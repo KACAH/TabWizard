@@ -1,5 +1,6 @@
 package music;
 import gp5.GP5Saver;
+import gui.Main;
 import gui.NewTrackFrame;
 import gui.PlayingMethodsFrame;
 
@@ -31,8 +32,6 @@ public class TWGenerate {
 	static public TWHarmony Harmony;
 	static public int MeasureCount;
 
-	
-	
 	static public void createSongPart(String name) throws TWDataException, FileNotFoundException, IOException
 	{
 		TWScaleManager.loadScales("data/Scales.twd");
@@ -51,9 +50,27 @@ public class TWGenerate {
 			randChord = rn.nextInt(6);
 			for(int j = 0; j < readyTracks.size(); j++)
 			{
-				writeHarmonyTrack(readyTracks.get(j).getTrack(), readyTracks.get(j).getMethod());
-				//writeRiffTrack(readyTracks.get(j).getTrack(), readyTracks.get(j).getMethod());
-				writeBassTrack(readyTracks.get(j).getTrack(), readyTracks.get(j).getMethod());
+				boolean isWritten = false;
+				if(Main.fragmenttypeframe.isHarmonyFragment())
+				{
+					writeHarmonyTrack(readyTracks.get(j).getTrack(), readyTracks.get(j).getMethod());
+					writeBassTrack(readyTracks.get(j).getTrack(), readyTracks.get(j).getMethod());
+				}
+
+				if(Main.fragmenttypeframe.isRiffFragment())
+				{
+					for(int k = 0; k < readyTracks.size(); k++)	
+					{
+						if(readyTracks.get(k).getTuning().getNumStringsUsed() == 4)
+						{
+							writeRiffTrack(readyTracks.get(j).getTrack(), readyTracks.get(k).getTrack(), readyTracks.get(j).getMethod());
+							isWritten = true;
+							break;
+						}
+					}
+				}
+				if(isWritten)
+					break;
 			}
 			writeDrumTrack(readyPercussionTrack.getPercussionTrack(), readyPercussionTrack.getMethod());
 		}
@@ -63,7 +80,6 @@ public class TWGenerate {
 		GP5Saver writer = new GP5Saver();
 		writer.saveSong(NewTrackFrame.song, "Test.gp5");
 		Desktop.getDesktop().open(new File("Test.gp5"));
-
 	}
 
 

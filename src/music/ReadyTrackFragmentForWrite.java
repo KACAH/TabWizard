@@ -1,6 +1,7 @@
 package music;
 import datastruct.TWInstrumentTrack;
 import datastruct.TWPercussionTrack;
+import datastruct.TWStringsTunning;
 import datastruct.TWTrackHeader;
 
 
@@ -56,5 +57,10 @@ public class ReadyTrackFragmentForWrite {
 	public String getHeaderName()
 	{
 		return header.getName();
+	}
+	
+	public TWStringsTunning getTuning()
+	{
+		return header.getStringsTunning();
 	}
 }
