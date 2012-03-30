@@ -14,7 +14,6 @@ import datastruct.TWDataException;
 import datastruct.TWInstrumentTrack;
 import datastruct.TWPercussionTrack;
 import datastruct.TWSongPart;
-import datastruct.TWTrackHeader;
 
 
 public class TWGenerate {
@@ -32,6 +31,8 @@ public class TWGenerate {
 	static public TWHarmony Harmony;
 	static public int MeasureCount;
 
+	
+	
 	static public void createSongPart(String name) throws TWDataException, FileNotFoundException, IOException
 	{
 		TWScaleManager.loadScales("data/Scales.twd");

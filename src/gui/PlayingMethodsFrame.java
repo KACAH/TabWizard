@@ -32,6 +32,7 @@ public class PlayingMethodsFrame extends JFrame{
 	private static final long serialVersionUID = 8874696486929822528L;
 
 	public static DefaultListModel<String> MethodListModel = new DefaultListModel<String>();
+	public static DefaultListModel<String> TracklistModelCopy = new DefaultListModel<String>();
 
 	private JLabel setScale = new JLabel();
 	private JLabel setMesCount = new JLabel();
@@ -67,7 +68,7 @@ public class PlayingMethodsFrame extends JFrame{
 		this.add(setMeasureCount());
 		this.add(confirmButton());
 		this.add(resetButton());
-		this.add(BackButton());
+		this.add(BackButton()); 
 		this.add(RoundButtonGenerate());
 		this.add(LabelSetMethod());
 		this.add(LabelSetMesCount());
@@ -98,12 +99,12 @@ public class PlayingMethodsFrame extends JFrame{
 					for(int i = 0; i < TWGenerate.readyTracks.size(); i++)
 					{
 						String TrackName = list.getSelectedValue().split("\\) ")[1].split(",")[0];
-		
+
 						if(TrackName.equals(TWGenerate.readyTracks.get(i).getHeaderName()))
 						{
 							TWGenerate.readyTracks.get(i).setMethod(methods.getSelectedItem().toString());
 						}
-						
+
 						if(list.getSelectedValue().split(": ")[1].equals("Drums"))
 							TWGenerate.readyPercussionTrack.setMethod(methods.getSelectedItem().toString());
 					}
@@ -136,7 +137,7 @@ public class PlayingMethodsFrame extends JFrame{
 		});
 		return confirm;
 	}
-	
+
 	private JButton resetButton() {
 		reset.setBounds(570, 310, 100, 30);
 		reset.setText("Reset");
@@ -150,14 +151,22 @@ public class PlayingMethodsFrame extends JFrame{
 		});
 		return reset;
 	}
-	
+
 	private void resetWindow()
-	{
-		this.setVisible(false); 
-		System.out.println("Njam");
-		this.setVisible(true);
+	{	
+		Main.newtrackframe.TracklistModel = TracklistModelCopy;
+		list.setModel(Main.newtrackframe.TracklistModel);
+		clearReadyTrackMethods();
 	}
 	
+	private void clearReadyTrackMethods()
+	{
+		for(int i = 0; i < TWGenerate.readyTracks.size(); i++)
+		{
+			TWGenerate.readyTracks.get(i).setMethod("");
+		}
+	}
+
 	private JButton BackButton() {
 		back.setBounds(410, 350, 150, 30);
 		back.setText("Back to type");
@@ -166,7 +175,7 @@ public class PlayingMethodsFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				
+
 			}
 		});
 		return back;
@@ -338,6 +347,13 @@ public class PlayingMethodsFrame extends JFrame{
 	private void init()
 	{
 		TWScaleManager.loadScales("data//Scales.twd");
+
+		String[] elements = new String[Main.newtrackframe.TracklistModel.size()];
+		for(int i = 0; i < Main.newtrackframe.TracklistModel.size(); i++)
+		{
+			elements[i] = Main.newtrackframe.TracklistModel.get(i);
+			TracklistModelCopy.addElement(elements[i]);
+		}
 
 		this.setResizable(false);
 

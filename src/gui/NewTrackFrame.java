@@ -255,7 +255,7 @@ public class NewTrackFrame extends JFrame {
 	private JButton nextStep() {
 		nextStep.setBounds(570, 350, 100, 30);
 		nextStep.setText("Next Step");
-		
+
 		nextStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -289,6 +289,7 @@ public class NewTrackFrame extends JFrame {
 							e1.printStackTrace();
 						}
 					}
+					//PlayingMethodsFrame.TracklistModelCopy = TracklistModel;
 				}
 				else
 					JOptionPane.showMessageDialog(null, "Please, add tracks");
