@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.Border;
 
 import music.ReadyTrackFragmentForWrite;
 import music.TWGenerate;
@@ -233,7 +235,6 @@ public class NewTrackFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "List is empty");
 				else
 				{
-
 					String[] elem = list.getSelectedValue().split(":");
 					if(elem[1].equals(" Drums"))
 					{
@@ -384,6 +385,8 @@ public class NewTrackFrame extends JFrame {
 	private JList<String> newTrackList(){
 		list = new JList<String>(TracklistModel);
 		list.setBounds(10, 170, 350, 200);
+		Border listPanelBorder = BorderFactory.createTitledBorder("Added tracks");
+		list.setBorder(listPanelBorder);
 		list.setLayoutOrientation(JList.VERTICAL);
 		return list;
 	}
@@ -427,6 +430,14 @@ public class NewTrackFrame extends JFrame {
 		return LabelPercTrack;
 	}
 
+	public int getTempo(){
+		return (Integer) Tempo.getValue();
+	}
+
+	public String getSimpleTrackName(){
+		return SimpleTrackName.getText();
+	}
+	
 	private void init()
 	{
 		loadInstruments("data//Instruments.twd");
@@ -447,13 +458,5 @@ public class NewTrackFrame extends JFrame {
 				}
 			}
 		});
-	}
-
-	public int getTempo(){
-		return (Integer) Tempo.getValue();
-	}
-
-	public String getSimpleTrackName(){
-		return SimpleTrackName.getText();
 	}
 }

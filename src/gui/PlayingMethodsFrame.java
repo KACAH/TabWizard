@@ -9,6 +9,7 @@ import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -20,7 +21,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.Border;
 
 import music.TWGenerate;
 import music.TWScaleManager;
@@ -39,14 +42,23 @@ public class PlayingMethodsFrame extends JFrame{
 	private JLabel setScale = new JLabel();
 	private JLabel setMesCount = new JLabel();
 	private JLabel setMethod = new JLabel();
+	
 	private JSpinner MeasureCount = new JSpinner(new SpinnerNumberModel(4, 1, 64, 1));
+	
 	private static JComboBox<String> scales;
 	private JComboBox<String> methods;
-	private static JList<String> list;
+	
+	private JList<String> list;
+	
 	private JButton confirm = new JButton();
+	private JButton add = new JButton();
 	private JButton reset = new JButton();
 	private JButton back = new JButton();
+	private JButton delete = new JButton();
+	private JButton showParts = new JButton();
 	private RoundButton generate = new RoundButton();
+	
+	private JTextField FragmentName = new JTextField();
 
 	private String[] DrumMethods = {"Simple Drums (slow)", "Simple Drums (middle)",
 			"Simple Drums (fast)", "Double Hat Drums (slow)",
@@ -69,16 +81,19 @@ public class PlayingMethodsFrame extends JFrame{
 		this.setTitle("Set playing methods");
 		this.add(setMeasureCount());
 		this.add(confirmButton());
+		this.add(addButton());
 		this.add(resetButton());
 		this.add(BackButton()); 
+		this.add(showButton());
+		this.add(deleteButton());
 		this.add(RoundButtonGenerate());
+		this.add(FragmentName());
 		this.add(LabelSetMethod());
 		this.add(LabelSetMesCount());
-
 	}
 
 	private JButton confirmButton() {
-		confirm.setBounds(570, 350, 100, 30);
+		confirm.setBounds(370, 250, 150, 30);
 		confirm.setText("Confirm method");
 
 		confirm.addActionListener(new ActionListener() {
@@ -136,8 +151,57 @@ public class PlayingMethodsFrame extends JFrame{
 		return confirm;
 	}
 
+	private JButton addButton() {
+		add.setBounds(530, 250, 150, 30);
+		add.setText("Add part");
+
+		add.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				TWGenerate.parts.add(TWGenerate.newPart);
+			}
+		});
+		return add;
+	}
+	
+	private JButton showButton() {
+		showParts.setBounds(530, 350, 150, 30);
+		showParts.setText("Show part list");
+
+		showParts.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				Main.fragmentlist.setVisible(true);
+				setNonVisibleWindow();
+			}
+		});
+		return showParts;
+	}
+	private void setNonVisibleWindow()
+	{
+		this.setVisible(false);
+		this.dispose();
+	}
+	
+	private JButton deleteButton() {
+		delete.setBounds(530, 290, 150, 30);
+		delete.setText("Delete part");
+
+		delete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				NewTrackFrame.song.removeSongPart(0);
+				FragmentName.setText("");
+			}
+		});
+		return delete;
+	}
+	
 	private JButton resetButton() {
-		reset.setBounds(570, 310, 100, 30);
+		reset.setBounds(370, 290, 150, 30);
 		reset.setText("Reset");
 
 		reset.addActionListener(new ActionListener() {
@@ -170,7 +234,7 @@ public class PlayingMethodsFrame extends JFrame{
 
 	
 	private JButton BackButton() {
-		back.setBounds(410, 350, 150, 30);
+		back.setBounds(370, 350, 150, 30);
 		back.setText("Back to type");
 
 		back.addActionListener(new ActionListener() {
@@ -193,17 +257,20 @@ public class PlayingMethodsFrame extends JFrame{
 
 	private RoundButton RoundButtonGenerate()
 	{
-		generate.setBounds(520, 30, 150, 150);
+		generate.setBounds(520, 20, 150, 150);
 		ImageIcon cup = new ImageIcon("media//Button.png");
 		generate.setIcon(cup);
-
+		generate.setToolTipText("Generate new music fragment");
 		generate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				String name = JOptionPane.showInputDialog(null, "Enter a song part name", "Enter name", JOptionPane.QUESTION_MESSAGE);
 
+				FragmentName.setText(name);
+				
 				try {
+					
 					TWGenerate.createSongPart(name);
 
 				} catch (TWDataException e1) {
@@ -225,6 +292,12 @@ public class PlayingMethodsFrame extends JFrame{
 
 		return MeasureCount;
 	}
+	
+	private JTextField FragmentName(){
+		FragmentName.setBounds(530, 210, 150, 30);
+		FragmentName.setEditable(false);
+		return FragmentName;
+	}
 
 	private JComboBox<String> setScale() throws IOException
 	{
@@ -245,7 +318,9 @@ public class PlayingMethodsFrame extends JFrame{
 
 	private JList<String> InstrumentList(){
 		list = new JList<String>(Main.newtrackframe.TracklistModel);
-		list.setBounds(10, 170, 350, 200);
+		list.setBounds(10, 170, 350, 210);
+		Border listPanelBorder = BorderFactory.createTitledBorder("Instruments");
+		list.setBorder(listPanelBorder);
 		list.setLayoutOrientation(JList.VERTICAL);
 
 		list.addMouseListener(new MouseAdapter()
@@ -308,7 +383,7 @@ public class PlayingMethodsFrame extends JFrame{
 	private JComboBox<String> setPlayingMethod() throws IOException
 	{
 		methods = new JComboBox<String>();
-		methods.setBounds(370, 200, 150, 30);
+		methods.setBounds(370, 210, 150, 30);
 		return methods;
 	}
 
@@ -352,9 +427,6 @@ public class PlayingMethodsFrame extends JFrame{
 	private void init() throws IOException
 	{
 		TWScaleManager.loadScales("data//Scales.twd");
-
-		
-		//elements = new String[Main.newtrackframe.TracklistModel.size()];
 		
 		for(int i = 0; i < Main.newtrackframe.TracklistModel.size(); i++)
 		{
@@ -376,6 +448,7 @@ public class PlayingMethodsFrame extends JFrame{
 				}
 			}
 		});
+		
 		for(int i = 0; i < DrumMethods.length; i++)
 			MethodListModel.addElement(DrumMethods[i]);
 		for(int i = 0; i < BassMethods.length; i++)
