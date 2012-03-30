@@ -49,7 +49,7 @@ public class Main
 	{
 		try 
 		{				
-
+			//TWSong njam-njam;
 			TWSong song = new TWSong(150);
 
 			song.addTrack( new TWTrackHeader( "Harmony", (short)80, (short)10, new TWColor(12,123,32), new TWStringsTunning(TWStringsTunning.STANDARD), (short)48));
