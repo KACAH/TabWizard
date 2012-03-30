@@ -290,6 +290,7 @@ public class NewTrackFrame extends JFrame {
 						}
 					}
 					//PlayingMethodsFrame.TracklistModelCopy = TracklistModel;
+					
 				}
 				else
 					JOptionPane.showMessageDialog(null, "Please, add tracks");

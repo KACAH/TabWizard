@@ -32,8 +32,10 @@ public class PlayingMethodsFrame extends JFrame{
 	private static final long serialVersionUID = 8874696486929822528L;
 
 	public static DefaultListModel<String> MethodListModel = new DefaultListModel<String>();
-	public static DefaultListModel<String> TracklistModelCopy = new DefaultListModel<String>();
-
+	public DefaultListModel<String> TracklistModelCopy = new DefaultListModel<String>();
+	
+	private String[] elements = new String[Main.newtrackframe.TracklistModel.size()];
+	
 	private JLabel setScale = new JLabel();
 	private JLabel setMesCount = new JLabel();
 	private JLabel setMethod = new JLabel();
@@ -73,10 +75,6 @@ public class PlayingMethodsFrame extends JFrame{
 		this.add(LabelSetMethod());
 		this.add(LabelSetMesCount());
 
-		if(Main.fragmenttypeframe.isRiffFragment())
-			RiffInit();
-		if(Main.fragmenttypeframe.isHarmonyFragment())
-			HarmonyInit();
 	}
 
 	private JButton confirmButton() {
@@ -154,19 +152,23 @@ public class PlayingMethodsFrame extends JFrame{
 
 	private void resetWindow()
 	{	
-		Main.newtrackframe.TracklistModel = TracklistModelCopy;
+		Main.newtrackframe.TracklistModel.removeAllElements();
+		
+		for(int i = 0; i < elements.length; i++)
+			Main.newtrackframe.TracklistModel.addElement(elements[i]);
+			
 		list.setModel(Main.newtrackframe.TracklistModel);
+
 		clearReadyTrackMethods();
 	}
-	
+
 	private void clearReadyTrackMethods()
 	{
 		for(int i = 0; i < TWGenerate.readyTracks.size(); i++)
-		{
 			TWGenerate.readyTracks.get(i).setMethod("");
-		}
 	}
 
+	
 	private JButton BackButton() {
 		back.setBounds(410, 350, 150, 30);
 		back.setText("Back to type");
@@ -175,10 +177,18 @@ public class PlayingMethodsFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
+				
+				closeWindow();
+				Main.fragmenttypeframe.setVisible(true);
 
 			}
 		});
 		return back;
+	}
+
+	public void closeWindow()
+	{
+		this.setVisible(false);
 	}
 
 	private RoundButton RoundButtonGenerate()
@@ -231,20 +241,6 @@ public class PlayingMethodsFrame extends JFrame{
 			scales.addItem(ScaleName[0]);
 		}
 		return scales;
-	}
-
-	private void RiffInit() throws IOException
-	{
-		this.add(setScale());
-		this.add(LabelScale());
-		this.add(InstrumentList());
-		this.add(setPlayingMethod());
-	}
-
-	private void HarmonyInit() throws IOException
-	{
-		this.add(InstrumentList());
-		this.add(setPlayingMethod());
 	}
 
 	private JList<String> InstrumentList(){
@@ -334,27 +330,38 @@ public class PlayingMethodsFrame extends JFrame{
 		return 	setMesCount;
 	}
 
-	public static String getSelectedMethod()
-	{
-		return list.getSelectedValue();
-	}
-
-	public static String getSelectedScale()
+	public static String getSelectedScale()/////////////////////////////
 	{
 		return scales.getSelectedItem().toString();
 	}
 
-	private void init()
+	private void RiffInit() throws IOException
+	{
+		this.add(setScale());
+		this.add(LabelScale());
+		this.add(InstrumentList());
+		this.add(setPlayingMethod());
+	}
+
+	private void HarmonyInit() throws IOException
+	{
+		this.add(InstrumentList());
+		this.add(setPlayingMethod());
+	}
+
+	private void init() throws IOException
 	{
 		TWScaleManager.loadScales("data//Scales.twd");
 
-		String[] elements = new String[Main.newtrackframe.TracklistModel.size()];
+		
+		//elements = new String[Main.newtrackframe.TracklistModel.size()];
+		
 		for(int i = 0; i < Main.newtrackframe.TracklistModel.size(); i++)
 		{
 			elements[i] = Main.newtrackframe.TracklistModel.get(i);
 			TracklistModelCopy.addElement(elements[i]);
 		}
-
+		
 		this.setResizable(false);
 
 		this.addWindowListener(new WindowAdapter()
@@ -377,5 +384,10 @@ public class PlayingMethodsFrame extends JFrame{
 			MethodListModel.addElement(HarmonyMethods[i]);
 		for(int i = 0; i < RiffMethods.length; i++)
 			MethodListModel.addElement(RiffMethods[i]);
+
+		if(Main.fragmenttypeframe.isRiffFragment())
+			RiffInit();
+		if(Main.fragmenttypeframe.isHarmonyFragment())
+			HarmonyInit();
 	}
 }

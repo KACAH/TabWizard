@@ -66,8 +66,8 @@ public class FragmentTypeFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				//System.out.println(Main.newtrackframe.TracklistModel.get(0).split(", ")[1].split(" tuning")[0]);
-
+				if(Main.newtrackframe.TracklistModel.size() != 0)
+				{
 					if(Main.newtrackframe.TracklistModel.get(0).split(", ")[1].split(" tuning")[0].equals("Bass") && Main.newtrackframe.TracklistModel.getSize() == 1)
 					{
 						if(Riff.isSelected())
@@ -76,14 +76,17 @@ public class FragmentTypeFrame extends JFrame{
 							return;
 						}
 					}
-				try {
-					PlayingMethodsFrame plf = new PlayingMethodsFrame();
-					Main.fragmenttypeframe.setVisible(false);
-					plf.setVisible(true);
-					
-				} catch (IOException e1) {
-					e1.printStackTrace();
+					try {
+						PlayingMethodsFrame plf = new PlayingMethodsFrame();
+						Main.fragmenttypeframe.setVisible(false);
+						plf.setVisible(true);
+
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				}
+				else
+					JOptionPane.showMessageDialog(null, "Error");
 			}
 		});
 		return nextStep;
@@ -110,11 +113,11 @@ public class FragmentTypeFrame extends JFrame{
 			}
 		});
 	}
-	
+
 	public boolean isRiffFragment(){
 		return Riff.isSelected();
 	}
-	
+
 	public boolean isHarmonyFragment(){
 		return Harmony.isSelected();
 	}
