@@ -1,0 +1,92 @@
+91
+MajorScale 7 C D E F G A B
+PentatonicMajorScale 5 C D E G A
+BluesMajorScale 6 C D# F F# G A
+MinorScale 7 C D D# F G G# A#
+MelodicMinorScale 7 C D D# F G A B
+HarmonicMinorScale 7 C D D# F G G# B
+PentatonicMinorScale 5 C D# F G A#
+BluesMinorScale 6 C D# F F# G A#
+AugmentedScale 6 C D# E G G# B
+Be-BopScale 8 C D E F G A A# B
+ChromaticScale 12 C C# D D# E F F# G G# A A# B
+Whole-HalfScale 8 C D D# F F# G# A B
+Half-WholeScale 8 C C# D# E F# G A A#
+WholeToneScale 6 C D E F# G# A#
+AugmentedfifthScale 8 C D E F G G# A B
+AlgerianScale 7 C D D# F# G G# B
+ArabianScale 7 C D E F F# G# A#
+BalineseScale 5 C C# D# G G#
+BartokScale 7 C D E F# G A A#
+ByzantineScale 7 C C# E F G G# B
+ChineseScale 5 C D E G A
+EgyptianScale 5 C D F G A#
+EnigmaticScale 7 C C# E F# G# A# B
+SpanishScale 7 C C# E F G G# A#
+Spanish8ToneScale 8 C C# D# E F F# G# A#
+EthiopianScale 7 C D D# F G G# A#
+GypsyScale 7 C C# E F G A A#
+HungarianGypsyScale 7 C D D# F# G G# A#
+HinduScale 7 C D E F G G# A#
+IwatoScale 5 C C# F F# A#
+JapaneseScale 5 C C# F G G#
+JavaneseScale 7 C C# D# F G A A#
+JewishScale 7 C C# E F G G# A#
+HawaiianScale 7 C D D# F G A B
+HirajoshiScale 5 C D D# G G#
+HungarianMinorScale 7 C D D# F# G G# B
+HungarianMajorScale 7 C D# E F# G A A#
+KumoiScale 5 C C# F G G#
+LeadingWholeToneScale 7 C D E F# G# A# B
+MohammedanScale 7 C D D# F G G# B
+MongolianScale 5 C D E G A
+NeapolitanMinorScale 7 C C# D# F G G# B
+NeapolitanMajorScale 7 C C# D# F G A B
+OrientalScale 7 C C# E F F# A A#
+OvertoneScale 7 C D E F# G A A#
+PelogScale 5 C C# D# G A#
+PersianScale 7 C C# E F F# G# B
+IonianMode 7 C D E F G A B
+DorianMode 7 C D D# F G A A#
+PhrygianMode 7 C C# D# F G G# A#
+LydianMode 7 C D E F# G A B
+MixolydianMode 7 C D E F G A A#
+AeolianMode 7 C D D# F G G# A#
+LocrianMode 7 C C# D# F F# G# A#
+IonianHarmonicMode 7 C D D# F G G# B
+LocrianNat6Mode 7 C C# D# F F# A A#
+MajorSharp5Mode 7 C D E F G# A B
+DorianSharp4Mode 7 C D D# F# G A A#
+PhrygianMajorMode 7 C C# E F G G# A#
+LydianSharp2mode 7 C D# E F# G A B
+SuperlocrianDoubleFlat7Mode 7 C C# D# E F# G# A
+JazzMinorMode 7 C D D# F G A B
+Dorianb2MinorMode 7 C C# D# F G A B
+LydianAugmentedMinorMode 7 C D E F# G# A B
+LydianFlat7MinorMode 7 C D E F# G A A#
+MixolydianFlat6MinorMode 7 C D E F G G# A#
+LocrianSharp2MinorMode 7 C D D# F F# G# A#
+SuperlocrianMinorMode 7 C C# D# E F# G# A#
+PentatonicMajeurMode 5 C D E G A
+PentatonicMode2 5 C D F G A#
+PentatonicMode3 5 C D# F G# A#
+PentatonicMode4 5 C D F G A
+PentatonicDominantMode 5 C D E G A#
+PentatonicMinorMode 5 C D# F G A#
+AlteredPentatonicMode 5 C C# E G A
+BluesMode 6 C D# F F# G A
+MajorArpeggio 3 C E G
+MinorArpeggio 3 C D# G
+Major7thMajorArpeggio 4 C E G B
+Major7thMinorArpeggio 4 C E G A#
+Minor7thMajorArpeggio 4 C D# G B
+Minor7thMinorArpeggio 4 C D# G A#
+Major9thArpeggio 5 C D E G A#
+Minor9thArpeggio 5 C D D# G A#
+Major11thArpeggio 6 C D E F G A#
+Minor11thArpeggio 6 C D D# F G A#
+Major13thArpeggio 7 C D E F G A A#
+Minor13thArpeggio 7 C D D# F G A A#
+AugmentedArpeggio 3 C E G#
+DiminishedArpeggio 4 C D# F# A
+Aaa 1 C
