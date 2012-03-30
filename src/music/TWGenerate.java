@@ -24,7 +24,9 @@ public class TWGenerate {
 
 	public static ArrayList<TWSongPart> parts = new ArrayList<TWSongPart>();
 
-	public static TWPercussionTrack PercTrack;
+	public static TWPercussionTrack PercTrack;/////////////////////
+
+	public static TWSongPart newPart;
 
 	private static Random rn = new Random();
 	private static int randChord = rn.nextInt(6);
@@ -36,8 +38,7 @@ public class TWGenerate {
 	{
 		TWScaleManager.loadScales("data/Scales.twd");
 
-		TWSongPart newPart = NewTrackFrame.song.createSongPart(name);
-
+		newPart = NewTrackFrame.song.createSongPart(name);
 
 		for(int i = 0; i < readyTracks.size(); i++)	
 			readyTracks.get(i).setInstrumentTrack(newPart.getInstrumentTrack(i));
