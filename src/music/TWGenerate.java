@@ -79,14 +79,19 @@ public class TWGenerate {
 		NewTrackFrame.song.addSongPart(newPart, 0);
 
 		GP5Saver writer = new GP5Saver();
-		writer.saveSong(NewTrackFrame.song, "Test.gp5");
-		Desktop.getDesktop().open(new File("Test.gp5"));
+		writer.saveSong(NewTrackFrame.song, "Fragment.gp5");
+		Desktop.getDesktop().open(new File("Fragment.gp5"));
 	}
 
 
-	static public void GenerateNewSong() throws TWDataException
+	static public void GenerateNewSong(String name, ArrayList<TWSongPart> parts) throws TWDataException, FileNotFoundException, IOException
 	{
+		for(int i = 0; i < parts.size(); i++)
+		NewTrackFrame.song.addSongPart(parts.get(i), i);
 
+		GP5Saver writer = new GP5Saver();
+		writer.saveSong(NewTrackFrame.song, name + ".gp5");
+		Desktop.getDesktop().open(new File(name + ".gp5"));
 	}
 
 	private static void writeHarmonyTrack(TWInstrumentTrack track, String method) throws TWDataException

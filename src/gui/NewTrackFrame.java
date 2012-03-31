@@ -55,6 +55,7 @@ public class NewTrackFrame extends JFrame {
 
 	private JTextField SimpleTrackName = new JTextField();
 	private JTextField PercTrackName = new JTextField();
+	private JTextField SongName = new JTextField();
 
 	private JSpinner SimpleTrackVolume = new JSpinner(new SpinnerNumberModel(13, 0, 16, 1));
 	private JSpinner PercTrackVolume = new JSpinner(new SpinnerNumberModel(13, 0, 16, 1));
@@ -68,6 +69,7 @@ public class NewTrackFrame extends JFrame {
 	private JList<String> list;
 
 	private JLabel LabelTempo = new JLabel();
+	private JLabel LabelSongName = new JLabel();
 	private JLabel LabelSimpleTrack = new JLabel();
 	private JLabel LabelPercTrack = new JLabel();
 
@@ -86,6 +88,7 @@ public class NewTrackFrame extends JFrame {
 		this.add(nextStep());
 		this.add(newSimpleTrackName());
 		this.add(newPercussionTrackName());
+		this.add(setSongName());
 		this.add(newSimpleTrackVolume());
 		this.add(newPercussionTrackVolume());
 		this.add(newSongTempo());
@@ -96,6 +99,7 @@ public class NewTrackFrame extends JFrame {
 		this.add(Tempo());
 		this.add(SimpleTrack());
 		this.add(PercussionTrack());
+		this.add(SongName());
 	}
 
 	private JButton AddSimpleTrackButton() 
@@ -201,7 +205,8 @@ public class NewTrackFrame extends JFrame {
 								return;
 							}
 						}
-						addElemToList(PercTrackElem);				
+						addElemToList(PercTrackElem);			
+						PercTrackName.setText("");
 						PercTrackName.setEnabled(false);
 						addNewPercussionTrack.setEnabled(false);
 
@@ -272,6 +277,8 @@ public class NewTrackFrame extends JFrame {
 
 						PercTrackName.setEnabled(true);
 						addNewPercussionTrack.setEnabled(true);
+						
+						SongName.setText("");
 
 						try {
 							TWGenerate.Harmony = TWHarmonyGenerator.generateSimpleHarmony();
@@ -290,8 +297,6 @@ public class NewTrackFrame extends JFrame {
 							e1.printStackTrace();
 						}
 					}
-					//PlayingMethodsFrame.TracklistModelCopy = TracklistModel;
-					
 				}
 				else
 					JOptionPane.showMessageDialog(null, "Please, add tracks");
@@ -305,9 +310,7 @@ public class NewTrackFrame extends JFrame {
 		for(int i = 0; i < TracklistModel.size(); i++)
 		{
 			if(TracklistModel.get(i).split(", ")[1].split(" tuning")[0].equals("Bass"))
-			{
 				return true;
-			}
 		}
 		JOptionPane.showMessageDialog(null, "Please add a bass track");
 		return false;
@@ -321,6 +324,11 @@ public class NewTrackFrame extends JFrame {
 	private JTextField newPercussionTrackName(){
 		PercTrackName.setBounds(10, 125, 100, 30);
 		return PercTrackName;
+	}
+
+	private JTextField setSongName(){
+		SongName.setBounds(275, 10, 100, 30);
+		return SongName;
 	}
 
 	private JSpinner newSimpleTrackVolume() {
@@ -338,7 +346,7 @@ public class NewTrackFrame extends JFrame {
 	}
 
 	private JSpinner newSongTempo() {
-		Tempo.setBounds(100, 10, 50, 30);
+		Tempo.setBounds(90, 10, 50, 30);
 		JFormattedTextField tf = ((JSpinner.DefaultEditor)Tempo.getEditor()).getTextField();
 		tf.setEditable(false);
 
@@ -418,6 +426,12 @@ public class NewTrackFrame extends JFrame {
 		LabelTempo.setText("Enter tempo:");
 		return LabelTempo;
 	}
+	
+	private JLabel SongName(){
+		LabelSongName.setBounds(170, 20, 110, 15);
+		LabelSongName.setText("Enter song name:");
+		return LabelSongName;
+	}
 
 	private JLabel SimpleTrack(){
 		LabelSimpleTrack.setBounds(10, 53, 150, 15);
@@ -438,6 +452,10 @@ public class NewTrackFrame extends JFrame {
 		return SimpleTrackName.getText();
 	}
 	
+	public String getSongName(){
+		return SongName.getText();
+	}
+
 	private void init()
 	{
 		loadInstruments("data//Instruments.twd");
