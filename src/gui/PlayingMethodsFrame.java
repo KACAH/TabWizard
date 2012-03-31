@@ -36,20 +36,20 @@ public class PlayingMethodsFrame extends JFrame{
 
 	public static DefaultListModel<String> MethodListModel = new DefaultListModel<String>();
 	public DefaultListModel<String> TracklistModelCopy = new DefaultListModel<String>();
-	
+
 	private String[] elements = new String[Main.newtrackframe.TracklistModel.size()];
-	
+
 	private JLabel setScale = new JLabel();
 	private JLabel setMesCount = new JLabel();
 	private JLabel setMethod = new JLabel();
-	
+
 	private JSpinner MeasureCount = new JSpinner(new SpinnerNumberModel(4, 1, 64, 1));
-	
+
 	private static JComboBox<String> scales;
 	private JComboBox<String> methods;
-	
+
 	private JList<String> list;
-	
+
 	private JButton confirm = new JButton();
 	private JButton add = new JButton();
 	private JButton reset = new JButton();
@@ -57,7 +57,7 @@ public class PlayingMethodsFrame extends JFrame{
 	private JButton delete = new JButton();
 	private JButton showParts = new JButton();
 	private RoundButton generate = new RoundButton();
-	
+
 	private JTextField FragmentName = new JTextField();
 
 	private String[] DrumMethods = {"Simple Drums (slow)", "Simple Drums (middle)",
@@ -160,11 +160,14 @@ public class PlayingMethodsFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) 
 			{
 				TWGenerate.parts.add(TWGenerate.newPart);
+				JOptionPane.showMessageDialog(null, "Fragment \"" + TWGenerate.newPart.getName() + "\" is added to fragment list");
+				NewTrackFrame.song.removeSongPart(0);
+				FragmentName.setText("");
 			}
 		});
 		return add;
 	}
-	
+
 	private JButton showButton() {
 		showParts.setBounds(530, 350, 150, 30);
 		showParts.setText("Show part list");
@@ -173,7 +176,8 @@ public class PlayingMethodsFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				Main.fragmentlist.setVisible(true);
+				FragmentList frag = new FragmentList();
+				frag.setVisible(true);
 				setNonVisibleWindow();
 			}
 		});
@@ -184,7 +188,7 @@ public class PlayingMethodsFrame extends JFrame{
 		this.setVisible(false);
 		this.dispose();
 	}
-	
+
 	private JButton deleteButton() {
 		delete.setBounds(530, 290, 150, 30);
 		delete.setText("Delete part");
@@ -193,13 +197,18 @@ public class PlayingMethodsFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				NewTrackFrame.song.removeSongPart(0);
-				FragmentName.setText("");
+				int DialogResult = JOptionPane.showConfirmDialog(null, "Are you sure?" , "Confirm" , JOptionPane.YES_NO_OPTION);
+				if (DialogResult == 0)
+				{
+					NewTrackFrame.song.removeSongPart(0);
+					JOptionPane.showMessageDialog(null, "Fragment \"" + TWGenerate.newPart.getName() + "\" is deleted");
+					FragmentName.setText("");
+				}
 			}
 		});
 		return delete;
 	}
-	
+
 	private JButton resetButton() {
 		reset.setBounds(370, 290, 150, 30);
 		reset.setText("Reset");
@@ -217,10 +226,10 @@ public class PlayingMethodsFrame extends JFrame{
 	private void resetWindow()
 	{	
 		Main.newtrackframe.TracklistModel.removeAllElements();
-		
+
 		for(int i = 0; i < elements.length; i++)
 			Main.newtrackframe.TracklistModel.addElement(elements[i]);
-			
+
 		list.setModel(Main.newtrackframe.TracklistModel);
 
 		clearReadyTrackMethods();
@@ -232,7 +241,7 @@ public class PlayingMethodsFrame extends JFrame{
 			TWGenerate.readyTracks.get(i).setMethod("");
 	}
 
-	
+
 	private JButton BackButton() {
 		back.setBounds(370, 350, 150, 30);
 		back.setText("Back to type");
@@ -241,7 +250,7 @@ public class PlayingMethodsFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				
+				resetWindow();
 				closeWindow();
 				Main.fragmenttypeframe.setVisible(true);
 
@@ -268,9 +277,9 @@ public class PlayingMethodsFrame extends JFrame{
 				String name = JOptionPane.showInputDialog(null, "Enter a song part name", "Enter name", JOptionPane.QUESTION_MESSAGE);
 
 				FragmentName.setText(name);
-				
+
 				try {
-					
+
 					TWGenerate.createSongPart(name);
 
 				} catch (TWDataException e1) {
@@ -292,7 +301,7 @@ public class PlayingMethodsFrame extends JFrame{
 
 		return MeasureCount;
 	}
-	
+
 	private JTextField FragmentName(){
 		FragmentName.setBounds(530, 210, 150, 30);
 		FragmentName.setEditable(false);
@@ -427,13 +436,13 @@ public class PlayingMethodsFrame extends JFrame{
 	private void init() throws IOException
 	{
 		TWScaleManager.loadScales("data//Scales.twd");
-		
+
 		for(int i = 0; i < Main.newtrackframe.TracklistModel.size(); i++)
 		{
 			elements[i] = Main.newtrackframe.TracklistModel.get(i);
 			TracklistModelCopy.addElement(elements[i]);
 		}
-		
+
 		this.setResizable(false);
 
 		this.addWindowListener(new WindowAdapter()
@@ -448,7 +457,7 @@ public class PlayingMethodsFrame extends JFrame{
 				}
 			}
 		});
-		
+
 		for(int i = 0; i < DrumMethods.length; i++)
 			MethodListModel.addElement(DrumMethods[i]);
 		for(int i = 0; i < BassMethods.length; i++)
