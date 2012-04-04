@@ -76,35 +76,35 @@ public class Main
 
 			TWHarmony newSimpleHarmony = TWHarmonyGenerator.generateSimpleHarmony();
 
-			for(int i = 0; i < 4; i++)
+			for(int i = 0; i < 8; i++)
 			{
 				int randChord = rn.nextInt(6);
 				TWHarmonyManager.writeHarmony(newSimpleHarmony.getChord(randChord), track1);
 				TWGuitar.AcousticArpeggio(newSimpleHarmony.getChord(randChord), track4);
-				TWBassLine.WriteSimpleBassLine(newSimpleHarmony.getChord(randChord), track3);	
+				TWBassLine.WriteBassLine(newSimpleHarmony.getChord(randChord), newSimpleHarmony, track3);	
 				TWDrums.WriteSimpleDrums_1_5(track6);
 				TWMelody.WriteSimpleMelody(newSimpleHarmony, newSimpleHarmony.getChord(randChord), track2);
-				TWGuitar.writePauseSoundWall(newSimpleHarmony.getChord(randChord), track5);
+				//TWGuitar.writePauseSoundWall(newSimpleHarmony.getChord(randChord), track5);
 			}
 			
 			
-			TWSongPart part2 = song.createSongPart("Test2");
-			track3 = part2.getInstrumentTrack(2);
-			track5 = part2.getInstrumentTrack(4);
-			track6 = part2.getPercussionTrack();
+			//TWSongPart part2 = song.createSongPart("Test2");
+			//track3 = part2.getInstrumentTrack(2);
+			//track5 = part2.getInstrumentTrack(4);
+			//track6 = part2.getPercussionTrack();
 			
 
 
-			for(int i = 0; i < 4; i++)
-			{
-				TWRiffs.writePowerRiff(TWScaleManager.getScaleByName("Blues Minor Scale"), track5, track3);
-				TWDrums.WriteOpenHatDrums_1_5(track6);
-			}
+			//for(int i = 0; i < 4; i++)
+			//{
+			//	TWRiffs.writeSimpleRiff(TWScaleManager.getScaleByName("Blues Minor Scale"), track5, track3);
+			//	TWDrums.WriteOpenHatDrums_1_5(track6);
+			//}
 			
 			
 			song.addSongPart(part, 0);
-			song.addSongPart(part2, 1);
-			song.addSongPart(part, 2);
+			//song.addSongPart(part2, 1);
+			//song.addSongPart(part, 2);
 
 			GP5Saver writer = new GP5Saver();
 			writer.saveSong(song, "Test.gp5");

@@ -7,9 +7,6 @@ import datastruct.TWSimpleNote;
 
 
 public class TWRiffs {
-
-	final static public int WITH_BASS = 0;
-	final static public int WITHOUT_BASS = 1;
 	
 	static public void writeSimpleRiff(TWScale Scale, TWInstrumentTrack track, TWInstrumentTrack bassTrack) throws TWDataException
 	{
@@ -18,7 +15,7 @@ public class TWRiffs {
 		TWSimpleNote MainNote = TWHarmonyGenerator.getMainChord().getNote(0);
 		Scale = TWScaleManager.transponScale(Scale, MainNote.getName());
 
-		for(int FullBeat = 0; FullBeat < 8;)
+		for(int FullBeat = 0; FullBeat < 8; FullBeat++)
 		{
 			int randScaleNote = rn.nextInt(Scale.ScaleSize());
 			int randMainOrScaleNote = rn.nextInt(2);
@@ -34,24 +31,13 @@ public class TWRiffs {
 
 					if(rand16Note == 0 || rand16Note == 1)
 					{
-						track.addNoteNew(frets[0], 6, 8);
-						track.getLastNote().setSimpleEffect(7, true);
-						bassTrack.addNoteNew(frets[0], 4, 8);
-
-						FullBeat++;
+						SimpleRiffNote(frets, 0, 6, 4, 8, true, track, bassTrack);
 						i = Scale.ScaleSize() - 1;
 					}
 					if(rand16Note == 2)
 					{
-						track.addNoteNew(frets[0], 6, 16);
-						track.getLastNote().setSimpleEffect(7, true);
-						bassTrack.addNoteNew(frets[0], 4, 16);
-
-						track.addNoteNew(frets[0], 6, 16);
-						track.getLastNote().setSimpleEffect(7, true);
-						bassTrack.addNoteNew(frets[0], 4, 16);
-
-						FullBeat++;
+						SimpleRiffNote(frets, 0, 6, 4, 16, true, track, bassTrack);
+						SimpleRiffNote(frets, 0, 6, 4, 16, true, track, bassTrack);
 						i = Scale.ScaleSize() - 1;
 					}					
 				}
@@ -62,22 +48,22 @@ public class TWRiffs {
 						frets = track.getFretsByNoteAndString(Scale.getNote(i), randString);
 
 						if(randOctava == 0 || randOctava == 1)
-						{
-							track.addNoteNew(frets[0], randString, 8);
-							bassTrack.addNoteNew(frets[0], randString-2, 8);
-							FullBeat++;
-						}
+							SimpleRiffNote(frets, 0, randString, randString-2, 8, false, track, bassTrack);
 						else
-						{
-							track.addNoteNew(frets[1], randString, 8);
-							bassTrack.addNoteNew(frets[0], randString-2, 8);
-							FullBeat++;
-						}
+							SimpleRiffNote(frets, 1, randString, randString-2, 8, false, track, bassTrack);
 					}
 				}
 			}			
 		}
 	}	
+	
+	private static void SimpleRiffNote(int[] frets, int FretOcatava, int string, int bassString, int duration, boolean PalmMute, TWInstrumentTrack track, TWInstrumentTrack bassTrack)
+	{
+		track.addNoteNew(frets[FretOcatava], string, duration);
+		if(PalmMute)
+			track.getLastNote().setSimpleEffect(7, true);
+		bassTrack.addNoteNew(frets[0], bassString, duration);
+	}
 
 	static public void writeSimplePowerRiff(TWScale Scale, TWInstrumentTrack track, TWInstrumentTrack bassTrack) throws TWDataException
 	{
@@ -140,8 +126,7 @@ public class TWRiffs {
 
 			if(randPause == 0 && FullBeat < 8 && FullBeat != 0)
 			{
-				track.addRest(8);
-				bassTrack.addRest(8);
+				PowerRiffPause(track, bassTrack);
 				FullBeat++;
 				pause = true;
 			}
@@ -154,10 +139,7 @@ public class TWRiffs {
 					{
 						frets = track.getFretsByNoteAndString(Scale.getNote(i), 6);
 
-						track.addNoteNew(frets[0], 6, 8);
-						track.addNoteMore(frets[0]+2, 5);
-						track.addNoteMore(frets[0]+2, 4);
-						bassTrack.addNoteNew(frets[0], 4, 8);
+						PowerRiffBeat(frets, track, bassTrack);					
 						FullBeat++;
 
 					}
@@ -168,11 +150,7 @@ public class TWRiffs {
 					{
 						frets = track.getFretsByNoteAndString(MainNote, 6);
 
-						track.addNoteNew(frets[0], 6, 8);
-						track.addNoteMore(frets[0]+2, 5);
-						track.addNoteMore(frets[0]+2, 4);
-						bassTrack.addNoteNew(frets[0], 4, 8);
-
+						PowerRiffBeat(frets, track, bassTrack);
 						FullBeat++;
 						i = Scale.ScaleSize() - 1;
 					}
@@ -180,6 +158,22 @@ public class TWRiffs {
 			}
 		}
 	}
+
+	
+	private static void PowerRiffBeat(int[] frets, TWInstrumentTrack track, TWInstrumentTrack bassTrack) throws TWDataException
+	{
+		track.addNoteNew(frets[0], 6, 8);
+		track.addNoteMore(frets[0]+2, 5);
+		track.addNoteMore(frets[0]+2, 4);
+		bassTrack.addNoteNew(frets[0], 4, 8);
+	}
+	
+	private static void PowerRiffPause(TWInstrumentTrack track, TWInstrumentTrack bassTrack) throws TWDataException
+	{
+		track.addRest(8);
+		bassTrack.addRest(8);
+	}
+	
 }
 
 

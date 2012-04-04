@@ -8,24 +8,23 @@ import datastruct.TWNoteEffects;
 
 public class TWMelody {
 
+	static int FullBeat;
+	static boolean is16 = false;
+
 	static public void WriteSimpleMelody (TWHarmony harmony, TWChord chord, TWInstrumentTrack track)
 	{
 		TWScale HarmonyScale = TWScaleManager.constructHarmonyScale(harmony);
 
 		Random rn = new Random();
 		int duration[] = {1, 2, 4, 8, 16};
-		int frets[];
+		int frets[] = null;
 
-		boolean is16 = false;
-		boolean is16afterDot = false;
-		int count16 = 0;
-
-		for(int FullBeat = 64; FullBeat > 0;)
+		for(FullBeat = 64; FullBeat > 0;)
 		{
-			int randMelodyStep = rn.nextInt(5); // Берёт ноту с аккорда или нет
+			int randMelodyStep = rn.nextInt(5); // Note from harmony or not
 			int randBaseNote = rn.nextInt(3);
 			int randScaleNote = rn.nextInt(HarmonyScale.ScaleSize());
-			int randPause = rn.nextInt(14);
+			int NormRestDot = rn.nextInt(14);
 			int randDuration;
 
 			if(!is16)
@@ -33,151 +32,181 @@ public class TWMelody {
 			else
 			{
 				randDuration = rn.nextInt(1)+4; 
-				randPause = rn.nextInt(8);
+				NormRestDot = rn.nextInt(8);
 			}
 
 			if(!TWHarmonyManager.onceNoteInHarmony(harmony, HarmonyScale.getNote(randScaleNote)))
 			{	
 				if(randMelodyStep == 0)
-				{
-					for(int i = 0; i < HarmonyScale.ScaleSize(); i++)
-					{
-						if(randScaleNote == i && FullBeat >= 0)
-						{
-							frets = track.getFretsByNoteAndString(HarmonyScale.getNote(i), 4);
-
-							if(randPause == 0 || randPause == 1 || randPause == 2 || randPause == 3 || randPause == 4 || randPause == 5 || randPause == 6 || randPause == 7)
-							{
-								if(randDuration == 2 && FullBeat >= 16)
-								{
-									track.addNoteNew(frets[0], 4, duration[randDuration]);
-									FullBeat -= 16;
-								}
-								if(randDuration == 3 && FullBeat >= 8)
-								{
-									track.addNoteNew(frets[0], 4, duration[randDuration]);
-									FullBeat -= 8;
-								}
-								if(randDuration == 4 && FullBeat >= 4)
-								{
-									if(is16afterDot)
-									{
-										track.addNoteNew(frets[0], 4, duration[randDuration]);							
-										FullBeat -= 4;
-										is16afterDot = false;
-									}
-									else
-									{
-										track.addNoteNew(frets[0], 4, duration[randDuration]);							
-										FullBeat -= 4;
-										is16 = true;
-										count16++;
-
-										if(count16 == 2)
-										{
-											is16 = false;
-											count16 = 0;
-										}
-									}
-								}
-							}
-							if(randPause == 8)
-							{
-								if(randDuration == 0 && FullBeat >= 64)
-								{
-									track.addRest(duration[randDuration]);
-									FullBeat -= 64;
-								}
-								if(randDuration == 1 && FullBeat >= 32)
-								{
-									track.addRest(duration[randDuration]);
-									FullBeat -= 32;
-								}
-								if(randDuration == 2 && FullBeat >= 16)
-								{
-									track.addRest(duration[randDuration]);
-									FullBeat -= 16;
-								}
-								if(randDuration == 3 && FullBeat >= 8)
-								{
-									track.addRest(duration[randDuration]);
-									FullBeat -= 8;
-								}		
-							}
-							if(randPause == 9 || randPause == 10 || randPause == 11 || randPause == 12)
-							{
-								if(randDuration == 2 && FullBeat >= 24)
-								{
-									track.addNoteNew(frets[0], 4, duration[randDuration]);
-									track.getLastBeat().setDotted(true);
-									FullBeat -= 24;
-								}
-								if(randDuration == 3 && FullBeat >= 12)
-								{
-									track.addNoteNew(frets[0], 4, duration[randDuration]);
-									track.getLastBeat().setDotted(true);
-									FullBeat -= 12;
-									is16afterDot = true;
-								}
-							}
-						}
-					}
-				}
+					writeMelodyStep(HarmonyScale, chord, randBaseNote, randScaleNote, randMelodyStep, NormRestDot, randDuration, frets, track);
 				else
-				{
-					for(int i = 0; i < HarmonyScale.ScaleSize(); i++)
-					{
-						if(TWScaleManager.getNotesIndexFromScale(HarmonyScale, chord)[randBaseNote]  == i && FullBeat >= 0)
-						{
-							frets = track.getFretsByNoteAndString(HarmonyScale.getNote(i), 4);
+					writeMelodyStep(HarmonyScale, chord, randBaseNote, randScaleNote, randMelodyStep, NormRestDot, randDuration, frets, track);
+			}
+		}
+	}
 
-							if(randPause == 0 || randPause == 1 || randPause == 2 || randPause == 3 || randPause == 4 || randPause == 5 || randPause == 6 || randPause == 7)
-							{
-								if(randDuration == 0 && FullBeat >= 64)
-								{
-									track.addNoteNew(frets[0], 4, duration[randDuration]);
-									FullBeat -= 64;
-									track.getLastNote().setSimpleEffect(TWNoteEffects.VIBRATO, true);
-								}
-								if(randDuration == 1 && FullBeat >= 32)
-								{
-									track.addNoteNew(frets[0], 4, duration[randDuration]);
-									FullBeat -= 32;
-									track.getLastNote().setSimpleEffect(TWNoteEffects.VIBRATO, true);
-								}
-								if(randDuration == 2 && FullBeat >= 16)
-								{
-									track.addNoteNew(frets[0], 4, duration[randDuration]);
-									FullBeat -= 16;
-								}
-							}
-							if(randPause == 9 || randPause == 10 || randPause == 11 || randPause == 12)
-							{							
-								if(randDuration == 1 && FullBeat >= 48)
-								{
-									track.addNoteNew(frets[0], 4, duration[randDuration]);
-									track.getLastBeat().setDotted(true);
-									track.getLastNote().setSimpleEffect(TWNoteEffects.VIBRATO, true);
-									FullBeat -= 48;
-								}
-								if(randDuration == 2 && FullBeat >= 24)
-								{
-									track.addNoteNew(frets[0], 4, duration[randDuration]);
-									track.getLastBeat().setDotted(true);
-									FullBeat -= 24;
-								}
-								if(randDuration == 3 && FullBeat >= 12)
-								{
-									track.addNoteNew(frets[0], 4, duration[randDuration]);
-									track.getLastBeat().setDotted(true);
-									FullBeat -= 12;
-									is16afterDot = true;
-								}
-							}
-						}
-					}
+	private static void writeMelodyStep(TWScale HarmonyScale, TWChord chord, int randBaseNote, int randScaleNote, int randMelodyStep, int NormRestDot, int randDuration, int[] frets, TWInstrumentTrack track)
+	{
+		for(int i = 0; i < HarmonyScale.ScaleSize(); i++)
+		{
+			if(randMelodyStep == 0)
+			{
+				if(randScaleNote == i && FullBeat >= 0)
+				{
+					frets = track.getFretsByNoteAndString(HarmonyScale.getNote(i), 4);
+					setNormalDottedOrRest(randMelodyStep, NormRestDot, randDuration, frets, track);
+				}
+			}
+			else
+			{
+				if(TWScaleManager.getNotesIndexFromScale(HarmonyScale, chord)[randBaseNote]  == i && FullBeat >= 0)
+				{
+					frets = track.getFretsByNoteAndString(HarmonyScale.getNote(i), 4);
+					setNormalDottedOrRest(randMelodyStep, NormRestDot, randDuration, frets, track);
 				}
 			}
 		}
+	}
+	
+	private static void setNormalDottedOrRest(int randMelodyStep, int NormRestDot, int randDuration, int[]frets, TWInstrumentTrack track)
+	{	
+		if(NormRestDot == 0 || NormRestDot == 1 || NormRestDot == 2 || NormRestDot == 3 || NormRestDot == 4 || NormRestDot == 5 || NormRestDot == 6 || NormRestDot == 7)
+			MelodyStepNotes(randMelodyStep, randDuration, frets, track);
+
+		if(randMelodyStep == 0)
+		{
+			if(NormRestDot == 8)
+				RestDurationChoice(randDuration, track);
+		}
+		else
+			return;
+
+		if(NormRestDot == 9 || NormRestDot == 10 || NormRestDot == 11 || NormRestDot == 12)
+			MelodyStepDotted(randMelodyStep, randDuration, frets, track);
+	}
+
+	private static void MelodyStepNotes(int randMelodyStep, int randDuration, int[] frets, TWInstrumentTrack track)
+	{
+		if(randMelodyStep == 0)
+		{
+			NoteDurationChoice(randDuration, 2, frets, track);
+			NoteDurationChoice(randDuration, 3, frets, track);
+			NoteDurationChoice(randDuration, 4, frets, track);
+		}
+		else
+		{
+			NoteDurationChoice(randDuration, 0, frets, track);
+			NoteDurationChoice(randDuration, 1, frets, track);
+			NoteDurationChoice(randDuration, 2, frets, track);
+		}
+	}
+
+	private static void MelodyStepDotted(int randMelodyStep, int randDuration, int[] frets, TWInstrumentTrack track)
+	{
+		if(randMelodyStep == 0)
+		{		
+			DottedDurationChoice(randDuration, 2, frets, track);
+			DottedDurationChoice(randDuration, 3, frets, track);
+		}
+		else
+		{			
+			DottedDurationChoice(randDuration, 1, frets, track);
+			DottedDurationChoice(randDuration, 2, frets, track);
+			DottedDurationChoice(randDuration, 3, frets, track);
+		}
+	}
+
+	private static void NoteDurationChoice(int randDuration, int reqDuration, int[] frets, TWInstrumentTrack track)
+	{
+		for(int i = 0, j = 64; i < 5; i++, j = j/2)
+		{
+			if(randDuration == i && FullBeat >= j)
+				if(reqDuration == randDuration)
+					writeNote(frets, randDuration, track);
+		}
+	}
+
+	private static void DottedDurationChoice(int randDuration, int reqDuration, int[] frets, TWInstrumentTrack track)
+	{
+		for(int i = 1, j = 48; i < 4; i++, j = j/2)
+		{
+			if(randDuration == i && FullBeat >= j)
+				if(reqDuration == randDuration)
+				writeDottedNote(frets, randDuration, track);
+		}
+	}
+
+	private static void RestDurationChoice(int randDuration, TWInstrumentTrack track)
+	{
+		for(int i = 0, j = 64; i < 4; i++, j = j/2)
+		{
+			if(randDuration == i && FullBeat >= j)
+				writeRest(randDuration, track);
+		}
+	}
+
+
+	private static void writeNote(int[] frets, int randomDuration, TWInstrumentTrack track)
+	{
+		int duration[] = {1, 2, 4, 8, 16};
+
+		track.addNoteNew(frets[0], 4, duration[randomDuration]);
+
+		if(randomDuration == 0)
+		{
+			track.getLastNote().setSimpleEffect(TWNoteEffects.VIBRATO, true);
+			FullBeat -= 64;	
+		}
+		if(randomDuration == 1)
+		{
+			track.getLastNote().setSimpleEffect(TWNoteEffects.VIBRATO, true);
+			FullBeat -= 32;	
+		}
+		if(randomDuration == 2)
+			FullBeat -= 16;
+		if(randomDuration == 3)
+			FullBeat -= 8;
+		if(randomDuration == 4)
+			FullBeat -= 4;
+	}
+
+	private static void writeDottedNote(int[] frets, int randomDuration, TWInstrumentTrack track)
+	{
+		int duration[] = {1, 2, 4, 8, 16};
+
+		if(randomDuration == 0 || randomDuration == 4)
+			return;
+
+		track.addNoteNew(frets[0], 4, duration[randomDuration]);
+		track.getLastBeat().setDotted(true);
+
+		if(randomDuration == 1)
+		{
+			FullBeat -= 48;
+			track.getLastNote().setSimpleEffect(TWNoteEffects.VIBRATO, true);
+		}
+		if(randomDuration == 2)
+			FullBeat -= 24;
+		if(randomDuration == 3)
+			FullBeat -= 12;
+	}
+
+	private static void writeRest(int randomDuration, TWInstrumentTrack track)
+	{
+		int duration[] = {1, 2, 4, 8, 16};
+
+		if(randomDuration == 4)
+			return;
+
+		track.addRest(duration[randomDuration]);
+
+		if(randomDuration == 0)
+			FullBeat -= 64;
+		if(randomDuration == 1)
+			FullBeat -= 32;
+		if(randomDuration == 2)
+			FullBeat -= 16;
+		if(randomDuration == 3)
+			FullBeat -= 8;
 	}
 }

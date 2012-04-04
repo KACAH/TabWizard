@@ -24,6 +24,7 @@ public class TWDrums {
 			else
 			{
 				track.addNoteNew(42, 2, 8);
+				
 				if(i == 0)
 					track.addNoteMore(36, 6);
 				if(randBD == 0 || randBD == 1)
@@ -324,7 +325,7 @@ public class TWDrums {
 	{
 		Random rnd = new Random();
 
-		for(int i = 8; i > TactBalance;)
+		for(int i = 8; i > TactBalance; i--)
 		{
 			int randDrumElement = rnd.nextInt(6);
 			int randPause = rnd.nextInt(10);
@@ -332,175 +333,53 @@ public class TWDrums {
 			int randTriplet = rnd.nextInt(6);
 
 			if(randPause == 0)
-			{
 				track.addRest(8);
-				i--;
-			}
 			else
 			{
 				if(randDrumElement == 0)
-				{
-					if(rand16 == 0)
-					{
-						if(randTriplet == 0)
-						{
-							track.addNoteNew(38, 5, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(38, 5, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(38, 5, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							i--;
-						}
-						else
-						{
-							track.addNoteNew(38, 5, 16);
-							track.addNoteNew(38, 5, 16);
-							i--;
-						}
-					}
-					else
-					{
-						track.addNoteNew(38, 5, 8);
-						i--;
-					}
-				}
+					BreakNoteType(rand16, randTriplet, 38, 5, track);
 				if(randDrumElement == 1)
-				{
-					if(rand16 == 0)
-					{
-						if(randTriplet == 0)
-						{
-							track.addNoteNew(43, 4, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(43, 4, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(43, 4, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							i--;
-						}
-						else
-						{
-							track.addNoteNew(43, 4, 16);
-							track.addNoteNew(43, 4, 16);
-							i--;
-						}
-					}
-					else
-					{
-						track.addNoteNew(43, 4, 8);
-						i--;
-					}
-				}
+					BreakNoteType(rand16, randTriplet, 43, 4, track);
 				if(randDrumElement == 2)
-				{
-					if(rand16 == 0)
-					{
-						if(randTriplet == 0)
-						{
-							track.addNoteNew(45, 3, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(45, 3, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(45, 3, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							i--;
-						}
-						else
-						{
-							track.addNoteNew(45, 4, 16);
-							track.addNoteNew(45, 4, 16);
-							i--;
-						}
-					}
-					else
-					{
-						track.addNoteNew(45, 4, 8);
-						i--;
-					}
-				}
+					BreakNoteType(rand16, randTriplet, 45, 4, track);
 				if(randDrumElement == 3)
-				{
-					if(rand16 == 0)
-					{
-						if(randTriplet == 0)
-						{
-							track.addNoteNew(47, 2, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(47, 2, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(47, 2, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							i--;
-						}
-						else
-						{
-							track.addNoteNew(47, 4, 16);
-							track.addNoteNew(47, 4, 16);
-							i--;	
-						}
-					}
-					else
-					{
-						track.addNoteNew(47, 4, 8);
-						i--;
-					}
-				}
+					BreakNoteType(rand16, randTriplet, 47, 4, track);
 				if(randDrumElement == 4)
-				{
-					if(rand16 == 0)
-					{
-						if(randTriplet == 0)
-						{
-							track.addNoteNew(41, 4, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(41, 4, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(41, 4, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							i--;
-						}
-						else
-						{
-							track.addNoteNew(41, 4, 16);
-							track.addNoteNew(41, 4, 16);
-							i--;
-						}
-					}
-					else
-					{
-						track.addNoteNew(41, 4, 8);
-						i--;
-					}
-				}
+					BreakNoteType(rand16, randTriplet, 41, 4, track);
 				if(randDrumElement == 5)
-				{
-					if(rand16 == 0)
-					{
-						if(randTriplet == 0)
-						{
-							track.addNoteNew(36, 6, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(36, 6, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							track.addNoteNew(36, 6, 16);
-							track.getLastBeat().getDuration().setTriplet(true);
-							i--;
-						}
-						else
-						{
-							track.addNoteNew(36, 6, 16);
-							track.addNoteNew(36, 6, 16);
-							i--;
-						}
-					}
-					else
-					{
-						track.addNoteNew(36, 6, 8);
-						i--;
-					}
-				}
+					BreakNoteType(rand16, randTriplet, 36, 6, track);			
 			}
 		}
+	}
+
+	private static void BreakNoteType(int rand16, int randTriplet, int drumElement, int string, TWPercussionTrack track)
+	{
+		if(rand16 == 0)
+			BreakTripletOr16Note(drumElement, string, randTriplet, track);
+		else
+			track.addNoteNew(drumElement, string, 8);
+	}
+
+	private static void BreakTripletOr16Note(int drumElement, int string, int randTriplet, TWPercussionTrack track)
+	{
+		if(randTriplet == 0)
+			addBreakTriplets(drumElement, string, track);
+		else
+			addBreak16Notes(drumElement, string, track);
+	}
+
+	private static void addBreakTriplets(int drumElement, int string, TWPercussionTrack track)
+	{
+		for(int i = 0; i < 3; i++)
+		{
+			track.addNoteNew(drumElement, string, 16);
+			track.getLastBeat().getDuration().setTriplet(true);
+		}
+	}
+
+	private static void addBreak16Notes(int drumElement, int string, TWPercussionTrack track)
+	{
+		for(int i = 0; i < 2; i++)
+			track.addNoteNew(drumElement, string, 16);
 	}
 }

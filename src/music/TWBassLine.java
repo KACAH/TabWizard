@@ -32,27 +32,20 @@ public class TWBassLine {
 			int randPause = rn.nextInt(3);
 			
 			if(randPause == 0)
-			{
 				track.addRest(8);
-			}
 			else
 			{
 				Note = chord.getNote(0);
 				frets = track.getFretsByNoteAndString(Note, 4); 
 				track.addNoteNew(frets[0], 4, 8);
 			}
-
 		}
 	}
 	
 	static public void WriteBassLine(TWChord chord, TWHarmony harmony, TWInstrumentTrack track)
 	{
 		TWScale HarmonyScale = TWScaleManager.constructHarmonyScale(harmony);
-			
 		Random rnd = new Random();
-		
-		TWSimpleNote Note;
-		int[] frets; 
 			
 		for(int i = 0; i < 8; i++)
 		{
@@ -69,25 +62,21 @@ public class TWBassLine {
 					if(i == randPlaceInFirstPart)
 					{
 						PlaceInFirstPart = true;
-						Note = HarmonyScale.getNote(randNoteFromScale);
-						frets = track.getFretsByNoteAndString(Note, 4); 
-					    track.addNoteNew(frets[randNoteOnFret], 4, 8);
-					    
+						
+						BassLineNote(HarmonyScale.getNote(randNoteFromScale), randNoteOnFret, track);				    
 					}
 				}
 				if(!PlaceInFirstPart)
-				{
-					Note = chord.getNote(0);
-					frets = track.getFretsByNoteAndString(Note, 4); 
-					track.addNoteNew(frets[0], 4, 8);
-				}
+					BassLineNote(chord.getNote(0), 0, track);
 			}
 			if(i == 6 || i == 7)
-			{
-				Note = HarmonyScale.getNote(randNoteFromScale);
-				frets = track.getFretsByNoteAndString(Note, 4); 
-			    track.addNoteNew(frets[randNoteOnFret], 4, 8);
-			}
+				BassLineNote(HarmonyScale.getNote(randNoteFromScale), randNoteOnFret, track);
 		}
+	}
+	
+	private static void BassLineNote(TWSimpleNote Note, int randNoteOnFret, TWInstrumentTrack track)
+	{
+		int[] Frets = track.getFretsByNoteAndString(Note, 4);
+		track.addNoteNew(Frets[randNoteOnFret], 4, 8);
 	}
 }
