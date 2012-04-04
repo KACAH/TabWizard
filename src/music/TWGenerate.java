@@ -72,7 +72,7 @@ public class TWGenerate {
 						{
 							for(int l = 0; l < readyTracks.size(); l++)
 							{
-								System.out.println(readyTracks.get(l).getMethod());
+								System.out.println(i + ") " + readyTracks.get(l).getMethod());
 								if(readyTracks.get(l).getMethod() != null)
 								{
 									writeRiffTrack(readyTracks.get(l).getTrack(), readyTracks.get(k).getTrack(), readyTracks.get(l).getMethod(), PlayingMethodsFrame.getSelectedScale());

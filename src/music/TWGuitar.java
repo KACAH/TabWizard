@@ -15,8 +15,6 @@ public class TWGuitar {
 		Random rn = new Random();
 		TWSimpleNote Note;
 
-		int[] frets;
-
 		for(int i = 0; i < 8; i++)
 		{
 			TWSimpleNote BaseNote = chord.getNote(0);
@@ -25,18 +23,17 @@ public class TWGuitar {
 
 			Note = chord.getNote(randNote);
 			if(i == 0)
-			{
-				frets = track.getFretsByNoteAndString(BaseNote, 6);
-				track.addNoteNew(frets[0], 6, 8);
-				track.getLastNote().setSimpleEffect(TWNoteEffects.LETRING, true);
-			}
+				AcousticArpeggioNote(BaseNote, 6, track);
 			else
-			{
-				frets = track.getFretsByNoteAndString(Note, randString);
-				track.addNoteNew(frets[0], randString, 8);
-				track.getLastNote().setSimpleEffect(TWNoteEffects.LETRING, true);
-			}
+				AcousticArpeggioNote(Note, randString, track);
 		}
+	}
+	
+	private static void AcousticArpeggioNote(TWSimpleNote Note, int String, TWInstrumentTrack track)
+	{
+		int[] frets = track.getFretsByNoteAndString(Note, String);
+		track.addNoteNew(frets[0], String, 8);
+		track.getLastNote().setSimpleEffect(TWNoteEffects.LETRING, true);
 	}
 
 	static public void writeSoundWall(TWChord Chord, TWInstrumentTrack track) throws TWDataException
@@ -49,32 +46,21 @@ public class TWGuitar {
 		if(frets[0] < 5)
 		{
 			if(randOctava == 0)
-			{
-				for(int FullBeat = 0; FullBeat < 8; FullBeat++)
-				{
-					track.addNoteNew(frets[0], 6, 8);
-					track.addNoteMore(frets[0] + 2, 5);
-					track.addNoteMore(frets[0] + 2, 4);
-				}
-			}
+				SoundWallMeasure(frets, 0, track);
 			else
-			{
-				for(int FullBeat = 0; FullBeat < 8; FullBeat++)
-				{
-					track.addNoteNew(frets[1], 6, 8);
-					track.addNoteMore(frets[1] + 2, 5);
-					track.addNoteMore(frets[1] + 2, 4);
-				}
-			}
+				SoundWallMeasure(frets, 1, track);
 		}
 		else
+			SoundWallMeasure(frets, 0, track);
+	}
+	
+	private static void SoundWallMeasure(int[] frets, int fretOctava, TWInstrumentTrack track) throws TWDataException
+	{
+		for(int FullBeat = 0; FullBeat < 8; FullBeat++)
 		{
-			for(int FullBeat = 0; FullBeat < 8; FullBeat++)
-			{
-				track.addNoteNew(frets[0], 6, 8);
-				track.addNoteMore(frets[0] + 2, 5);
-				track.addNoteMore(frets[0] + 2, 4);
-			}
+			track.addNoteNew(frets[0], 6, 8);
+			track.addNoteMore(frets[0] + 2, 5);
+			track.addNoteMore(frets[0] + 2, 4);
 		}
 	}
 
@@ -88,62 +74,29 @@ public class TWGuitar {
 		if(frets[0] < 2)
 		{
 			if(randOctava == 0)
-			{
-				for(int FullBeat = 0; FullBeat < 8; FullBeat++)
-				{
-					int randPause = rn.nextInt(4);
-
-					if(randPause == 0)
-					{
-						track.addRest(8);
-					}
-					else
-					{
-						track.addNoteNew(frets[0], 6, 8);
-						track.addNoteMore(frets[0] + 2, 5);
-						track.addNoteMore(frets[0] + 2, 4);
-					}
-				}
-			}
+				PauseSoundWallMeasure(frets, 0, track);
 			else
-			{
-				for(int FullBeat = 0; FullBeat < 8; FullBeat++)
-				{
-					int randPause = rn.nextInt(4);
-
-					if(randPause == 0)
-					{
-						track.addRest(8);
-					}
-					else
-					{
-						track.addNoteNew(frets[1], 6, 8);
-						track.addNoteMore(frets[1] + 2, 5);
-						track.addNoteMore(frets[1] + 2, 4);
-					}
-				}
-			}
+				PauseSoundWallMeasure(frets, 0, track);
 		}
 		else
-		{
-			for(int FullBeat = 0; FullBeat < 8; FullBeat++)
-			{
-				int randPause = rn.nextInt(4);
-
-				if(randPause == 0)
-				{
-					track.addRest(8);
-				}
-				else
-				{
-					track.addNoteNew(frets[0], 6, 8);
-					track.addNoteMore(frets[0] + 2, 5);
-					track.addNoteMore(frets[0] + 2, 4);
-				}
-			}
-		}
+			PauseSoundWallMeasure(frets, 0, track);
 	}
 
+	private static void PauseSoundWallMeasure(int[] frets, int fretOctava, TWInstrumentTrack track) throws TWDataException
+	{
+		Random rn = new Random();
+		
+		for(int FullBeat = 0; FullBeat < 8; FullBeat++)
+		{
+			int randPause = rn.nextInt(4);
+
+			if(randPause == 0)
+				track.addRest(8);
+			else
+				SoundWallPowerBeat(frets, fretOctava, track);
+		}
+	}
+	
 	static public void writeHardSoundWall(TWChord Chord, TWInstrumentTrack track) throws TWDataException
 	{
 		Random rn = new Random();
@@ -154,62 +107,39 @@ public class TWGuitar {
 		if(frets[0] < 2)
 		{
 			if(randOctava == 0)
-			{
-				for(int FullBeat = 0; FullBeat < 8; FullBeat++)
-				{
-					int randPause = rn.nextInt(4);
-
-					if(randPause == 0)
-					{
-						track.addNoteNew(frets[0], 6, 8);
-						track.getLastNote().setSimpleEffect(7, true);
-					}
-					else
-					{
-						track.addNoteNew(frets[0], 6, 8);
-						track.addNoteMore(frets[0] + 2, 5);
-						track.addNoteMore(frets[0] + 2, 4);
-					}
-				}
-			}
+				HardSoundWallMeasure(frets, 0, track);
 			else
-			{
-				for(int FullBeat = 0; FullBeat < 8; FullBeat++)
-				{
-					int randPause = rn.nextInt(4);
-
-					if(randPause == 0)
-					{
-						track.addNoteNew(frets[0], 6, 8);
-						track.getLastNote().setSimpleEffect(7, true);
-					}
-					else
-					{
-						track.addNoteNew(frets[1], 6, 8);
-						track.addNoteMore(frets[1] + 2, 5);
-						track.addNoteMore(frets[1] + 2, 4);
-					}
-				}
-			}
+				HardSoundWallMeasure(frets, 1, track);
 		}
 		else
+			HardSoundWallMeasure(frets, 0, track);
+	}
+	
+	private static void HardSoundWallMeasure(int[] frets, int fretOctava, TWInstrumentTrack track) throws TWDataException
+	{
+		Random rn = new Random();
+		
+		for(int FullBeat = 0; FullBeat < 8; FullBeat++)
 		{
-			for(int FullBeat = 0; FullBeat < 8; FullBeat++)
-			{
-				int randPause = rn.nextInt(4);
+			int randPalm = rn.nextInt(4);
 
-				if(randPause == 0)
-				{
-					track.addNoteNew(frets[0], 6, 8);
-					track.getLastNote().setSimpleEffect(7, true);
-				}
-				else
-				{
-					track.addNoteNew(frets[0], 6, 8);
-					track.addNoteMore(frets[0] + 2, 5);
-					track.addNoteMore(frets[0] + 2, 4);
-				}
-			}
+			if(randPalm == 0)
+				HardSoundWallPalmMuteBeat(frets, track);
+			else
+				SoundWallPowerBeat(frets, fretOctava, track);
 		}
+	}
+	
+	private static void HardSoundWallPalmMuteBeat(int[] frets, TWInstrumentTrack track)
+	{
+		track.addNoteNew(frets[0], 6, 8);
+		track.getLastNote().setSimpleEffect(7, true);
+	}
+	
+	private static void SoundWallPowerBeat(int[] frets, int fretOctava, TWInstrumentTrack track) throws TWDataException
+	{
+		track.addNoteNew(frets[fretOctava], 6, 8);
+		track.addNoteMore(frets[fretOctava] + 2, 5);
+		track.addNoteMore(frets[fretOctava] + 2, 4);
 	}
 }

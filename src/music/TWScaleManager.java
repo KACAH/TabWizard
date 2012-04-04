@@ -139,7 +139,6 @@ public class TWScaleManager {
 				TWSimpleNote Note = TWSimpleNote.noteByName(parts[i+2]);
 				Scale.addSimpleNote(Note);
 			}
-
 			return Scale;
 		}
 		else
