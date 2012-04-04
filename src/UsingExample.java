@@ -21,7 +21,7 @@ public class UsingExample
 				System.out.println(res.get(i).getName());
 			
 			TWSong song = new TWSong(100);	
-			//song.addTrack( new TWTrackHeader( "Rithm", TWDefaults.VOLUME, TWDefaults.BALANCE, 
+			//song.addTrack( new TWTrackHeader( "Rhythm", TWDefaults.VOLUME, TWDefaults.BALANCE, 
 			//		new TWColor(12,123,32), new TWStringsTunning(TWStringsTunning.STANDARD), TWInstruments.DISTORTION_GUITAR) );
 			song.addTrack( new TWTrackHeader( "Rithm", TWInstruments.DISTORTION_GUITAR) );
 			song.addTrack( new TWTrackHeader( "Lead", TWInstruments.DISTORTION_GUITAR) );

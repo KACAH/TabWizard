@@ -60,17 +60,17 @@ public class PlayingMethodsFrame extends JFrame{
 
 	private JTextField FragmentName = new JTextField();
 
-	private String[] DrumMethods = {"Simple Drums (slow)", "Simple Drums (middle)",
-			"Simple Drums (fast)", "Double Hat Drums (slow)",
-			"Double Hat Drums (middle)", "Double Bass Drums (middle)", 
-			"Double Bass Drums(fast)", "Open Hat Drums (slow)", "Open Hat Drums (middle)"};
+	public static String[] DrumMethods = {"Simple Drums (slow)", "Simple Drums (middle)",
+		"Simple Drums (fast)", "Double Hat Drums (slow)",
+		"Double Hat Drums (middle)", "Double Bass Drums (middle)", 
+		"Double Bass Drums(fast)", "Open Hat Drums (slow)", "Open Hat Drums (middle)", "Nothing"};
 
-	private String[] BassMethods = {"Simple Bass Line", "Pause Bass Line", "Bass Line"};
+	public static String[] BassMethods = {"Simple Bass Line", "Pause Bass Line", "Bass Line", "Nothing"};
 
-	private String[] HarmonyMethods = {"Acoustic Arpeggio", "Sound Wall", "Pause Sound Wall",
-			"Hard Sound Wall", "Harmony", "Simple Melody"};
+	public static String[] HarmonyMethods = {"Acoustic Arpeggio", "Sound Wall", "Pause Sound Wall",
+		"Hard Sound Wall", "Harmony", "Simple Melody", "Nothing"};
 
-	private String[] RiffMethods = {"Simple Riff", "Simple Power Riff", "Power Riff"};
+	public static String[] RiffMethods = {"Simple Riff", "Simple Power Riff", "Power Riff"};
 
 	public PlayingMethodsFrame() throws IOException
 	{
@@ -114,9 +114,7 @@ public class PlayingMethodsFrame extends JFrame{
 						String TrackName = list.getSelectedValue().split("\\) ")[1].split(",")[0];
 
 						if(TrackName.equals(TWGenerate.readyTracks.get(i).getHeaderName()))
-						{
 							TWGenerate.readyTracks.get(i).setMethod(methods.getSelectedItem().toString());
-						}
 
 						if(list.getSelectedValue().split(": ")[1].equals("Drums"))
 							TWGenerate.readyPercussionTrack.setMethod(methods.getSelectedItem().toString());
@@ -127,16 +125,17 @@ public class PlayingMethodsFrame extends JFrame{
 
 					if(methods.getSelectedItem().toString().split(" ")[count-1].equals("Riff"))
 					{			
-						for(int i = 0; i < Main.newtrackframe.TracklistModel.getSize(); i++)
+						for(int i = 0; i < Main.newtrackframe.TracklistModel.getSize();)
 						{
 							if(!Main.newtrackframe.TracklistModel.get(i).split(": ")[1].split("; ")[0].equals("Drums") )
 							{
 								if(!Main.newtrackframe.TracklistModel.get(i).equals(Main.newtrackframe.TracklistModel.get(list.getSelectedIndex())))
-								{
 									Main.newtrackframe.TracklistModel.remove(i);
-									i = 0;
-								}
+								else
+									i++;
 							}
+							else
+								i++;
 						}
 						JOptionPane.showMessageDialog(null, "Only one track can use riff method");
 					}
@@ -280,7 +279,7 @@ public class PlayingMethodsFrame extends JFrame{
 
 				try {
 
-					TWGenerate.createSongPart(name);
+					TWGenerate.createParamSongPart(name);
 
 				} catch (TWDataException e1) {
 					e1.printStackTrace();

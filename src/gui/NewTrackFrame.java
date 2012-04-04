@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -115,12 +116,14 @@ public class NewTrackFrame extends JFrame {
 				else
 				{
 					String name = SimpleTrackName.getText();
-					int volume = (Integer) SimpleTrackVolume.getValue()*16-1;
+					int volume = (Integer) SimpleTrackVolume.getValue()*8-1;
 					int balance = Balance.getValue()*8+64;
 					String tuning = (String) Tuning.getSelectedItem();
-					String instrument = (String) instruments.getSelectedItem();
+					
+					String instr = (String) instruments.getSelectedItem();
+					int instrument = instruments.getSelectedIndex()+1;
 
-					String ListElem = TracklistModel.size()+1 + ") " + name + ", " + tuning + " tuning,  instrument: " + instrument;
+					String ListElem = TracklistModel.size()+1 + ") " + name + ", " + tuning + " tuning,  instrument: " + instr;
 
 					if(TracklistModel.size() != 0)
 					{
@@ -149,18 +152,24 @@ public class NewTrackFrame extends JFrame {
 		return addNewSimpleTrack;
 	}
 
-	private void addTrackHeader(String name, int volume, int balance, String tuning, String instrument)
+	private void addTrackHeader(String name, int volume, int balance, String tuning, int instrument)
 	{
 		if(tuning.equals("Standart"))
 		{
-			TWTrackHeader header = new TWTrackHeader(name, (short)volume, (short)balance, new TWColor(12,123,32), new TWStringsTunning(TWStringsTunning.STANDARD), (short)instruments.getSelectedIndex());
+			Random rnd = new Random();
+			
+			int rndR = rnd.nextInt(255);
+			int rndG = rnd.nextInt(255);
+			int rndB = rnd.nextInt(255);
+			
+			TWTrackHeader header = new TWTrackHeader(name, (short)volume, (short)balance, new TWColor(rndR,rndG,rndB), new TWStringsTunning(TWStringsTunning.STANDARD), (short)instrument);
 			ReadyTrackFragmentForWrite newTr = new ReadyTrackFragmentForWrite();
 			newTr.setTrackHeader(header);
 			TWGenerate.readyTracks.add(newTr);
 		}
 		if(tuning.equals("Bass"))
 		{
-			TWTrackHeader header = new TWTrackHeader(name, (short)volume, (short)balance, new TWColor(12,123,32), new TWStringsTunning(TWStringsTunning.BASS), (short)instruments.getSelectedIndex());
+			TWTrackHeader header = new TWTrackHeader(name, (short)volume, (short)balance, new TWColor(12,123,32), new TWStringsTunning(TWStringsTunning.BASS), (short)instrument);
 			ReadyTrackFragmentForWrite newTr = new ReadyTrackFragmentForWrite();
 			newTr.setTrackHeader(header);
 			TWGenerate.readyTracks.add(newTr);

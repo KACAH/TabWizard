@@ -31,6 +31,7 @@ public class RoundButton extends JButton {
 
         super.paintComponent(g);
     }
+    
     protected void paintBorder(Graphics g) {
         g.setColor(getForeground());
         g.drawOval(0, 0, getSize().width - 1,
