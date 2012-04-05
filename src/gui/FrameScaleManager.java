@@ -74,12 +74,8 @@ public class FrameScaleManager extends JFrame
 				int temp = JOptionPane.showConfirmDialog(null, "Are you sure?" , "Confirm" , JOptionPane.YES_NO_OPTION);
 				if (temp == 0)
 				{
-					//Main.scalemanager.dispose();
 					try {
 						TWScaleManager.deleteScaleFromList("data//Scales.twd", scales.getSelectedItem().toString());
-
-						//FrameScaleManager scalemanager = new FrameScaleManager();
-						//scalemanager.setVisible(true);
 						refreshScales();
 
 					} catch (IOException e) {
@@ -129,7 +125,6 @@ public class FrameScaleManager extends JFrame
 				}
 			}
 		});
-
 		return showScale;
 	}
 
@@ -144,7 +139,7 @@ public class FrameScaleManager extends JFrame
 		refreshScales();
 		return scales;
 	}
-	
+
 	private void refreshScales()
 	{
 		scales.removeAllItems();
@@ -173,7 +168,6 @@ public class FrameScaleManager extends JFrame
 	private void init()
 	{
 		TWScaleManager.loadScales("data//Scales.twd");
-
 		this.setResizable(false);
 
 		this.addWindowListener(new WindowAdapter()

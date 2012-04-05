@@ -10,6 +10,12 @@ import datastruct.TWSimpleNote;
 
 public class TWGuitar {
 
+	/**
+	 * Writes Arpeggio to the track
+	 * @param chord chord, which notes are using to write an arpeggio
+	 * @param track track on which we write an arpeggio
+	 * @throws TWDataException
+	 */
 	static public void AcousticArpeggio(TWChord chord, TWInstrumentTrack track)throws TWDataException
 	{
 		Random rn = new Random();
@@ -29,6 +35,12 @@ public class TWGuitar {
 		}
 	}
 	
+	/**
+	 * Writes Arpeggio note to the track
+	 * @param Note that writes on track
+	 * @param String guitar string on which will be writes note
+	 * @param track track on which we write an arpeggio
+	 */
 	private static void AcousticArpeggioNote(TWSimpleNote Note, int String, TWInstrumentTrack track)
 	{
 		int[] frets = track.getFretsByNoteAndString(Note, String);
@@ -36,6 +48,12 @@ public class TWGuitar {
 		track.getLastNote().setSimpleEffect(TWNoteEffects.LETRING, true);
 	}
 
+	/**
+	 * Writes Sound wall to the track
+	 * @param Chord chord, which notes are using to write an arpeggio
+	 * @param track track on which we write an arpeggio
+	 * @throws TWDataException
+	 */
 	static public void writeSoundWall(TWChord Chord, TWInstrumentTrack track) throws TWDataException
 	{
 		Random rn = new Random();
@@ -54,16 +72,28 @@ public class TWGuitar {
 			SoundWallMeasure(frets, 0, track);
 	}
 	
-	private static void SoundWallMeasure(int[] frets, int fretOctava, TWInstrumentTrack track) throws TWDataException
+	/**
+	 * Writes Sound Wall notes to the measure on track
+	 * @param frets frets on guitar neck
+	 * @param FretOcatave choice of note with a difference of one octave 
+	 * @param track track on which we write an arpeggio
+	 */
+	private static void SoundWallMeasure(int[] frets, int fretOctave, TWInstrumentTrack track) throws TWDataException
 	{
 		for(int FullBeat = 0; FullBeat < 8; FullBeat++)
 		{
-			track.addNoteNew(frets[0], 6, 8);
-			track.addNoteMore(frets[0] + 2, 5);
-			track.addNoteMore(frets[0] + 2, 4);
+			track.addNoteNew(frets[fretOctave], 6, 8);
+			track.addNoteMore(frets[fretOctave] + 2, 5);
+			track.addNoteMore(frets[fretOctave] + 2, 4);
 		}
 	}
-
+	
+	/**
+	 * Writes Sound Wall with pauses to the track
+	 * @param chord chord, which notes are using to write an arpeggio
+	 * @param track track on which we write an arpeggio
+	 * @throws TWDataException
+	 */
 	static public void writePauseSoundWall(TWChord Chord, TWInstrumentTrack track) throws TWDataException
 	{
 		Random rn = new Random();
@@ -82,6 +112,12 @@ public class TWGuitar {
 			PauseSoundWallMeasure(frets, 0, track);
 	}
 
+	/**
+	 * Writes Sound Wall with pauses note to the track
+	 * @param frets frets on guitar neck
+	 * @param FretOcatave choice of note with a difference of one octave 
+	 * @param track track on which we write an arpeggio
+	 */
 	private static void PauseSoundWallMeasure(int[] frets, int fretOctava, TWInstrumentTrack track) throws TWDataException
 	{
 		Random rn = new Random();
@@ -96,7 +132,12 @@ public class TWGuitar {
 				SoundWallPowerBeat(frets, fretOctava, track);
 		}
 	}
-	
+	/**
+	 * Writes Hard Sound Wall to the track
+	 * @param chord chord, which notes are using to write an arpeggio
+	 * @param track track on which we write an arpeggio
+	 * @throws TWDataException
+	 */
 	static public void writeHardSoundWall(TWChord Chord, TWInstrumentTrack track) throws TWDataException
 	{
 		Random rn = new Random();
@@ -115,6 +156,12 @@ public class TWGuitar {
 			HardSoundWallMeasure(frets, 0, track);
 	}
 	
+	/**
+	 * Writes Hard Sound Wall notes to the measure on track
+	 * @param frets frets on guitar neck
+	 * @param FretOcatave choice of note with a difference of one octave 
+	 * @param track track on which we write an arpeggio
+	 */
 	private static void HardSoundWallMeasure(int[] frets, int fretOctava, TWInstrumentTrack track) throws TWDataException
 	{
 		Random rn = new Random();
@@ -130,12 +177,23 @@ public class TWGuitar {
 		}
 	}
 	
+	/**
+	 * Writes Sound Wall beat with palm mute effect on track
+	 * @param frets frets on guitar neck
+	 * @param track track on which we write an arpeggio
+	 */
 	private static void HardSoundWallPalmMuteBeat(int[] frets, TWInstrumentTrack track)
 	{
 		track.addNoteNew(frets[0], 6, 8);
 		track.getLastNote().setSimpleEffect(7, true);
 	}
 	
+	/**
+	 * Writes Sound Wall quint to the track
+	 * @param frets frets on guitar neck
+	 * @param FretOcatave choice of note with a difference of one octave 
+	 * @param track track on which we write an arpeggio
+	 */
 	private static void SoundWallPowerBeat(int[] frets, int fretOctava, TWInstrumentTrack track) throws TWDataException
 	{
 		track.addNoteNew(frets[fretOctava], 6, 8);

@@ -195,8 +195,6 @@ public class FrameCreateScale extends JFrame
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-	
-					
 					text.setText("");
 				}
 			}

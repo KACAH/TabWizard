@@ -88,22 +88,22 @@ public class Main
 			}
 			
 			
-			//TWSongPart part2 = song.createSongPart("Test2");
-			//track3 = part2.getInstrumentTrack(2);
-			//track5 = part2.getInstrumentTrack(4);
-			//track6 = part2.getPercussionTrack();
+			TWSongPart part2 = song.createSongPart("Test2");
+			track3 = part2.getInstrumentTrack(2);
+			track5 = part2.getInstrumentTrack(4);
+			track6 = part2.getPercussionTrack();
 			
 
 
-			//for(int i = 0; i < 4; i++)
-			//{
-			//	TWRiffs.writeSimpleRiff(TWScaleManager.getScaleByName("Blues Minor Scale"), track5, track3);
-			//	TWDrums.WriteOpenHatDrums_1_5(track6);
-			//}
+			for(int i = 0; i < 4; i++)
+			{
+				TWRiffs.writePowerRiff(TWScaleManager.getScaleByName("Blues Minor Scale"), track5, track3);
+				TWDrums.WriteOpenHatDrums_1_5(track6);
+			}
 			
 			
 			song.addSongPart(part, 0);
-			//song.addSongPart(part2, 1);
+			song.addSongPart(part2, 1);
 			//song.addSongPart(part, 2);
 
 			GP5Saver writer = new GP5Saver();

@@ -29,7 +29,7 @@ public class TWGenerate {
 
 	public static ArrayList<TWSongPart> parts = new ArrayList<TWSongPart>();
 
-	public static TWPercussionTrack PercTrack;/////////////////////
+	public static TWPercussionTrack PercTrack;
 
 	public static TWSongPart newPart;
 
@@ -102,15 +102,9 @@ public class TWGenerate {
 	{
 		for(int i = 0; i < NewTrackFrame.song.getParts().size(); i++)
 			NewTrackFrame.song.removeSongPart(i);
-		
+
 		for(int i = 0; i < parts.size(); i++)
 			NewTrackFrame.song.addSongPart(parts.get(i), i);
-		
-		//for (int i = 0; i < song.getParts().size(); i++) 
-		//	song.removeSongPart(i);
-
-		//for(int i = 0; i < parts.size(); i++)
-		//	song.addSongPart(parts.get(i), i);
 
 		GP5Saver writer = new GP5Saver();
 		writer.saveSong(NewTrackFrame.song, name + ".gp5");
@@ -130,7 +124,6 @@ public class TWGenerate {
 		int rndB;
 
 		int rndInstr;
-
 
 		ArrayList<ReadyTrackFragmentForWrite> readyTracks = new ArrayList<ReadyTrackFragmentForWrite>();
 
@@ -262,7 +255,15 @@ public class TWGenerate {
 		writer.saveSong(song, name + ".gp5");
 		Desktop.getDesktop().open(new File(name + ".gp5"));
 	}
-	
+
+	/**
+	 * Writes Harmony methods on track
+	 * @param track track on which we write a method
+	 * @param method Method name
+	 * @param Harmony harmony that used to write methods on track
+	 * @param randChord, random integer, that choose chord from harmony
+	 * @throws TWDataException
+	 */
 
 	private static void writeHarmonyTrack(TWInstrumentTrack track, String method, TWHarmony Harmony, int randChord) throws TWDataException
 	{
@@ -280,6 +281,14 @@ public class TWGenerate {
 			TWMelody.WriteSimpleMelody(Harmony, Harmony.getChord(randChord), track);		
 	}
 
+	/**
+	 * Writes riff methods on track
+	 * @param track track on which we write an method
+	 * @param bassTrack bass track on which we write a method
+	 * @param method Method name
+	 * @param scale Scale that uses in Riff methods
+	 * @throws TWDataException
+	 */
 	private static void writeRiffTrack(TWInstrumentTrack track, TWInstrumentTrack bassTrack, String method, String scale) throws TWDataException
 	{
 		if(method.equals("Simple Riff"))
@@ -290,6 +299,14 @@ public class TWGenerate {
 			TWRiffs.writePowerRiff(TWScaleManager.getScaleByName(scale), track, bassTrack);
 	}
 
+	/**
+	 * Writes bass methods on track
+	 * @param bassTrack bass track on which we write a method
+	 * @param method Method name
+	 * @param Harmony harmony that used to write methods on track
+	 * @param randChord, random integer, that choose chord from harmony
+	 * @throws TWDataException
+	 */
 	private static void writeBassTrack(TWInstrumentTrack bassTrack, String method, TWHarmony Harmony, int randChord) throws TWDataException
 	{
 		if(method.equals("Simple Bass Line"))
@@ -300,6 +317,12 @@ public class TWGenerate {
 			TWBassLine.WriteBassLine(Harmony.getChord(randChord), Harmony, bassTrack);
 	}
 
+	/**
+	 * Writes Drum methods on track
+	 * @param track Percussion track on which we write a method
+	 * @param method Method name
+	 * @throws TWDataException
+	 */
 	private static void writeDrumTrack(TWPercussionTrack track, String method) throws TWDataException
 	{
 		if(method.equals("Simple Drums (slow)"))

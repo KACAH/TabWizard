@@ -11,6 +11,12 @@ public class TWMelody {
 	static int FullBeat;
 	static boolean is16 = false;
 
+	/**
+	 * Writes a simple melody to the track
+	 * @param harmony harmony that is used to write melody
+	 * @param chord current chord, which notes are used to write melody
+	 * @param track track on which we write a melody
+	 */
 	static public void WriteSimpleMelody (TWHarmony harmony, TWChord chord, TWInstrumentTrack track)
 	{
 		TWScale HarmonyScale = TWScaleManager.constructHarmonyScale(harmony);
@@ -39,12 +45,25 @@ public class TWMelody {
 			{	
 				if(randMelodyStep == 0)
 					writeMelodyStep(HarmonyScale, chord, randBaseNote, randScaleNote, randMelodyStep, NormRestDot, randDuration, frets, track);
+				
 				else
 					writeMelodyStep(HarmonyScale, chord, randBaseNote, randScaleNote, randMelodyStep, NormRestDot, randDuration, frets, track);
 			}
 		}
 	}
 
+	/**
+	 * The choice between the notes from the chord or from scale
+	 * @param HarmonyScale scale that is used to write melody
+	 * @param chord current chord, which notes are used to write melody
+	 * @param randBaseNote random integer, which chooses note from chord
+	 * @param randScaleNote random integer, which chooses note from scale
+	 * @param randMelodyStep random integer, which chooses note from chord, or from scale
+	 * @param NormRestDot random integer, which chooses note type (Normal, dotted, or rest)
+	 * @param randDuration random integer, which chooses note duration
+	 * @param frets frets on guitar neck
+	 * @param track track on which we write a melody
+	 */
 	private static void writeMelodyStep(TWScale HarmonyScale, TWChord chord, int randBaseNote, int randScaleNote, int randMelodyStep, int NormRestDot, int randDuration, int[] frets, TWInstrumentTrack track)
 	{
 		for(int i = 0; i < HarmonyScale.ScaleSize(); i++)
@@ -59,7 +78,7 @@ public class TWMelody {
 			}
 			else
 			{
-				if(TWScaleManager.getNotesIndexFromScale(HarmonyScale, chord)[randBaseNote]  == i && FullBeat >= 0)
+				if(TWScaleManager.getNotesIndexFromScale(HarmonyScale, chord)[randBaseNote] == i && FullBeat >= 0)
 				{
 					frets = track.getFretsByNoteAndString(HarmonyScale.getNote(i), 4);
 					setNormalDottedOrRest(randMelodyStep, NormRestDot, randDuration, frets, track);
@@ -68,6 +87,14 @@ public class TWMelody {
 		}
 	}
 	
+	/**
+	 * Sets note type (Normal, dotted, or rest)
+	 * @param randMelodyStep random integer, which chooses note from chord, or from scale
+	 * @param NormRestDot random integer, which chooses note type (Normal, dotted, or rest)
+	 * @param randDuration random integer, which chooses note duration
+	 * @param frets frets on guitar neck
+	 * @param track track on which we write a melody
+	 */
 	private static void setNormalDottedOrRest(int randMelodyStep, int NormRestDot, int randDuration, int[]frets, TWInstrumentTrack track)
 	{	
 		if(NormRestDot == 0 || NormRestDot == 1 || NormRestDot == 2 || NormRestDot == 3 || NormRestDot == 4 || NormRestDot == 5 || NormRestDot == 6 || NormRestDot == 7)
@@ -85,6 +112,13 @@ public class TWMelody {
 			MelodyStepDotted(randMelodyStep, randDuration, frets, track);
 	}
 
+	/**
+	 * Note duration choice for melody step
+	 * @param randMelodyStep random integer, which chooses note from chord, or from scale
+	 * @param randDuration random integer, which chooses note duration
+	 * @param frets frets on guitar neck
+	 * @param track track on which we write a melody
+	 */
 	private static void MelodyStepNotes(int randMelodyStep, int randDuration, int[] frets, TWInstrumentTrack track)
 	{
 		if(randMelodyStep == 0)
@@ -101,6 +135,13 @@ public class TWMelody {
 		}
 	}
 
+	/**
+	 * Dotted note duration choice for melody step
+	 * @param randMelodyStep random integer, which chooses note from chord, or from scale
+	 * @param randDuration random integer, which chooses note duration
+	 * @param frets frets on guitar neck
+	 * @param track track on which we write a melody
+	 */
 	private static void MelodyStepDotted(int randMelodyStep, int randDuration, int[] frets, TWInstrumentTrack track)
 	{
 		if(randMelodyStep == 0)
@@ -116,6 +157,13 @@ public class TWMelody {
 		}
 	}
 
+	/**
+	 * Note duration choice
+	 * @param randDuration random integer, which chooses note duration
+	 * @param reqDuration required duration
+	 * @param frets frets on guitar neck
+	 * @param track track on which we write a melody
+	 */
 	private static void NoteDurationChoice(int randDuration, int reqDuration, int[] frets, TWInstrumentTrack track)
 	{
 		for(int i = 0, j = 64; i < 5; i++, j = j/2)
@@ -125,7 +173,14 @@ public class TWMelody {
 					writeNote(frets, randDuration, track);
 		}
 	}
-
+	
+	/**
+	 * Dotted note duration choice
+	 * @param randDuration random integer, which chooses note duration
+	 * @param reqDuration required duration
+	 * @param frets frets on guitar neck
+	 * @param track track on which we write a melody
+	 */
 	private static void DottedDurationChoice(int randDuration, int reqDuration, int[] frets, TWInstrumentTrack track)
 	{
 		for(int i = 1, j = 48; i < 4; i++, j = j/2)
@@ -136,6 +191,11 @@ public class TWMelody {
 		}
 	}
 
+	/**
+	 * Rest duration choice
+	 * @param randDuration random integer, which chooses note duration
+	 * @param track track on which we write a melody
+	 */
 	private static void RestDurationChoice(int randDuration, TWInstrumentTrack track)
 	{
 		for(int i = 0, j = 64; i < 4; i++, j = j/2)
@@ -145,7 +205,12 @@ public class TWMelody {
 		}
 	}
 
-
+	/**
+	 * Write note on track
+	 * @param frets frets on guitar neck
+	 * @param randDuration random integer, which chooses note duration
+	 * @param track track on which we write a melody
+	 */
 	private static void writeNote(int[] frets, int randomDuration, TWInstrumentTrack track)
 	{
 		int duration[] = {1, 2, 4, 8, 16};
@@ -170,6 +235,12 @@ public class TWMelody {
 			FullBeat -= 4;
 	}
 
+	/**
+	 * Write dotted note on track
+	 * @param frets frets on guitar neck
+	 * @param randDuration random integer, which chooses note duration
+	 * @param track track on which we write a melody
+	 */
 	private static void writeDottedNote(int[] frets, int randomDuration, TWInstrumentTrack track)
 	{
 		int duration[] = {1, 2, 4, 8, 16};
@@ -191,6 +262,11 @@ public class TWMelody {
 			FullBeat -= 12;
 	}
 
+	/**
+	 * Write rest on track
+	 * @param randDuration random integer, which chooses note duration
+	 * @param track track on which we write a melody
+	 */
 	private static void writeRest(int randomDuration, TWInstrumentTrack track)
 	{
 		int duration[] = {1, 2, 4, 8, 16};
