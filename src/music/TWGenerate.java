@@ -50,7 +50,7 @@ public class TWGenerate {
 			readyTracks.get(i).setInstrumentTrack(newPart.getInstrumentTrack(i));
 
 		readyPercussionTrack.setPercussionTrack(newPart.getPercussionTrack());
-	
+
 		for(int i = 0; i < MeasureCount; i++)
 		{
 			int randChord = rn.nextInt(6);
@@ -62,25 +62,24 @@ public class TWGenerate {
 					writeHarmonyTrack(readyTracks.get(j).getTrack(), readyTracks.get(j).getMethod(), Harmony, randChord);
 					writeBassTrack(readyTracks.get(j).getTrack(), readyTracks.get(j).getMethod(), Harmony, randChord);
 				}
-				
+
 				if(Main.fragmenttypeframe.isRiffFragment())
 				{
 					for(int k = 0; k < readyTracks.size(); k++)	
-					{
 						if(readyTracks.get(k).getTuning().getNumStringsUsed() == 4)
 						{					
-							for(int l = 0; l < readyTracks.size(); l++)
-							{							
+							for(int l = 0; l < readyTracks.size(); l++)						
 								if(!readyTracks.get(l).getMethod().equals(""))
 								{
-									writeRiffTrack(readyTracks.get(l).getTrack(), readyTracks.get(k).getTrack(), readyTracks.get(l).getMethod(), PlayingMethodsFrame.getSelectedScale());
+									writeRiffTrack(readyTracks.get(l).getTrack(), 
+											readyTracks.get(k).getTrack(), 
+											readyTracks.get(l).getMethod(), 
+											PlayingMethodsFrame.getSelectedScale());
 									RiffIsWritten = true;
 									break;
 								}
-							}
 							break;
 						}
-					}
 				}
 				if(RiffIsWritten)
 					break;
@@ -96,7 +95,7 @@ public class TWGenerate {
 	}
 
 
-	static public void GenerateNewSong(String name, ArrayList<TWSongPart> parts) throws TWDataException, FileNotFoundException, IOException
+	static public void GenerateNewParamSong(String name, ArrayList<TWSongPart> parts) throws TWDataException, FileNotFoundException, IOException
 	{
 		for(int i = 0; i < NewTrackFrame.song.getParts().size(); i++)
 			NewTrackFrame.song.removeSongPart(i);
@@ -112,34 +111,23 @@ public class TWGenerate {
 	static public void Generate(int Tempo, String scale) throws TWDataException, FileNotFoundException, IOException
 	{	
 		Random rnd = new Random();
-
 		int rndTrackCount = rnd.nextInt(5)+3;
-		int rndVolume;
-		int rndBalance;
-
-		int rndR;
-		int rndG;
-		int rndB;
-
-		int rndInstr;
 
 		ArrayList<ReadyTrackFragmentForWrite> readyTracks = new ArrayList<ReadyTrackFragmentForWrite>();
 
 		TWSong Song = new TWSong(Tempo);
-
-
 		ArrayList<TWSongPart> SongParts = new ArrayList<TWSongPart>();
 
 		for(int i = 0; i < rndTrackCount; i++)
 		{
-			rndVolume = (rnd.nextInt(6)+10)*8-1;
-			rndBalance = rnd.nextInt(64);
+			int rndVolume = (rnd.nextInt(6)+10)*8-1;
+			int rndBalance = rnd.nextInt(128);
 
-			rndR = rnd.nextInt(255);
-			rndG = rnd.nextInt(255);
-			rndB = rnd.nextInt(255);
+			int rndR = rnd.nextInt(255);
+			int rndG = rnd.nextInt(255);
+			int rndB = rnd.nextInt(255);
 
-			rndInstr = rnd.nextInt(127);
+			int rndInstr = rnd.nextInt(127);
 
 			if(i == rndTrackCount-1)
 			{
@@ -181,7 +169,6 @@ public class TWGenerate {
 		//////////////////////////////////////////////////////////////
 
 		int rndPartCount = rnd.nextInt(9)+3;
-		int rndChord = rnd.nextInt(6);
 
 		for(int i = 0; i < rndPartCount; i++)
 		{
@@ -190,28 +177,31 @@ public class TWGenerate {
 			int[] MeasureCountVar = {2, 4, 8, 16};
 			int rndMeasureCount = rnd.nextInt(MeasureCountVar.length);
 
-			int rndHarmonyMethod = rnd.nextInt(PlayingMethodsFrame.HarmonyMethods.length);
 			int rndBassMethod = rnd.nextInt(PlayingMethodsFrame.BassMethods.length);
 			int rndRiffMethod = rnd.nextInt(PlayingMethodsFrame.RiffMethods.length);
 			int rndDrumMethod = rnd.nextInt(PlayingMethodsFrame.DrumMethods.length);
+		
+			
+			for(int k = 0; k < readyTracks.size(); k++)
+			{
+				int rndHarmonyMethod = rnd.nextInt(PlayingMethodsFrame.HarmonyMethods.length);
+
+				if(!readyTracks.get(k).getHeaderName().equals("Bass"))
+					readyTracks.get(k).setMethod(PlayingMethodsFrame.HarmonyMethods[rndHarmonyMethod]);
+			}
 
 			for(int j = 0; j < MeasureCountVar[rndMeasureCount]; j++)
 			{
+				int rndChord = rnd.nextInt(6);
+				
 				if(rndHarmonyOrRiff == 0)
 				{
-					boolean HarmonyIsWritten = false;
 					for(int k = 0; k < readyTracks.size(); k++)
 					{
-						if(!HarmonyIsWritten)
-						{
-							readyTracks.get(k).setMethod(PlayingMethodsFrame.HarmonyMethods[rndHarmonyMethod]);
+						if(!readyTracks.get(k).getHeaderName().equals("Bass"))
 							writeHarmonyTrack(readyTracks.get(k).getTrack(), readyTracks.get(k).getMethod(), newHar, rndChord);
-							HarmonyIsWritten = true;
-						}
-						if(readyTracks.get(k).getHeaderName().equals("Bass"))
-						{
+						else
 							writeBassTrack(readyTracks.get(k).getTrack(), PlayingMethodsFrame.BassMethods[rndBassMethod], newHar, rndChord);
-						}	
 					}
 				}
 				else
@@ -241,6 +231,7 @@ public class TWGenerate {
 		GenerateSuggSong(Song, "Song", SongParts);
 	}
 
+
 	private static void GenerateSuggSong(TWSong song, String name, ArrayList<TWSongPart> parts) throws TWDataException, FileNotFoundException, IOException
 	{	
 		for (int i = 0; i < song.getParts().size(); i++) 
@@ -262,7 +253,6 @@ public class TWGenerate {
 	 * @param randChord, random integer, that choose chord from harmony
 	 * @throws TWDataException
 	 */
-
 	private static void writeHarmonyTrack(TWInstrumentTrack track, String method, TWHarmony Harmony, int randChord) throws TWDataException
 	{
 		if(method.equals("Acoustic Arpeggio"))
