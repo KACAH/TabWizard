@@ -114,10 +114,18 @@ public class FragmentTypeFrame extends JFrame{
 		});
 	}
 
+	/**
+	 * Is selected riff generating
+	 * @return if radio button "riff" is selected
+	 */
 	public boolean isRiffFragment(){
 		return Riff.isSelected();
 	}
-
+	
+	/**
+	 * Is selected harmony generating
+	 * @return if radio button "harmony" is selected
+	 */
 	public boolean isHarmonyFragment(){
 		return Harmony.isSelected();
 	}

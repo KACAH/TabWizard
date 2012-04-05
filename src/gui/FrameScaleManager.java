@@ -158,7 +158,7 @@ public class FrameScaleManager extends JFrame
 		return NotesGer;
 	}
 
-	public JTextField ScaleNotesIt()
+	private JTextField ScaleNotesIt()
 	{
 		NotesIt.setBounds(170, 60, 120, 30);
 		NotesIt.setEditable(false);

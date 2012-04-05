@@ -125,13 +125,13 @@ public class FrameCreateScale extends JFrame
 		return newCheck;
 	}
 
-	public JTextField ScaleName()
+	private JTextField ScaleName()
 	{
 		text.setBounds(140, 20, 120, 30);
 		return text;
 	}
 
-	public static TWScale createNewScale()
+	private static TWScale createNewScale()
 	{
 		TWScaleManager.loadScales("data//Scales.twd");
 		String name = "";

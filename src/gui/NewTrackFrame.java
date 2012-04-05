@@ -453,14 +453,26 @@ public class NewTrackFrame extends JFrame {
 		return LabelPercTrack;
 	}
 
+	/**
+	 * Get song tempo
+	 * @return song tempo from Spinner
+	 */
 	public int getTempo(){
 		return (Integer) Tempo.getValue();
 	}
 
+	/**
+	 * Get track name
+	 * @return track name from text field
+	 */
 	public String getSimpleTrackName(){
 		return SimpleTrackName.getText();
 	}
 	
+	/**
+	 * Get song name
+	 * @return song name from text field 
+	 */
 	public String getSongName(){
 		return SongName.getText();
 	}

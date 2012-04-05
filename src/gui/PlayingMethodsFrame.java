@@ -258,7 +258,7 @@ public class PlayingMethodsFrame extends JFrame{
 		return back;
 	}
 
-	public void closeWindow()
+	private void closeWindow()
 	{
 		this.setVisible(false);
 	}
@@ -273,6 +273,10 @@ public class PlayingMethodsFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				//for (int j = 0; j < TWGenerate.readyTracks.size(); j++)
+				//	System.out.println(j + ") " + TWGenerate.readyTracks.get(j).getMethod() + " Njaaam");
+				
+				
 				String name = JOptionPane.showInputDialog(null, "Enter a song part name", "Enter name", JOptionPane.QUESTION_MESSAGE);
 				FragmentName.setText(name);
 
@@ -426,6 +430,10 @@ public class PlayingMethodsFrame extends JFrame{
 		return 	setMesCount;
 	}
 
+	/**
+	 * Get selected scale from list
+	 * @return selected item
+	 */
 	public static String getSelectedScale()
 	{
 		return scales.getSelectedItem().toString();
