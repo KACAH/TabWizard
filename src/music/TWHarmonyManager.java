@@ -10,6 +10,12 @@ import datastruct.TWSimpleNote;
 
 public class TWHarmonyManager {
 
+	/**
+	 * Writes a harmony to the track
+	 * @param chord current chord from harmony, which writes on track
+	 * @param track track on which we write a harmony
+	 * @throws TWDataException
+	 */
 	static public void writeHarmony(TWChord chord, TWInstrumentTrack track)throws TWDataException
 	{
 		TWSimpleNote Note;
@@ -25,6 +31,11 @@ public class TWHarmonyManager {
 		}
 	}
 
+	/**
+	 * Check note that doesn't appropriate to the chord
+	 * @param chord chord which we want to check
+	 * @return note name, that tone doesn't appropriate to the chord
+	 */
 	static public String TonicFunctionState(TWChord chord)
 	{
 		String Notes[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
@@ -61,6 +72,12 @@ public class TWHarmonyManager {
 		return null;
 	}
 
+	/**
+	 * Checks, is note repeated when harmony constructs
+	 * @param harmony harmony, which should be checked
+	 * @param note Note that we are looking for in the scale
+	 * @throws TWDataException
+	 */
 	static boolean onceNoteInHarmony(TWHarmony harmony, TWSimpleNote note)
 	{
 		TWSimpleNote[] AllNotes;

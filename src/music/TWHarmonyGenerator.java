@@ -10,11 +10,20 @@ public class TWHarmonyGenerator {
 
 	static TWChord mainChord;
 
+	/**
+	 * Get main chord from harmony
+	 * @return main chord from harmony
+	 */
 	static public TWChord getMainChord()
 	{
 		return mainChord;
 	}
 
+	/**
+	 * Generates a simple harmony, using simple chords
+	 * @return new harmony
+	 * @throws TWDataException
+	 */
 	public static TWHarmony generateSimpleHarmony()throws TWDataException
 	{
 		Random rn = new Random();
@@ -24,197 +33,142 @@ public class TWHarmonyGenerator {
 
 		TWChordManager.loadChords("data//Chords.twd");
 		TWChord[] allChords = new TWChord[24];
-		
+
 		String myChords[] = {"Am", "A", "A#m", "A#", "Bm", "B", "Cm",
 				"C", "C#m", "C#", "Dm",	"D", "D#m", "D#", "Em", "E", "Fm",
 				"F", "F#m", "F#", "Gm", "G", "G#m", "G#"};
-		
+
 		for (int i = 0; i < myChords.length; i++)
 			allChords[i] = TWChordManager.getChordByName(myChords[i]);
 
-		
+
 		TWHarmony simpleHarmony = new TWHarmony();
-		for(int i = 0; i < myChords.length; i++)
-			simpleHarmony.addChord(TWChordManager.getChordByName(myChords[randChord]));
+		FillHarmonyWithChord(simpleHarmony, myChords, randChord);
 
 
 		boolean MinorScheme = false;
+		MinorScheme = isMinorScheme(myChords, simpleHarmony, MinorScheme);
+		
+		
+		if(MinorScheme)
+			setHarmonyByMinorChord(myChords, simpleHarmony, randHarmonyVariant);
+		else
+			setHarmonyByMajorChord(myChords, simpleHarmony, randHarmonyVariant);
+
+		return simpleHarmony;
+	}
+	
+	/**
+	 * Checks created harmony for minor key
+	 * @param myChords array with chord names
+	 * @param simpleHarmony created new harmony
+	 * @param MinorScheme flag, that specifies selection of chords
+	 * @return flag
+	 * @throws TWDataException
+	 */
+	private static boolean isMinorScheme(String[] myChords, TWHarmony simpleHarmony, boolean MinorScheme)
+	{
 		for (int i = 0; i < myChords.length; i=i+2)
 		{
 			if(simpleHarmony.getChord(0).getName().equals(myChords[i]))
 			{
 				MinorScheme = true;
 				mainChord = simpleHarmony.getChord(0);
-				break;
+				return MinorScheme;
 			}
 		}
-
-		if(MinorScheme)
-		{
-			for(int j = 0; j < myChords.length; j++)
-			{
-				if(simpleHarmony.getChord(0).getName().equals(myChords[j]))
-				{
-					if(j + 7 >= 24)
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-17]));
-					else
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+7]));
-
-					if(j + 10 >= 24)
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-14]));
-					else
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+10]));
-
-					if(randHarmonyVariant == 0)
-					{
-						if(j + 14 >= 24)
-							simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-10]));
-						else
-							simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+15]));
-					}
-					else
-					{
-						if(j + 14 >= 24)
-							simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-9]));
-						else
-							simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+14]));
-					}
-
-					if(j + 17 >= 24)
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-7]));
-					else
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+17]));
-
-					if(j + 21 >= 24)
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-3]));
-					else
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+21]));
-				}
-			}
-		}
-
-		else
-			for(int j = 0; j < myChords.length; j++)
-			{
-				if(simpleHarmony.getChord(0).getName().equals(myChords[j]))
-				{
-					if(j - 7 < 0)
-					{
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+17]));
-						mainChord = TWChordManager.getChordByName(myChords[j+17]);
-					}
-					else
-					{
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-7]));
-						mainChord = TWChordManager.getChordByName(myChords[j-7]);
-					}					
-					if(j + 3 >= 24)
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-21]));
-					else
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+3]));
-
-
-					if(randHarmonyVariant == 0)
-					{
-						if(j + 8 >= 24)
-							simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-17]));
-						else
-							simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+7]));
-					}
-					else
-					{
-						if(j + 8 >= 24)
-							simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-16]));
-						else
-							simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+8]));
-					}
-
-
-
-					if(j + 10 >= 24)
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-14]));
-					else
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+10]));
-
-					if(j + 14 >= 24)
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-10]));
-					else
-						simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+14]));
-				}
-			}
-		return simpleHarmony;
+		return MinorScheme;
 	}
 
-	
-	
-/*
-	static public TWChord[] generateEastHarmony(int randVal)throws TWDataException
+	/**
+	 * Add chords if MinorScheme was minor
+	 * @param myChords array with chord names
+	 * @param simpleHarmony created new harmony
+	 * @param randHarmonyVariant random integer, that make a little change in harmony 
+	 */
+	private static void setHarmonyByMinorChord(String[] myChords, TWHarmony simpleHarmony, int randHarmonyVariant)
 	{
-		TWChordManager.loadChords("Chords.twd");
-		TWChord[] allChords;
-		allChords = new TWChord[24];
-		String myChords[] = {"Am", "A", "A#m", "A#", "Bm", "B", "Cm",
-				"C", "C#m", "C#", "Dm",	"D", "D#m", "D#", "Em", "E", "Fm",
-				"F", "F#m", "F#", "Gm", "G", "G#m", "G#"};
-		for (int i = 0; i < myChords.length; i++)
+		for(int j = 0; j < myChords.length; j++)
 		{
-			allChords[i] = TWChordManager.getChordByName(myChords[i]);
-		}
-
-		TWChord[] eastHarmony;
-		eastHarmony = new TWChord[3];
-
-		for(int i = 0; i < myChords.length; i++)
-		{
-			eastHarmony[0] = TWChordManager.getChordByName(myChords[randVal-1]);
-		}
-
-		boolean MinorScheme = false;
-		for (int i = 0; i < myChords.length; i=i+2)
-		{
-			if(eastHarmony[0].getName().equals(myChords[i]))
+			if(simpleHarmony.getChord(0).getName().equals(myChords[j]))
 			{
-				MinorScheme = true;
-				break;
+				addChordToHarmony(j, 7, simpleHarmony, myChords, -17, 7);
+				addChordToHarmony(j, 10, simpleHarmony, myChords, -14, 10);
+
+				if(randHarmonyVariant == 0)
+					addChordToHarmony(j, 14, simpleHarmony, myChords, -10, 15);
+				else
+					addChordToHarmony(j, 14, simpleHarmony, myChords, -9, 14);
+
+				addChordToHarmony(j, 17, simpleHarmony, myChords, -7, 17);
+				addChordToHarmony(j, 21, simpleHarmony, myChords, -3, 21);
 			}
 		}
-		if(MinorScheme)
-		{
-			for(int j = 0; j < myChords.length; j++)
-			{
-				if(eastHarmony[0].getName().equals(myChords[j]))
-				{
-					if(j + 5 >= 24)
-						eastHarmony[1] = TWChordManager.getChordByName(myChords[j-19]);
-					else
-						eastHarmony[1] = TWChordManager.getChordByName(myChords[j+5]);
-
-					if(j + 7 >= 24)
-						eastHarmony[2] = TWChordManager.getChordByName(myChords[j-17]);
-					else
-						eastHarmony[2] = TWChordManager.getChordByName(myChords[j+7]);									
-				}
-			}
-		}
-
-		else
-			for(int j = 0; j < myChords.length; j++)
-			{
-				if(eastHarmony[0].getName().equals(myChords[j]))
-				{
-					if(j - 5 < 0)
-						eastHarmony[1] = TWChordManager.getChordByName(myChords[j+19]);
-					else
-						eastHarmony[1] = TWChordManager.getChordByName(myChords[j-5]);
-
-					if(j + 2 >= 24)
-						eastHarmony[2] = TWChordManager.getChordByName(myChords[j-21]);
-					else
-						eastHarmony[2] = TWChordManager.getChordByName(myChords[j+2]);						
-
-				}
-			}
-		return eastHarmony;
 	}
-	*/
+
+	/**
+	 * Add chords if MinorScheme was major
+	 * @param myChords array with chord names
+	 * @param simpleHarmony created new harmony
+	 * @param randHarmonyVariant random integer, that make a little change in harmony 
+	 */
+	private static void setHarmonyByMajorChord(String[] myChords, TWHarmony simpleHarmony, int randHarmonyVariant)
+	{
+		for(int j = 0; j < myChords.length; j++)
+		{
+			if(simpleHarmony.getChord(0).getName().equals(myChords[j]))
+			{
+				if(j - 7 < 0)
+				{
+					simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j+17]));
+					mainChord = TWChordManager.getChordByName(myChords[j+17]);
+				}
+				else
+				{
+					simpleHarmony.addChord(TWChordManager.getChordByName(myChords[j-7]));
+					mainChord = TWChordManager.getChordByName(myChords[j-7]);
+				}	
+				
+				addChordToHarmony(j, 3, simpleHarmony, myChords, -21, 3);
+
+				if(randHarmonyVariant == 0)
+					addChordToHarmony(j, 8, simpleHarmony, myChords, -17, 7);
+				else
+					addChordToHarmony(j, 8, simpleHarmony, myChords, -16, 8);
+
+				addChordToHarmony(j, 10, simpleHarmony, myChords, -14, 10);
+				addChordToHarmony(j, 14, simpleHarmony, myChords, -10, 14);
+			}
+		}
+	}
+	/**
+	 * Add chords to harmony
+	 * @param curPosition current position in array
+	 * @param reqChordPosition required chord position in array 
+	 * @param myChords array with chord names
+	 * @param simpleHarmony created new harmony
+	 * @param shift1 required chord position in array with shift
+	 * @param shift2 required chord position in array with shift
+	 * @param randHarmonyVariant random integer, that make a little change in harmony 
+	 */
+	private static void addChordToHarmony(int curPosition, int reqChordPosition, TWHarmony simpleHarmony, String[] myChords, int shift1, int shift2)
+	{
+		if(curPosition + reqChordPosition >= 24)
+			simpleHarmony.addChord(TWChordManager.getChordByName(myChords[curPosition + shift1]));
+		else
+			simpleHarmony.addChord(TWChordManager.getChordByName(myChords[curPosition + shift2]));
+	}
+
+	/**
+	 * Add chords to harmony
+	 * @param simpleHarmony created new harmony
+	 * @param myChords array with chord names
+	 * @param randChord random integer, that choose first chord from chord array
+	 */
+	private static void FillHarmonyWithChord(TWHarmony simpleHarmony, String[] myChords, int randChord)
+	{
+		for(int i = 0; i < myChords.length; i++)
+			simpleHarmony.addChord(TWChordManager.getChordByName(myChords[randChord]));
+	}
+
 }

@@ -274,7 +274,6 @@ public class PlayingMethodsFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 
 				String name = JOptionPane.showInputDialog(null, "Enter a song part name", "Enter name", JOptionPane.QUESTION_MESSAGE);
-
 				FragmentName.setText(name);
 
 				try {
@@ -346,47 +345,61 @@ public class PlayingMethodsFrame extends JFrame{
 					Object o = theList.getModel().getElementAt(index);
 
 					if(o.toString().split(": ")[1].equals("Drums"))
-					{
-						if(Main.fragmenttypeframe.isRiffFragment())
-							scales.setEnabled(false);
-
-						for(int i = 0; i < DrumMethods.length; i++)
-							methods.addItem(DrumMethods[i]);
-					}				
+						fillMethodCombo("Drums");
+						
 					if(o.toString().split(", ")[1].equals("Bass tuning"))
-					{
-						if(Main.fragmenttypeframe.isRiffFragment())
-						{
-							methods.addItem("--");
-							scales.setEnabled(false);
-						}
-						else
-						{
-							for(int i = 0; i < BassMethods.length; i++)
-								methods.addItem(BassMethods[i]);
-						}
-					}
-					if(!o.toString().split(", ")[1].equals("Bass tuning") && !o.toString().split(":")[1].equals(" Drums"))
-					{
-						if(Main.fragmenttypeframe.isHarmonyFragment())
-						{
-							for(int i = 0; i < HarmonyMethods.length; i++)
-								methods.addItem(HarmonyMethods[i]);
-						}
-						if(Main.fragmenttypeframe.isRiffFragment())
-						{
-							scales.setEnabled(true);
+						fillMethodCombo("Bass tuning");
 
-							for(int i = 0; i < RiffMethods.length; i++)
-								methods.addItem(RiffMethods[i]);
-						}
-					}
+					if(!o.toString().split(", ")[1].equals("Bass tuning") && !o.toString().split(":")[1].equals(" Drums"))
+						fillMethodCombo("Harmony or Riff");
 				}
 			}
 		});
 		return list;
 	}
 
+	private void fillMethodCombo(String type)
+	{
+		if(type.equals("Drums"))
+		{
+			if(Main.fragmenttypeframe.isRiffFragment())
+				scales.setEnabled(false);
+
+			for(int i = 0; i < DrumMethods.length; i++)
+				methods.addItem(DrumMethods[i]);
+		}
+		if(type.equals("Bass tuning"))
+		{
+			if(Main.fragmenttypeframe.isRiffFragment())
+			{
+				methods.addItem("--");
+				scales.setEnabled(false);
+			}
+			else
+			{
+				for(int i = 0; i < BassMethods.length; i++)
+					methods.addItem(BassMethods[i]);
+			}
+		}
+		if(!type.equals("Drums") && !type.equals("Bass tuning"))
+		{
+			if(Main.fragmenttypeframe.isHarmonyFragment())
+			{
+				for(int i = 0; i < HarmonyMethods.length; i++)
+					methods.addItem(HarmonyMethods[i]);
+			}
+			
+			if(Main.fragmenttypeframe.isRiffFragment())
+			{
+				scales.setEnabled(true);
+
+				for(int i = 0; i < RiffMethods.length; i++)
+					methods.addItem(RiffMethods[i]);
+			}
+		}
+
+	}
+	
 
 	private JComboBox<String> setPlayingMethod() throws IOException
 	{
@@ -413,7 +426,7 @@ public class PlayingMethodsFrame extends JFrame{
 		return 	setMesCount;
 	}
 
-	public static String getSelectedScale()/////////////////////////////
+	public static String getSelectedScale()
 	{
 		return scales.getSelectedItem().toString();
 	}

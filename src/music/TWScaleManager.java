@@ -1,16 +1,28 @@
 package music;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import datastruct.TWChord;
 import datastruct.TWSimpleNote;
-import java.io.*;
 
+/**
+ * The TWScaleManager class manage scales, that are used in the program
+ * 
+ * @author Daniil Jurjev
+ */
 public class TWScaleManager {
-
 	static private ArrayList<TWScale> Scales = new ArrayList<TWScale>();
 	static public ArrayList<String> StringScales = new ArrayList<String>();
-
+	
+	/**
+	 * Load scales form file
+	 * @param fileName name of file, which contains scales
+	 */
 	static public void loadScales(String fileName)
 	{		
 		Scales.clear();
@@ -39,6 +51,11 @@ public class TWScaleManager {
 		}
 	}
 	
+	/**
+	 * Writes scales to file
+	 * @param fileName name of file, which contains scales
+	 * @param newScale the new scale that should be written to a file
+	 */
 	static public void writeScaleToFile(String fileName, TWScale newScale)
 	{
 		try {	
@@ -81,7 +98,13 @@ public class TWScaleManager {
 			System.err.println(e.getMessage());
 		}
 	}
-
+	
+	/**
+	 * Deletes a scale from the list and file
+	 * @param fileName name of file, which contains scales
+	 * @param scaleName The name of the scale which should be removed
+	 * @throws IOException
+	 */
 	static public void deleteScaleFromList(String fileName, String scaleName) throws IOException
 	{
 		Iterator<TWScale> itr1 = Scales.iterator(); 
@@ -125,7 +148,11 @@ public class TWScaleManager {
 	}
 	
 	
-
+	/**
+	 * Parse scale form string
+	 * @param str string to parse
+	 * @return parsed scale
+	 */
 	static public TWScale parseScale(String str)
 	{
 		String[] parts = str.split("( )+");
@@ -157,6 +184,12 @@ public class TWScaleManager {
 		return null;
 	}
 
+	/**
+	 * Transposes a scale in the required key
+	 * @param Scale scale that you want to transpose
+	 * @param newScaleKey note in which the file should be transposed
+	 * @return transposed scale
+	 */
 	static public TWScale transponScale(TWScale Scale, String newScaleKey)
 	{
 		String Notes[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
@@ -210,6 +243,11 @@ public class TWScaleManager {
 		return newScale;
 	}
 
+	/**
+	 * Transposes a scale in the required key for scale list (required key is C)
+	 * @param newScale scale that you want to transpose
+	 * @return transposed scale
+	 */
 	static public TWScale transposeScaleForScaleList(TWScale newScale)
 	{
 		String Notes[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
@@ -239,6 +277,12 @@ public class TWScaleManager {
 		return transposedScale;
 	}
 
+	/**
+	 * Compares the scales on the equality
+	 * @param newScale scale that you want to compare
+	 * @param exScale second scale that you want to compare with first scale
+	 * @return if first scale equals second scale
+	 */
 	static public boolean IsScaleEqualScale(TWScale newScale, TWScale exScale)
 	{
 		int isTrue = 0;    							// Must be equal ScaleSize
@@ -259,6 +303,11 @@ public class TWScaleManager {
 			return false;
 	}
 
+	/**
+	 * Checks for scale in scale list
+	 * @param newScale scale you want to check
+	 * @return if scale already exists
+	 */
 	static public boolean HasScaleInList(TWScale newScale)
 	{
 		String Notes[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
@@ -277,6 +326,11 @@ public class TWScaleManager {
 		return false;
 	}
 
+	/**
+	 * Constructs scale using harmony
+	 * @param harmony harmony which should be using to build scale
+	 * @return scale, builded using harmony
+	 */
 	static public TWScale constructHarmonyScale(TWHarmony harmony)
 	{
 		TWScale Scale = new TWScale("Harmony Scale");
@@ -302,6 +356,12 @@ public class TWScaleManager {
 		return Scale;
 	}
 
+	/**
+	 * Get the indexes of the chord notes in the required scale
+	 * @param Scale scale in which you want to find the indexes
+	 * @param chord chord, that contains required notes
+	 * @return array of indexes
+	 */
 	static int[] getNotesIndexFromScale(TWScale Scale, TWChord chord)
 	{
 		int NotesIndex[] = new int[3];
@@ -317,6 +377,12 @@ public class TWScaleManager {
 		return NotesIndex;
 	}
 
+	/**
+	 * Checks scale for note
+	 * @param Scale scale which should be checked
+	 * @param note Note, that we must find in scale
+	 * @return if scale contain note
+	 */
 	static boolean scaleHasNote(TWScale Scale, TWSimpleNote note)
 	{
 		for(int i = 0; i < Scale.ScaleSize(); i++)
@@ -326,6 +392,4 @@ public class TWScaleManager {
 		}
 		return false;
 	}
-
-
 }

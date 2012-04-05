@@ -7,6 +7,11 @@ import datastruct.TWPercussionTrack;
 
 public class TWDrums {
 
+	/**
+	 * Writes a simple drums to the track
+	 * @param track Percussion track on which we write a drums
+	 * @throws TWDataException
+	 */
 	static public void WriteSimpleDrums_1_5(TWPercussionTrack track)throws TWDataException
 	{
 		Random rnd = new Random();
@@ -37,6 +42,11 @@ public class TWDrums {
 		}
 	}
 
+	/**
+	 * Writes a simple drums to the track
+	 * @param track Percussion track on which we write a drums
+	 * @throws TWDataException
+	 */
 	static public void WriteSimpleDrums_1_3(TWPercussionTrack track) throws TWDataException
 	{
 		Random rnd = new Random();
@@ -64,6 +74,11 @@ public class TWDrums {
 		}
 	}
 
+	/**
+	 * Writes a simple drums to the track
+	 * @param track Percussion track on which we write a drums
+	 * @throws TWDataException
+	 */
 	static public void WriteSimpleDrums_1_2(TWPercussionTrack track) throws TWDataException
 	{
 		Random rnd = new Random();
@@ -108,6 +123,11 @@ public class TWDrums {
 		}
 	}
 
+	/**
+	 * Writes a simple drums to the track
+	 * @param track Percussion track on which we write a drums
+	 * @throws TWDataException
+	 */
 	static public void WriteDoubleHatDrums_1_5(TWPercussionTrack track)throws TWDataException
 	{
 		Random rnd = new Random();
@@ -142,6 +162,11 @@ public class TWDrums {
 		}
 	}	
 
+	/**
+	 * Writes a simple drums to the track
+	 * @param track Percussion track on which we write a drums
+	 * @throws TWDataException
+	 */
 	static public void WriteDoubleHatDrums_1_3(TWPercussionTrack track) throws TWDataException
 	{
 		Random rnd = new Random();
@@ -174,6 +199,11 @@ public class TWDrums {
 		}
 	}
 
+	/**
+	 * Writes a simple drums to the track
+	 * @param track Percussion track on which we write a drums
+	 * @throws TWDataException
+	 */
 	static public void WriteDoubleBassDrums_1_3(TWPercussionTrack track) throws TWDataException
 	{
 		Random rnd = new Random();
@@ -203,6 +233,11 @@ public class TWDrums {
 		}
 	}
 
+	/**
+	 * Writes a simple drums to the track
+	 * @param track Percussion track on which we write a drums
+	 * @throws TWDataException
+	 */
 	static public void WriteDoubleBassDrums_1_2(TWPercussionTrack track) throws TWDataException
 	{
 		Random rnd = new Random();
@@ -232,6 +267,11 @@ public class TWDrums {
 		}
 	}
 
+	/**
+	 * Writes a simple drums to the track
+	 * @param track Percussion track on which we write a drums
+	 * @throws TWDataException
+	 */
 	static public void WriteOpenHatDrums_1_5(TWPercussionTrack track)throws TWDataException
 	{
 		Random rnd = new Random();
@@ -283,6 +323,11 @@ public class TWDrums {
 		}
 	}
 
+	/**
+	 * Writes a simple drums to the track
+	 * @param track Percussion track on which we write a drums
+	 * @throws TWDataException
+	 */
 	static public void WriteOpenHatDrums_1_3(TWPercussionTrack track) throws TWDataException
 	{
 		Random rnd = new Random();
@@ -321,6 +366,11 @@ public class TWDrums {
 		}
 	}
 
+	/**
+	 * Writes a drum break to the track
+	 * @param TactBalance a free space in measure
+	 * @param track Percussion track on which we write a drums
+	 */
 	private static void InsertSimpleBreak(int TactBalance, TWPercussionTrack track)
 	{
 		Random rnd = new Random();
@@ -352,6 +402,14 @@ public class TWDrums {
 		}
 	}
 
+	/**
+	 * Chooses drum break note type
+	 * @param rand16 random integer, that reports note duration 
+	 * @param randTriplet random integer, that reports is note triplet 
+	 * @param drumElement random integer, that choose drum element 
+	 * @param string Guitar string that is using to write drum elements
+	 * @param track Percussion track on which we write a drums
+	 */
 	private static void BreakNoteType(int rand16, int randTriplet, int drumElement, int string, TWPercussionTrack track)
 	{
 		if(rand16 == 0)
@@ -360,6 +418,13 @@ public class TWDrums {
 			track.addNoteNew(drumElement, string, 8);
 	}
 
+	/**
+	 * Writes a drum break note duration (Triplet or 16th)
+	 * @param drumElement random integer, that choose drum element 
+	 * @param string Guitar string that is using to write drum elements
+	 * @param randTriplet random integer, that reports is note triplet 
+	 * @param track Percussion track on which we write a drums
+	 */
 	private static void BreakTripletOr16Note(int drumElement, int string, int randTriplet, TWPercussionTrack track)
 	{
 		if(randTriplet == 0)
@@ -368,6 +433,12 @@ public class TWDrums {
 			addBreak16Notes(drumElement, string, track);
 	}
 
+	/**
+	 * Adds drum break Triplet note 
+	 * @param drumElement random integer, that choose drum element 
+	 * @param string Guitar string that is using to write drum elements
+	 * @param track Percussion track on which we write a drums
+	 */
 	private static void addBreakTriplets(int drumElement, int string, TWPercussionTrack track)
 	{
 		for(int i = 0; i < 3; i++)
@@ -377,6 +448,12 @@ public class TWDrums {
 		}
 	}
 
+	/**
+	 * Adds drum break 16th note 
+	 * @param drumElement random integer, that choose drum element 
+	 * @param string Guitar string that is using to write drum elements
+	 * @param track Percussion track on which we write a drums
+	 */
 	private static void addBreak16Notes(int drumElement, int string, TWPercussionTrack track)
 	{
 		for(int i = 0; i < 2; i++)
