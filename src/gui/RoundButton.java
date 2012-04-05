@@ -20,6 +20,7 @@ public class RoundButton extends JButton {
         setPreferredSize(size);
         setContentAreaFilled(false);
     }
+	
     protected void paintComponent(Graphics g) {
         if (getModel().isArmed()) {
             g.setColor(Color.lightGray);

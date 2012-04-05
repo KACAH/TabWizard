@@ -34,7 +34,6 @@ public class TWGenerate {
 	public static TWSongPart newPart;
 
 	private static Random rn = new Random();
-	//private static int randChord = rn.nextInt(6);
 
 	static public TWHarmony Harmony;
 	static public int MeasureCount;
@@ -51,7 +50,7 @@ public class TWGenerate {
 			readyTracks.get(i).setInstrumentTrack(newPart.getInstrumentTrack(i));
 
 		readyPercussionTrack.setPercussionTrack(newPart.getPercussionTrack());
-
+	
 		for(int i = 0; i < MeasureCount; i++)
 		{
 			int randChord = rn.nextInt(6);
@@ -63,17 +62,16 @@ public class TWGenerate {
 					writeHarmonyTrack(readyTracks.get(j).getTrack(), readyTracks.get(j).getMethod(), Harmony, randChord);
 					writeBassTrack(readyTracks.get(j).getTrack(), readyTracks.get(j).getMethod(), Harmony, randChord);
 				}
-
+				
 				if(Main.fragmenttypeframe.isRiffFragment())
 				{
 					for(int k = 0; k < readyTracks.size(); k++)	
 					{
 						if(readyTracks.get(k).getTuning().getNumStringsUsed() == 4)
-						{
+						{					
 							for(int l = 0; l < readyTracks.size(); l++)
-							{
-								System.out.println(i + ") " + readyTracks.get(l).getMethod());
-								if(readyTracks.get(l).getMethod() != null)
+							{							
+								if(!readyTracks.get(l).getMethod().equals(""))
 								{
 									writeRiffTrack(readyTracks.get(l).getTrack(), readyTracks.get(k).getTrack(), readyTracks.get(l).getMethod(), PlayingMethodsFrame.getSelectedScale());
 									RiffIsWritten = true;

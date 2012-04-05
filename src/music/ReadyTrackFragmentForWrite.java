@@ -20,8 +20,7 @@ public class ReadyTrackFragmentForWrite {
 	 * Sets instrument track
 	 * @param t instrument track
 	 */
-	public void setInstrumentTrack(TWInstrumentTrack t)
-	{
+	public void setInstrumentTrack(TWInstrumentTrack t){
 		track = t;
 	}
 	
@@ -29,8 +28,7 @@ public class ReadyTrackFragmentForWrite {
 	 * Sets percussion track
 	 * @param t percussion track
 	 */
-	public void setPercussionTrack(TWPercussionTrack t)
-	{
+	public void setPercussionTrack(TWPercussionTrack t){
 		percTrack = t;
 	}
 	
@@ -38,8 +36,7 @@ public class ReadyTrackFragmentForWrite {
 	 * Sets track header
 	 * @param h header
 	 */
-	public void setTrackHeader(TWTrackHeader h)
-	{
+	public void setTrackHeader(TWTrackHeader h){
 		header = h;
 	}
 	
@@ -47,8 +44,7 @@ public class ReadyTrackFragmentForWrite {
 	 * Sets track playing method
 	 * @param m playing method name
 	 */
-	public void setMethod(String m)
-	{
+	public void setMethod(String m){
 		method = m;
 	}
 	
@@ -56,8 +52,7 @@ public class ReadyTrackFragmentForWrite {
 	 * Get instrument track
 	 * @return instrument track
 	 */
-	public TWInstrumentTrack getTrack()
-	{
+	public TWInstrumentTrack getTrack(){
 		return track;
 	}
 	
@@ -65,8 +60,7 @@ public class ReadyTrackFragmentForWrite {
 	 * Get Percussion track
 	 * @return Percussion track
 	 */
-	public TWPercussionTrack getPercussionTrack()
-	{
+	public TWPercussionTrack getPercussionTrack(){
 		return percTrack;
 	}
 	
@@ -74,8 +68,7 @@ public class ReadyTrackFragmentForWrite {
 	 * Get track header
 	 * @return track header
 	 */
-	public TWTrackHeader getHeader()
-	{
+	public TWTrackHeader getHeader(){
 		return header;
 	}
 	
@@ -83,8 +76,7 @@ public class ReadyTrackFragmentForWrite {
 	 * Get track playing method
 	 * @return playing method
 	 */
-	public String getMethod()
-	{
+	public String getMethod(){
 		return method;
 	}
 	
@@ -92,8 +84,7 @@ public class ReadyTrackFragmentForWrite {
 	 * Get track header name
 	 * @return track header name
 	 */
-	public String getHeaderName()
-	{
+	public String getHeaderName(){
 		return header.getName();
 	}
 	
@@ -101,8 +92,7 @@ public class ReadyTrackFragmentForWrite {
 	 * Get track string tuning
 	 * @return string tuning
 	 */
-	public TWStringsTunning getTuning()
-	{
+	public TWStringsTunning getTuning(){
 		return header.getStringsTunning();
 	}
 }
