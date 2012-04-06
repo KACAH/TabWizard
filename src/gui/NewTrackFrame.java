@@ -67,7 +67,7 @@ public class NewTrackFrame extends JFrame {
 	private JComboBox<String> Tuning;
 	private JComboBox<String> instruments;
 
-	private JList<String> list;
+	private JList<String> TrackList;
 
 	private JLabel LabelTempo = new JLabel();
 	private JLabel LabelSongName = new JLabel();
@@ -127,6 +127,11 @@ public class NewTrackFrame extends JFrame {
 
 					if(TracklistModel.size() != 0)
 					{
+						if(TracklistModel.size() >= 10)
+						{
+							JOptionPane.showMessageDialog(null, "The maximum track count is 10");
+							return;
+						}	
 						for(int i = 0; i < TracklistModel.size(); i++)
 						{
 							String TrackName = TracklistModel.get(i).split("\\) ")[1].split(",")[0];
@@ -139,7 +144,6 @@ public class NewTrackFrame extends JFrame {
 						}
 						addElemToList(ListElem);
 						addTrackHeader(name, volume, balance, tuning, instrument);
-
 					}
 					else
 					{
@@ -180,8 +184,8 @@ public class NewTrackFrame extends JFrame {
 	{
 		TracklistModel.addElement(elem);
 		int index = TracklistModel.size() - 1;
-		list.setSelectedIndex(index);
-		list.ensureIndexIsVisible(index);
+		TrackList.setSelectedIndex(index);
+		TrackList.ensureIndexIsVisible(index);
 
 		SimpleTrackName.setText("");
 	}
@@ -204,6 +208,12 @@ public class NewTrackFrame extends JFrame {
 
 					if(TracklistModel.size() != 0)
 					{
+						if(TracklistModel.size() >= 10)
+						{
+							JOptionPane.showMessageDialog(null, "The maximum track count is 10");
+							return;
+						}
+						
 						for(int i = 0; i < TracklistModel.size(); i++)
 						{
 							String TrackName = TracklistModel.get(i).split("\\) ")[1].split(",")[0];
@@ -214,6 +224,7 @@ public class NewTrackFrame extends JFrame {
 								return;
 							}
 						}
+						
 						addElemToList(PercTrackElem);			
 						PercTrackName.setText("");
 						PercTrackName.setEnabled(false);
@@ -249,7 +260,7 @@ public class NewTrackFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "List is empty");
 				else
 				{
-					String[] elem = list.getSelectedValue().split(":");
+					String[] elem = TrackList.getSelectedValue().split(":");
 					if(elem[1].equals(" Drums"))
 					{
 						PercTrackName.setEnabled(true);
@@ -258,9 +269,9 @@ public class NewTrackFrame extends JFrame {
 						TWGenerate.PercTrack = null;
 					}
 					else
-						TWGenerate.readyTracks.remove(list.getSelectedIndex());
+						TWGenerate.readyTracks.remove(TrackList.getSelectedIndex());
 
-					TracklistModel.remove(list.getSelectedIndex());
+					TracklistModel.remove(TrackList.getSelectedIndex());
 				}
 			}
 		});
@@ -286,8 +297,6 @@ public class NewTrackFrame extends JFrame {
 
 						PercTrackName.setEnabled(true);
 						addNewPercussionTrack.setEnabled(true);
-						
-						SongName.setText("");
 
 						try {
 							TWGenerate.Harmony = TWHarmonyGenerator.generateSimpleHarmony();
@@ -400,12 +409,12 @@ public class NewTrackFrame extends JFrame {
 	}
 
 	private JList<String> newTrackList(){
-		list = new JList<String>(TracklistModel);
-		list.setBounds(10, 170, 350, 200);
+		TrackList = new JList<String>(TracklistModel);
+		TrackList.setBounds(10, 170, 350, 200);
 		Border listPanelBorder = BorderFactory.createTitledBorder("Added tracks");
-		list.setBorder(listPanelBorder);
-		list.setLayoutOrientation(JList.VERTICAL);
-		return list;
+		TrackList.setBorder(listPanelBorder);
+		TrackList.setLayoutOrientation(JList.VERTICAL);
+		return TrackList;
 	}
 
 	private void loadInstruments(String fileName) 

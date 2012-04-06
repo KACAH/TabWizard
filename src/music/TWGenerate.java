@@ -96,7 +96,7 @@ public class TWGenerate {
 
 
 	static public void GenerateNewParamSong(String name, ArrayList<TWSongPart> parts) throws TWDataException, FileNotFoundException, IOException
-	{
+	{		
 		for(int i = 0; i < NewTrackFrame.song.getParts().size(); i++)
 			NewTrackFrame.song.removeSongPart(i);
 
