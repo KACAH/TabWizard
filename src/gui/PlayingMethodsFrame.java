@@ -175,6 +175,7 @@ public class PlayingMethodsFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
+				resetWindow();
 				FragmentList frag = new FragmentList();
 				frag.setVisible(true);
 				setNonVisibleWindow();
@@ -273,10 +274,6 @@ public class PlayingMethodsFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				//for (int j = 0; j < TWGenerate.readyTracks.size(); j++)
-				//	System.out.println(j + ") " + TWGenerate.readyTracks.get(j).getMethod() + " Njaaam");
-				
-				
 				String name = JOptionPane.showInputDialog(null, "Enter a song part name", "Enter name", JOptionPane.QUESTION_MESSAGE);
 				FragmentName.setText(name);
 
