@@ -14,16 +14,16 @@ import javax.swing.JOptionPane;
 public class MainFrame extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	FrameScaleManager scaleManager;
-	
+
 	JButton SpecParam = new JButton();
 	JButton SomeSugg = new JButton();
 	JButton Settings = new JButton();
 	JButton About = new JButton();
 
 	RoundButton generate = new RoundButton();
-	
+
 	JLabel Name = new JLabel();
 
 	public MainFrame()
@@ -32,14 +32,14 @@ public class MainFrame extends JFrame{
 		this.setSize(600, 400);
 		this.setTitle("Tab Wizard");
 		this.getContentPane().setLayout(null);
-		
+
 		this.add(JButtonSpecParam());
 		this.add(JButtonSomeSugg());
 		this.add(JButtonSettings());
 		this.add(JButtonAbout());
-		
+
 		this.add(RoundButtonGenerate());
-		
+
 		this.add(JLabelName());
 
 		init();
@@ -53,15 +53,15 @@ public class MainFrame extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				Main.newtrackframe.setVisible(true);
 				Main.mainframe.setVisible(false);
 			}
 		});
-		
+
 		return SpecParam;
 	}
-	
+
 	private JButton JButtonSomeSugg() 
 	{
 		SomeSugg.setBounds(300, 200, 260, 30);
@@ -75,10 +75,10 @@ public class MainFrame extends JFrame{
 				Main.mainframe.setVisible(false);
 			}
 		});
-		
+
 		return SomeSugg;
 	}
-	
+
 	private JButton JButtonSettings() 
 	{
 		Settings.setBounds(300, 230, 100, 30);
@@ -91,9 +91,9 @@ public class MainFrame extends JFrame{
 				try {
 					FrameScaleManager scaleManager = new FrameScaleManager();
 					scaleManager.setVisible(true);
-					
+
 					Main.mainframe.setVisible(false);
-					
+
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -101,7 +101,7 @@ public class MainFrame extends JFrame{
 		});
 		return Settings;
 	}
-	
+
 	private JButton JButtonAbout() 
 	{
 		About.setBounds(300, 260, 80, 30);
@@ -109,36 +109,35 @@ public class MainFrame extends JFrame{
 		About.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				JOptionPane.showMessageDialog(null, "Created by Daniil and Vadim");
 			}
 		});
-		
+
 		return About;
 	}
 
-	private JLabel JLabelName() 					
-	{
+	private JLabel JLabelName()	{
 		Name.setBounds(250, 0, 260, 30);
 		Name.setText("Tab Wizard 1.0"); 
 		return Name;
 	}
-	
+
 	private RoundButton RoundButtonGenerate()
 	{
 		generate.setBounds(50, 150, 150, 150);
 		ImageIcon cup = new ImageIcon("media//Button.png");
 		generate.setIcon(cup);
 		generate.setToolTipText("Generate new song");
-		
+
 		generate.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					
+
 					Main.Generate();
-					
+
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -146,13 +145,11 @@ public class MainFrame extends JFrame{
 		});
 		return generate;
 	}
-	
-	private void init()
-	{	
+
+	private void init()	{	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.setVisible(true);
 	}
-	
-	
+
+
 }

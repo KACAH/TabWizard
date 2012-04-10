@@ -57,8 +57,8 @@ public class SomeSuggestionFrame extends JFrame{
 	    setScalePanel();
 	    tabbedPane.addTab("Scale", icon, panelScale);
 
-	    JComponent panel3 = makeTextPanel("Panel #3");
-	    tabbedPane.addTab("Tab 3", icon, panel3);
+	    JComponent panel3 = makeTextPanel("This is done only for fun");
+	    tabbedPane.addTab("Introduction", icon, panel3);
 
 	    panelGenerate = makeTextPanel("Generate");
 	    setGeneratePanel();
@@ -67,6 +67,7 @@ public class SomeSuggestionFrame extends JFrame{
 		return tabbedPane;
 	}
 	
+
 	private void setTempoPanel()
 	{
 		Tempo = new JSpinner(new SpinnerNumberModel(150, 1, 300, 1));
@@ -101,9 +102,9 @@ public class SomeSuggestionFrame extends JFrame{
 		
 		generate.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
 				try {
-					
 					TWGenerate.Generate((Integer)Tempo.getValue(), scales.getSelectedItem().toString());
 					
 				} catch (TWDataException e1) {
@@ -138,11 +139,10 @@ public class SomeSuggestionFrame extends JFrame{
 		this.addWindowListener(new WindowAdapter()
 		{
 			@Override
-			public void windowClosing(WindowEvent event) {
+			public void windowClosing(WindowEvent event) 
+			{
 				if (event.getID() == WindowEvent.WINDOW_CLOSING) 
-				{
 					Main.mainframe.setVisible(true);
-				}
 			}
 		});
 	}

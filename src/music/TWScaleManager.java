@@ -17,8 +17,8 @@ import datastruct.TWSimpleNote;
  */
 public class TWScaleManager {
 	static private ArrayList<TWScale> Scales = new ArrayList<TWScale>();
-	static public ArrayList<String> StringScales = new ArrayList<String>();
-	
+	static public ArrayList<String> StringScales = new ArrayList<String>(); //Using in combo boxes
+
 	/**
 	 * Load scales form file
 	 * @param fileName name of file, which contains scales
@@ -50,7 +50,7 @@ public class TWScaleManager {
 			System.err.println(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Writes scales to file
 	 * @param fileName name of file, which contains scales
@@ -75,9 +75,7 @@ public class TWScaleManager {
 			String Notes = "";
 
 			for(int i = 0; i < newScale.ScaleSize(); i++)
-			{
-				Notes = Notes + " " + newScale.getNote(i);
-			}			
+				Notes = Notes + " " + newScale.getNote(i);		
 
 			Notes = Notes.replace("_", "#");
 
@@ -98,7 +96,7 @@ public class TWScaleManager {
 			System.err.println(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Deletes a scale from the list and file
 	 * @param fileName name of file, which contains scales
@@ -146,8 +144,8 @@ public class TWScaleManager {
 		out.write(all);	
 		out.close();
 	}
-	
-	
+
+
 	/**
 	 * Parse scale form string
 	 * @param str string to parse
@@ -176,7 +174,8 @@ public class TWScaleManager {
 	{
 		name = name.replace(" ", "");
 		Iterator<TWScale> itr1 = Scales.iterator(); 
-		while(itr1.hasNext()) {
+		while(itr1.hasNext()) 
+		{
 			TWScale curScale = itr1.next();
 			if ( curScale.getScaleName().equals(name) )
 				return curScale;
@@ -196,15 +195,15 @@ public class TWScaleManager {
 
 		int FailCount = 0;
 		for(int i = 0; i < Notes.length; i++)
-		{
 			if(newScaleKey != Notes[i])
 				FailCount++;
-		}
+
 		if(FailCount == Notes.length)
 			return null;
 
-		if(newScaleKey.equals(Notes[0]))
+		if(newScaleKey.equals(Notes[0])) //doesn't require transposition
 			return Scale;
+
 
 		TWScale newScale = new TWScale(Scale.getScaleName());
 		ArrayList<TWSimpleNote> scaleNotes = new ArrayList<TWSimpleNote>();
@@ -212,34 +211,25 @@ public class TWScaleManager {
 		boolean KeyAccepted = false;
 
 		for(int i = 1; i < Notes.length; i++)
-		{
 			if(newScaleKey.equals(Notes[i]))
 				KeyAccepted = true;
-		}
 
 		int NoteOrdinal = 0;
-		for(int i = 0; i < Notes.length; i++)
-		{
+		for(int i = 0; i < Notes.length; i++) //shift counting
 			if(newScaleKey == Notes[i])
 				NoteOrdinal = i;
-		}
 
 		if(KeyAccepted)
-		{
 			for(int i = 0; i < Scale.ScaleSize(); i++)
-			{
 				for(int j = 0; j < Notes.length; j++)
-				{
 					if(scaleNotes.get(i).getName() == Notes[j])
 					{
-						if(j+NoteOrdinal < Notes.length)
-							newScale.addSimpleNote(TWSimpleNote.noteByName(Notes[j+NoteOrdinal]));
-						else
-							newScale.addSimpleNote(TWSimpleNote.noteByName(Notes[j-Notes.length+NoteOrdinal]));
+						if(j+NoteOrdinal < Notes.length) //note adding considering transposing shift
+							newScale.addSimpleNote(TWSimpleNote.noteByName(Notes[j+NoteOrdinal])); 
+						else //note adding considering transposing shift 
+							newScale.addSimpleNote(TWSimpleNote.noteByName(Notes[j-Notes.length+NoteOrdinal])); 
 					}
-				}
-			}
-		}
+
 		return newScale;
 	}
 
@@ -256,15 +246,11 @@ public class TWScaleManager {
 
 		int Ordinal = 0;
 		for(int i = 0; i < Notes.length; i++)
-		{
 			if(newScale.getNote(0).getName() == Notes[i])
 				Ordinal = i;				
-		}
 
 		for(int i = 0; i < newScale.ScaleSize(); i++)
-		{
 			for(int j = 0; j < Notes.length; j++)
-			{
 				if(newScale.getNote(i).getName() == Notes[j])
 				{
 					if(j-Ordinal >= 0)
@@ -272,8 +258,6 @@ public class TWScaleManager {
 					else
 						transposedScale.addSimpleNote(TWSimpleNote.noteByName(Notes[j+Notes.length-Ordinal]));
 				}
-			}
-		}
 		return transposedScale;
 	}
 
@@ -285,18 +269,14 @@ public class TWScaleManager {
 	 */
 	static public boolean IsScaleEqualScale(TWScale newScale, TWScale exScale)
 	{
-		int isTrue = 0;    							// Must be equal ScaleSize
+		int isTrue = 0; // Must be equal ScaleSize
+
 		if(newScale.ScaleSize() == exScale.ScaleSize())
-		{
 			for(int i = 0; i < newScale.ScaleSize(); i++)
-			{
 				for(int j = 0; j < exScale.ScaleSize(); j++)
-				{
 					if(newScale.getNote(i).getName().equals(exScale.getNote(j).getName()))
 						isTrue++;
-				}
-			}
-		}
+
 		if(isTrue == exScale.ScaleSize())
 			return true;
 		else
@@ -313,15 +293,12 @@ public class TWScaleManager {
 		String Notes[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 		Iterator<TWScale> itr1 = Scales.iterator(); 
 
-
 		while(itr1.hasNext()) 
 		{
 			TWScale curScale = itr1.next();
 			for(int i = 0; i < Notes.length; i++)
-			{
 				if (IsScaleEqualScale(newScale, transponScale(curScale, Notes[i])))			
 					return true;
-			}
 		}
 		return false;
 	}
@@ -335,24 +312,27 @@ public class TWScaleManager {
 	{
 		TWScale Scale = new TWScale("Harmony Scale");
 
-		TWSimpleNote[] AllNotes;
-		AllNotes = new TWSimpleNote[harmony.HarmonySize()*3];
+		//All notes from harmony with repeating. Every chord has 3 notes
+		TWSimpleNote[] AllNotes = new TWSimpleNote[harmony.HarmonySize()*3];
 
 		for(int i = 0, j = 0, k = 0; i < harmony.HarmonySize()*3; i++, k++)
 		{
-			if(k == 3)
-			{k = 0;	j++;}
-			if(j == harmony.HarmonySize())	j = 0;
-
-			AllNotes[i] = harmony.getChord(j).getNote(k);
-		}		
-		for(int i = 0; i < AllNotes.length; i++)
-		{
-			if( !scaleHasNote (Scale, AllNotes[i]) )
-			{
-				Scale.addSimpleNote( AllNotes[i] );
+			if(k == 3){
+				k = 0;
+				j++;
 			}
-		}		
+
+			if(j == harmony.HarmonySize())	
+				j = 0;
+
+			//Adds to all harmony notes array every note from harmony chords.
+			AllNotes[i] = harmony.getChord(j).getNote(k);
+		}	
+
+		for(int i = 0; i < AllNotes.length; i++) //Note adding to scale without repeating
+			if(!scaleHasNote(Scale, AllNotes[i]))
+				Scale.addSimpleNote(AllNotes[i]);
+
 		return Scale;
 	}
 
@@ -367,13 +347,10 @@ public class TWScaleManager {
 		int NotesIndex[] = new int[3];
 
 		for(int i = 0; i < Scale.ScaleSize(); i++)
-		{
 			for(int j = 0; j < 3; j++)
-			{
 				if(chord.getNote(j) == Scale.getNote(i))
 					NotesIndex[j] = i;
-			}
-		}
+
 		return NotesIndex;
 	}
 
@@ -385,11 +362,10 @@ public class TWScaleManager {
 	 */
 	static boolean scaleHasNote(TWScale Scale, TWSimpleNote note)
 	{
-		for(int i = 0; i < Scale.ScaleSize(); i++)
-		{      
+		for(int i = 0; i < Scale.ScaleSize(); i++)  
 			if(Scale.getNote(i) == note )
 				return true;
-		}
+
 		return false;
 	}
 }

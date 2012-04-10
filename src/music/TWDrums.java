@@ -4,11 +4,15 @@ import java.util.Random;
 import datastruct.TWDataException;
 import datastruct.TWPercussionTrack;
 
+/**
+ * The TWDrums class. Writes drums to the track
+ * 
+ */
 
 public class TWDrums {
 
 	/**
-	 * Writes a simple drums to the track
+	 * Writes a simple drums to the track. Strong beat is 1 and 5
 	 * @param track Percussion track on which we write a drums
 	 * @throws TWDataException
 	 */
@@ -19,8 +23,9 @@ public class TWDrums {
 		for(int i = 0; i < 8; i++)
 		{
 			int randFill = rnd.nextInt(30);
-			int randBD = rnd.nextInt(10);
+			int randBD = rnd.nextInt(10); 
 
+			//Writes a drum break on measure tail, or remainder. Probability 1/30
 			if(randFill == 0)
 			{
 				InsertSimpleBreak(i, track);
@@ -28,14 +33,15 @@ public class TWDrums {
 			}
 			else
 			{
+				//Writes elements on one beat
 				track.addNoteNew(42, 2, 8);
 				
 				if(i == 0)
-					track.addNoteMore(36, 6);
+					track.addNoteMore(36, 6); // Strong beat
 				if(randBD == 0 || randBD == 1)
 					track.addNoteMore(36, 5);
 				if(i == 4)
-					track.addNoteMore(38, 5);
+					track.addNoteMore(38, 5); // Strong beat
 				if(randBD == 3)
 					track.addNoteMore(38, 4);
 			}
@@ -43,7 +49,7 @@ public class TWDrums {
 	}
 
 	/**
-	 * Writes a simple drums to the track
+	 * Writes a simple drums to the track. Strong beat 1 and 3
 	 * @param track Percussion track on which we write a drums
 	 * @throws TWDataException
 	 */
@@ -65,17 +71,17 @@ public class TWDrums {
 			{
 				track.addNoteNew(42, 2, 8);
 				if(i == 0 || i == 4)
-					track.addNoteMore(36, 6);
+					track.addNoteMore(36, 6); // Strong beats
 				if(randBD == 0 || randBD == 1)
 					track.addNoteMore(36, 5);
 				if(i == 2 || i == 6)
-					track.addNoteMore(38, 5);
+					track.addNoteMore(38, 5); // Strong beats
 			}
 		}
 	}
 
 	/**
-	 * Writes a simple drums to the track
+	 * Writes a simple drums to the track. Strong beat is 1 and 2 
 	 * @param track Percussion track on which we write a drums
 	 * @throws TWDataException
 	 */
@@ -97,34 +103,30 @@ public class TWDrums {
 			else
 			{
 				if(i == 0 || i == 2 || i == 4 || i == 6)
-				{
 					if(randBD == 0 || randBD == 1 || randBD == 2 || randBD == 4)
 					{ 
 						track.addNoteNew(42, 2, 16);
 
 						track.getLastBeat().removeNote(6);
 						track.addNoteMore(36, 6);
-						track.addNoteNew(36, 6, 16);
+						track.addNoteNew(36, 6, 16); // add double bass
 						doubleBass = true;
 					}
-				}
-
+				
 				if(!doubleBass)
 					track.addNoteNew(42, 2, 8);
 
-				if(i == 0 || i == 2 || i == 4 || i == 6)
-				{
+				if(i == 0 || i == 2 || i == 4 || i == 6) // Strong beat
 					track.addNoteMore(36, 6);
-				}
 
-				if(i == 1 || i == 3 || i == 5 || i == 7)
-					track.addNoteMore(38, 5);
+				if(i == 1 || i == 3 || i == 5 || i == 7) // Strong beat
+					track.addNoteMore(38, 5); 
 			}
 		}
 	}
 
 	/**
-	 * Writes a simple drums to the track
+	 * Writes a simple drums to the track. Strong beat is 1 and 5
 	 * @param track Percussion track on which we write a drums
 	 * @throws TWDataException
 	 */
@@ -147,11 +149,11 @@ public class TWDrums {
 				track.addNoteNew(42, 2, 16);
 
 				if(i == 0)
-					track.addNoteMore(36, 6);
+					track.addNoteMore(36, 6); // Strong beat
 				if(randBD == 0 || randBD == 1)
 					track.addNoteMore(36, 5);
 				if(i == 4)
-					track.addNoteMore(38, 5);
+					track.addNoteMore(38, 5); // Strong beat
 				if(randBD == 3)
 					track.addNoteMore(38, 4);
 				if(i == 0 && randBD == 5)
@@ -163,7 +165,7 @@ public class TWDrums {
 	}	
 
 	/**
-	 * Writes a simple drums to the track
+	 * Writes a simple drums to the track. Strong beat is 1 and 3
 	 * @param track Percussion track on which we write a drums
 	 * @throws TWDataException
 	 */
@@ -186,11 +188,11 @@ public class TWDrums {
 				track.addNoteNew(42, 2, 16);
 
 				if(i == 0 || i == 4)
-					track.addNoteMore(36, 6);
+					track.addNoteMore(36, 6); // Strong beat
 				if(randBD == 0 || randBD == 1)
 					track.addNoteMore(36, 5);
 				if(i == 2 || i == 6)
-					track.addNoteMore(38, 5);
+					track.addNoteMore(38, 5); // Strong beat
 				if(i == 0 && randBD == 5)
 					track.addNoteMore(49, 1);
 
@@ -200,7 +202,7 @@ public class TWDrums {
 	}
 
 	/**
-	 * Writes a simple drums to the track
+	 * Writes a simple drums to the track. Strong beat is 1 and 3
 	 * @param track Percussion track on which we write a drums
 	 * @throws TWDataException
 	 */
@@ -224,7 +226,7 @@ public class TWDrums {
 				track.addNoteMore(36, 6);
 
 				if(i == 2 || i == 6)
-					track.addNoteMore(38, 5);
+					track.addNoteMore(38, 5); // Strong beat
 				if(i == 0 && randBD == 5)
 					track.addNoteMore(49, 1);
 
@@ -234,7 +236,7 @@ public class TWDrums {
 	}
 
 	/**
-	 * Writes a simple drums to the track
+	 * Writes a simple drums to the track. Strong beat is 1 and 2
 	 * @param track Percussion track on which we write a drums
 	 * @throws TWDataException
 	 */
@@ -257,7 +259,7 @@ public class TWDrums {
 				track.addNoteNew(42, 2, 16);
 				track.addNoteMore(36, 6);
 
-				if(i == 1 || i == 3 || i == 5 || i == 7)
+				if(i == 1 || i == 3 || i == 5 || i == 7) // Strong beat
 					track.addNoteMore(38, 5);
 				if(i == 0 && randBD == 5)
 					track.addNoteMore(49, 1);
@@ -268,7 +270,7 @@ public class TWDrums {
 	}
 
 	/**
-	 * Writes a simple drums to the track
+	 * Writes a simple drums to the track. Strong beat is 1 and 5
 	 * @param track Percussion track on which we write a drums
 	 * @throws TWDataException
 	 */
@@ -311,9 +313,9 @@ public class TWDrums {
 				}
 
 				if(i == 0)
-					track.addNoteMore(36, 6);
+					track.addNoteMore(36, 6); // Strong beat
 				if(i == 4)
-					track.addNoteMore(38, 5);
+					track.addNoteMore(38, 5); // Strong beat
 
 				if(randExtraDrum == 0 || randExtraDrum == 1)
 					track.addNoteMore(36, 5);
@@ -324,7 +326,7 @@ public class TWDrums {
 	}
 
 	/**
-	 * Writes a simple drums to the track
+	 * Writes a simple drums to the track. Strong beat is 1 and 3
 	 * @param track Percussion track on which we write a drums
 	 * @throws TWDataException
 	 */
@@ -357,11 +359,12 @@ public class TWDrums {
 				}
 
 				if(i == 0 || i == 4)
-					track.addNoteMore(36, 6);
+					track.addNoteMore(36, 6); // Strong beat
+				
 				if(randExtraDrum == 0 || randExtraDrum == 1)
 					track.addNoteMore(36, 5);
 				if(i == 2 || i == 6)
-					track.addNoteMore(38, 5);
+					track.addNoteMore(38, 5); // Strong beat
 			}
 		}
 	}

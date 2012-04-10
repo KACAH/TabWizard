@@ -6,6 +6,11 @@ import datastruct.TWDataException;
 import datastruct.TWInstrumentTrack;
 import datastruct.TWSimpleNote;
 
+/**
+ * The TWBassLine class. Writes a bass lines to the track
+ * 
+ */
+
 public class TWBassLine {
 
 	/**
@@ -18,11 +23,15 @@ public class TWBassLine {
 	{
 		TWSimpleNote Note;
 		int[] frets; 
+		
+		//One measure contains only eighth notes
 		for(int i = 0; i < 8; i++)
 		{
+			//Use first, main note from given chord
 			Note = chord.getNote(0);
 			frets = track.getFretsByNoteAndString(Note, 4); 
 
+			//Writes it on fourth string
 			track.addNoteNew(frets[0], 4, 8);
 		}
 	}
@@ -39,16 +48,22 @@ public class TWBassLine {
 		
 		TWSimpleNote Note;
 		int[] frets; 
+		
+		//One measure contains only eighth notes
 		for(int i = 0; i < 8; i++)
 		{
 			int randPause = rn.nextInt(3);
 			
+			//Writes eighth rest. Probability 1/3
 			if(randPause == 0)
 				track.addRest(8);
 			else
 			{
+				//Use first, main note from given chord
 				Note = chord.getNote(0);
 				frets = track.getFretsByNoteAndString(Note, 4); 
+
+				//Writes it on fourth string
 				track.addNoteNew(frets[0], 4, 8);
 			}
 		}
@@ -66,27 +81,36 @@ public class TWBassLine {
 		TWScale HarmonyScale = TWScaleManager.constructHarmonyScale(harmony);
 		Random rnd = new Random();
 			
+		//One measure contains only eighth notes
 		for(int i = 0; i < 8; i++)
 		{
 			int randNoteFromScale = rnd.nextInt(HarmonyScale.ScaleSize());
 			int randNoteOnFret = rnd.nextInt(2);
-			int randNoteInFirstPart = rnd.nextInt(4)+1;
+			int randNoteInFirstPart = rnd.nextInt(4);
 			int randPlaceInFirstPart = rnd.nextInt(4);
 			boolean PlaceInFirstPart = false;
 			
+			//Bass line divided into two parts. First part contains 6 eighth notes, 
+			//preferably main note from chord.
+			//Second part contains 2 eighth notes.
+			
 			if(i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 5)
 			{
-				if(randNoteInFirstPart == 4)
+				//Writes random note in first part. Probability 1/4
+				if(randNoteInFirstPart == 0)
 				{
+					//Writes note in random first part place. Probability 1/4
 					if(i == randPlaceInFirstPart)
 					{
 						PlaceInFirstPart = true;				
 						BassLineNote(HarmonyScale.getNote(randNoteFromScale), randNoteOnFret, track);				    
 					}
 				}
+				//Writes main note.
 				if(!PlaceInFirstPart)
 					BassLineNote(chord.getNote(0), 0, track);
 			}
+			//Second part. Writes random note from harmony scale.
 			if(i == 6 || i == 7)
 				BassLineNote(HarmonyScale.getNote(randNoteFromScale), randNoteOnFret, track);
 		}
