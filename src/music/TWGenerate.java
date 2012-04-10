@@ -46,23 +46,27 @@ public class TWGenerate {
 
 		newPart = NewTrackFrame.song.createSongPart(name);
 
+		//Add all tracks to new song part
 		for(int i = 0; i < readyTracks.size(); i++)	
 			readyTracks.get(i).setInstrumentTrack(newPart.getInstrumentTrack(i));
 
 		readyPercussionTrack.setPercussionTrack(newPart.getPercussionTrack());
 
+		//Writing on track considering measure count
 		for(int i = 0; i < MeasureCount; i++)
 		{
 			int randChord = rn.nextInt(6);
 			for(int j = 0; j < readyTracks.size(); j++)
 			{
 				boolean RiffIsWritten = false;
+				
+				//Writes methods if fragment type is harmonic
 				if(Main.fragmenttypeframe.isHarmonyFragment())
 				{
 					writeHarmonyTrack(readyTracks.get(j).getTrack(), readyTracks.get(j).getMethod(), Harmony, randChord);
 					writeBassTrack(readyTracks.get(j).getTrack(), readyTracks.get(j).getMethod(), Harmony, randChord);
 				}
-
+				//Writes methods if fragment type is riff
 				if(Main.fragmenttypeframe.isRiffFragment())
 				{
 					for(int k = 0; k < readyTracks.size(); k++)	
@@ -71,6 +75,7 @@ public class TWGenerate {
 							for(int l = 0; l < readyTracks.size(); l++)						
 								if(!readyTracks.get(l).getMethod().equals(""))
 								{
+									//Writes riff on normal and bass track
 									writeRiffTrack(readyTracks.get(l).getTrack(), 
 											readyTracks.get(k).getTrack(), 
 											readyTracks.get(l).getMethod(), 
@@ -84,6 +89,7 @@ public class TWGenerate {
 				if(RiffIsWritten)
 					break;
 			}
+			//Writes drums
 			writeDrumTrack(readyPercussionTrack.getPercussionTrack(), readyPercussionTrack.getMethod());
 		}
 
@@ -118,6 +124,11 @@ public class TWGenerate {
 		TWSong Song = new TWSong(Tempo);
 		ArrayList<TWSongPart> SongParts = new ArrayList<TWSongPart>();
 
+		///////////////////
+		// Tracks part
+		//////////////////
+		
+		//Header creating. Bass track is last.
 		for(int i = 0; i < rndTrackCount; i++)
 		{
 			int rndVolume = (rnd.nextInt(6)+10)*8-1;
@@ -152,6 +163,7 @@ public class TWGenerate {
 			Song.addTrack(readyTracks.get(i).getHeader());
 		}
 
+		//Creating drum header
 		TWTrackHeader header = new TWTrackHeader("Drums", TWInstruments.DRUMS);
 		ReadyTrackFragmentForWrite PercTrack = new ReadyTrackFragmentForWrite();
 		PercTrack.setTrackHeader(header);
@@ -166,8 +178,10 @@ public class TWGenerate {
 		TWPercussionTrack p = newPart.getPercussionTrack();
 		PercTrack.setPercussionTrack(p);
 
-		//////////////////////////////////////////////////////////////
-
+		///////////////////
+		// Generate part
+		//////////////////
+		
 		int rndPartCount = rnd.nextInt(9)+3;
 
 		for(int i = 0; i < rndPartCount; i++)
@@ -182,6 +196,7 @@ public class TWGenerate {
 			int rndDrumMethod = rnd.nextInt(PlayingMethodsFrame.DrumMethods.length);
 		
 			
+			//Set methods to harmony and bass fragments
 			for(int k = 0; k < readyTracks.size(); k++)
 			{
 				int rndHarmonyMethod = rnd.nextInt(PlayingMethodsFrame.HarmonyMethods.length);
@@ -194,8 +209,10 @@ public class TWGenerate {
 			{
 				int rndChord = rnd.nextInt(6);
 				
+				//Writes harmony or riff. Probability 1/2
 				if(rndHarmonyOrRiff == 0)
 				{
+					//Writes harmony and bass tracks
 					for(int k = 0; k < readyTracks.size(); k++)
 					{
 						if(!readyTracks.get(k).getHeaderName().equals("Bass"))
@@ -209,11 +226,13 @@ public class TWGenerate {
 					boolean RiffIsWritten = false;
 					for(int k = 0; k < readyTracks.size(); k++)
 					{
+						//Set methods to riff and bass fragments
 						if(!RiffIsWritten)
 						{
 							readyTracks.get(k).setMethod(PlayingMethodsFrame.RiffMethods[rndRiffMethod]);
 							for(int l = 0; l < readyTracks.size(); l++)	
 							{
+								//Writes riff and bass tracks
 								if(readyTracks.get(l).getTuning().getNumStringsUsed() == 4)
 								{
 									writeRiffTrack(readyTracks.get(k).getTrack(), readyTracks.get(l).getTrack(), readyTracks.get(k).getMethod(), scale);
@@ -224,6 +243,7 @@ public class TWGenerate {
 						}
 					}
 				}
+				//Writes drums
 				writeDrumTrack(PercTrack.getPercussionTrack(), PlayingMethodsFrame.DrumMethods[rndDrumMethod]);
 			}
 			SongParts.add(newPart);

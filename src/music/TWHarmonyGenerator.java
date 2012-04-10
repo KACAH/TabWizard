@@ -14,8 +14,7 @@ public class TWHarmonyGenerator {
 	 * Get main chord from harmony
 	 * @return main chord from harmony
 	 */
-	static public TWChord getMainChord()
-	{
+	static public TWChord getMainChord(){
 		return mainChord;
 	}
 
@@ -29,7 +28,7 @@ public class TWHarmonyGenerator {
 		Random rn = new Random();
 
 		int randChord = rn.nextInt(24);
-		int randHarmonyVariant = rn.nextInt(2); //MinorOrMajor7Chord
+		int randHarmonyVariant = rn.nextInt(2); //Minor Or Major Chord
 
 		TWChordManager.loadChords("data//Chords.twd");
 		TWChord[] allChords = new TWChord[24];

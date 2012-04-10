@@ -21,7 +21,6 @@ public class FrameScaleManager extends JFrame
 {
 	private static final long serialVersionUID = -1818704328534259047L;
 
-
 	private JButton newScale = new JButton();
 	private JButton deleteScale = new JButton();
 	private JButton showScale = new JButton();
@@ -32,7 +31,7 @@ public class FrameScaleManager extends JFrame
 	public FrameScaleManager() throws IOException
 	{		
 		init();
-		this.setSize(600, 400); 
+		this.setSize(470, 160); 
 		this.getContentPane().setLayout(null);
 		this.add(NewScale(), null);
 		this.setTitle("Scale Manager");
@@ -41,9 +40,7 @@ public class FrameScaleManager extends JFrame
 		this.add(ScaleNotesIt());
 		this.add(showSc());
 		this.add(delScale());
-
 	}
-
 
 	private JButton NewScale() 
 	{
@@ -53,12 +50,10 @@ public class FrameScaleManager extends JFrame
 		newScale.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
 				Main.createscale.setVisible(true);
 				Main.scalemanager.setEnabled(false);
 			}
 		});
-
 		return newScale;
 	}
 
@@ -112,14 +107,11 @@ public class FrameScaleManager extends JFrame
 
 						String[] notes = curScale.split(" [0-9]* ")[1].split(" ");
 						String ItNotes = "";
+						
 						for(int i = 0; i < NoteGer.length; i++)
-						{
 							for(int j = 0; j < notes.length; j++)
-							{
 								if(NoteGer[i].equals(notes[j]))
 									ItNotes = ItNotes + NoteIt[i] + " ";
-							}
-						}
 						NotesIt.setText(ItNotes);
 					}
 				}
@@ -140,8 +132,7 @@ public class FrameScaleManager extends JFrame
 		return scales;
 	}
 
-	private void refreshScales()
-	{
+	private void refreshScales(){
 		scales.removeAllItems();
 		for(int i = 0; i < TWScaleManager.StringScales.size(); i++)
 		{
@@ -151,15 +142,13 @@ public class FrameScaleManager extends JFrame
 	}
 
 
-	private JTextField ScaleNotesGer()
-	{
+	private JTextField ScaleNotesGer(){
 		NotesGer.setBounds(170, 20, 120, 30);
 		NotesGer.setEditable(false);
 		return NotesGer;
 	}
 
-	private JTextField ScaleNotesIt()
-	{
+	private JTextField ScaleNotesIt(){
 		NotesIt.setBounds(170, 60, 120, 30);
 		NotesIt.setEditable(false);
 		return NotesIt;

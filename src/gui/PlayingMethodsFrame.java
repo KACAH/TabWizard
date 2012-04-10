@@ -26,6 +26,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 
 import music.TWGenerate;
+import music.TWHarmonyGenerator;
 import music.TWScaleManager;
 
 import datastruct.TWDataException;
@@ -56,6 +57,7 @@ public class PlayingMethodsFrame extends JFrame{
 	private JButton back = new JButton();
 	private JButton delete = new JButton();
 	private JButton showParts = new JButton();
+	private JButton newHarmony = new JButton();
 	private RoundButton generate = new RoundButton();
 
 	private JTextField FragmentName = new JTextField();
@@ -113,9 +115,11 @@ public class PlayingMethodsFrame extends JFrame{
 					{
 						String TrackName = list.getSelectedValue().split("\\) ")[1].split(",")[0];
 
+						//Set playing method for normal track
 						if(TrackName.equals(TWGenerate.readyTracks.get(i).getHeaderName()))
 							TWGenerate.readyTracks.get(i).setMethod(methods.getSelectedItem().toString());
-
+						
+						//Set playing method for drum track
 						if(list.getSelectedValue().split(": ")[1].equals("Drums"))
 							TWGenerate.readyPercussionTrack.setMethod(methods.getSelectedItem().toString());
 					}
@@ -125,6 +129,7 @@ public class PlayingMethodsFrame extends JFrame{
 
 					if(methods.getSelectedItem().toString().split(" ")[count-1].equals("Riff"))
 					{			
+						//All track, except drum, track removes from list, if playing method is riff
 						for(int i = 0; i < Main.newtrackframe.TracklistModel.getSize();)
 						{
 							if(!Main.newtrackframe.TracklistModel.get(i).split(": ")[1].split("; ")[0].equals("Drums") )
@@ -162,9 +167,30 @@ public class PlayingMethodsFrame extends JFrame{
 				JOptionPane.showMessageDialog(null, "Fragment \"" + TWGenerate.newPart.getName() + "\" is added to fragment list");
 				NewTrackFrame.song.removeSongPart(0);
 				FragmentName.setText("");
+				resetWindow();
 			}
 		});
 		return add;
+	}
+	
+	private JButton CreateNewHarmony() {
+		newHarmony.setBounds(10, 40, 150, 30);
+		newHarmony.setText("New harmony");
+
+		newHarmony.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				try {
+					TWGenerate.Harmony = TWHarmonyGenerator.generateSimpleHarmony();
+					JOptionPane.showMessageDialog(null, "New harmony is created");
+					
+				} catch (TWDataException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		return newHarmony;
 	}
 
 	private JButton showButton() {
@@ -203,6 +229,7 @@ public class PlayingMethodsFrame extends JFrame{
 					NewTrackFrame.song.removeSongPart(0);
 					JOptionPane.showMessageDialog(null, "Fragment \"" + TWGenerate.newPart.getName() + "\" is deleted");
 					FragmentName.setText("");
+					resetWindow();
 				}
 			}
 		});
@@ -215,8 +242,7 @@ public class PlayingMethodsFrame extends JFrame{
 
 		reset.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
+			public void actionPerformed(ActionEvent e) {
 				resetWindow();
 			}
 		});
@@ -278,7 +304,6 @@ public class PlayingMethodsFrame extends JFrame{
 				FragmentName.setText(name);
 
 				try {
-
 					TWGenerate.createParamSongPart(name);
 
 				} catch (TWDataException e1) {
@@ -318,7 +343,6 @@ public class PlayingMethodsFrame extends JFrame{
 		for(int i = 0; i < TWScaleManager.StringScales.size(); i++)
 		{
 			String[] ScaleName = TWScaleManager.StringScales.get(i).split(" ");
-
 			scales.addItem(ScaleName[0]);
 		}
 		return scales;
@@ -385,10 +409,8 @@ public class PlayingMethodsFrame extends JFrame{
 		if(!type.equals("Drums") && !type.equals("Bass tuning"))
 		{
 			if(Main.fragmenttypeframe.isHarmonyFragment())
-			{
 				for(int i = 0; i < HarmonyMethods.length; i++)
 					methods.addItem(HarmonyMethods[i]);
-			}
 			
 			if(Main.fragmenttypeframe.isRiffFragment())
 			{
@@ -398,7 +420,6 @@ public class PlayingMethodsFrame extends JFrame{
 					methods.addItem(RiffMethods[i]);
 			}
 		}
-
 	}
 	
 
@@ -446,6 +467,7 @@ public class PlayingMethodsFrame extends JFrame{
 
 	private void HarmonyInit() throws IOException
 	{
+		this.add(CreateNewHarmony());
 		this.add(InstrumentList());
 		this.add(setPlayingMethod());
 	}

@@ -20,10 +20,11 @@ public class TWHarmonyManager {
 	{
 		TWSimpleNote Note;
 		int[] frets; 
-		for(int i = 0; i < 3; i++)
-		{
+		
+		for(int i = 0; i < 3; i++){
 			Note = chord.getNote(i);
 			frets = track.getFretsByNoteAndString(Note, i+1); 
+			
 			if (i == 0)
 				track.addNoteNew(frets[0], i+1, 1);
 			else
@@ -47,20 +48,17 @@ public class TWHarmonyManager {
 		if(state)// Minor State
 		{
 			for(int i = 0; i < Notes.length; i++)
-			{
-				if(chord.getNote(2).getName().equals(Notes[i]))
+				if(chord.getNote(2).getName().equals(Notes[i])) //third note in chord tonic state
 				{
 					if(i+1 > 11)
-						return Notes[i-11];
+						return Notes[i-11]; //returns note that can't be used
 					else
-						return Notes[i+1];
+						return Notes[i+1]; 
 				}
-			}
 		}
 		// Major State
 		else
 			for(int i = 0; i < Notes.length; i++)
-			{
 				if(chord.getNote(2).getName().equals(Notes[i]))
 				{
 					if(i-1 < 0)
@@ -68,7 +66,6 @@ public class TWHarmonyManager {
 					else
 						return Notes[i-1];
 				}
-			}
 		return null;
 	}
 
@@ -80,13 +77,12 @@ public class TWHarmonyManager {
 	 */
 	static boolean onceNoteInHarmony(TWHarmony harmony, TWSimpleNote note)
 	{
-		TWSimpleNote[] AllNotes;
-		AllNotes = new TWSimpleNote[harmony.HarmonySize()*3];
+		//All notes from harmony with repeating. Every chord has 3 notes
+		 TWSimpleNote[] AllNotes = new TWSimpleNote[harmony.HarmonySize()*3];
 
 		for(int i = 0, j = 0, k = 0; i < harmony.HarmonySize()*3; i++, k++)
 		{
-			if(k == 3)
-			{
+			if(k == 3) {
 				k = 0;	
 				j++;
 			}
@@ -96,12 +92,12 @@ public class TWHarmonyManager {
 			AllNotes[i] = harmony.getChord(j).getNote(k);
 		}
 
+		//checks if note founds in harmony only one time 
 		int NoteCount = 0;
 		for(int i = 0; i < AllNotes.length; i++)
-		{
 			if(note == AllNotes[i])
 				NoteCount++;
-		}
+		
 		if(NoteCount == 1)
 			return true;
 		else

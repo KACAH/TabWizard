@@ -29,8 +29,10 @@ public class TWGuitar {
 
 			Note = chord.getNote(randNote);
 			if(i == 0)
-				AcousticArpeggioNote(BaseNote, 6, track);
+				// first arpeggio note is always chord main bass note
+				AcousticArpeggioNote(BaseNote, 6, track); 
 			else
+				// all the others are any note from chord
 				AcousticArpeggioNote(Note, randString, track);
 		}
 	}
@@ -64,8 +66,10 @@ public class TWGuitar {
 		if(frets[0] < 5)
 		{
 			if(randOctava == 0)
+				//All measure is written with power chord
 				SoundWallMeasure(frets, 0, track);
 			else
+				//All measure is written with power chord on octave higher
 				SoundWallMeasure(frets, 1, track);
 		}
 		else
@@ -94,7 +98,7 @@ public class TWGuitar {
 	 * @param track track on which we write an arpeggio
 	 * @throws TWDataException
 	 */
-	static public void writePauseSoundWall(TWChord Chord, TWInstrumentTrack track) throws TWDataException
+	public static void writePauseSoundWall(TWChord Chord, TWInstrumentTrack track) throws TWDataException
 	{
 		Random rn = new Random();
 		int randOctava = rn.nextInt(2);

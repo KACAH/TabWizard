@@ -27,7 +27,7 @@ public class TWMelody {
 
 		for(FullBeat = 64; FullBeat > 0;)
 		{
-			int randMelodyStep = rn.nextInt(5); // Note from harmony or not
+			int randMelodyStep = rn.nextInt(5); 
 			int randBaseNote = rn.nextInt(3);
 			int randScaleNote = rn.nextInt(HarmonyScale.ScaleSize());
 			int NormRestDot = rn.nextInt(14);
@@ -37,18 +37,12 @@ public class TWMelody {
 				randDuration = rn. nextInt(duration.length);
 			else
 			{
-				randDuration = rn.nextInt(1)+4; 
+				randDuration = rn.nextInt(1)+4; // Half note after sixteenth sounds terrible
 				NormRestDot = rn.nextInt(8);
 			}
 
-			if(!TWHarmonyManager.onceNoteInHarmony(harmony, HarmonyScale.getNote(randScaleNote)))
-			{	
-				if(randMelodyStep == 0)
+			if(!TWHarmonyManager.onceNoteInHarmony(harmony, HarmonyScale.getNote(randScaleNote)))	
 					writeMelodyStep(HarmonyScale, chord, randBaseNote, randScaleNote, randMelodyStep, NormRestDot, randDuration, frets, track);
-				
-				else
-					writeMelodyStep(HarmonyScale, chord, randBaseNote, randScaleNote, randMelodyStep, NormRestDot, randDuration, frets, track);
-			}
 		}
 	}
 
@@ -68,22 +62,19 @@ public class TWMelody {
 	{
 		for(int i = 0; i < HarmonyScale.ScaleSize(); i++)
 		{
+			// Note from harmony or not. Probability 1/5
 			if(randMelodyStep == 0)
-			{
 				if(randScaleNote == i && FullBeat >= 0)
 				{
 					frets = track.getFretsByNoteAndString(HarmonyScale.getNote(i), 4);
 					setNormalDottedOrRest(randMelodyStep, NormRestDot, randDuration, frets, track);
 				}
-			}
 			else
-			{
 				if(TWScaleManager.getNotesIndexFromScale(HarmonyScale, chord)[randBaseNote] == i && FullBeat >= 0)
 				{
 					frets = track.getFretsByNoteAndString(HarmonyScale.getNote(i), 4);
 					setNormalDottedOrRest(randMelodyStep, NormRestDot, randDuration, frets, track);
 				}
-			}
 		}
 	}
 	
@@ -97,17 +88,20 @@ public class TWMelody {
 	 */
 	private static void setNormalDottedOrRest(int randMelodyStep, int NormRestDot, int randDuration, int[]frets, TWInstrumentTrack track)
 	{	
+		// Writes normal note, without dot. Probability 4/7
 		if(NormRestDot == 0 || NormRestDot == 1 || NormRestDot == 2 || NormRestDot == 3 || NormRestDot == 4 || NormRestDot == 5 || NormRestDot == 6 || NormRestDot == 7)
 			MelodyStepNotes(randMelodyStep, randDuration, frets, track);
 
 		if(randMelodyStep == 0)
 		{
+			// Writes rest. Probability 1/14
 			if(NormRestDot == 8)
 				RestDurationChoice(randDuration, track);
 		}
 		else
 			return;
-
+		
+		// Writes note, with dot. Probability 2/7
 		if(NormRestDot == 9 || NormRestDot == 10 || NormRestDot == 11 || NormRestDot == 12)
 			MelodyStepDotted(randMelodyStep, randDuration, frets, track);
 	}
@@ -166,7 +160,7 @@ public class TWMelody {
 	 */
 	private static void NoteDurationChoice(int randDuration, int reqDuration, int[] frets, TWInstrumentTrack track)
 	{
-		for(int i = 0, j = 64; i < 5; i++, j = j/2)
+		for(int i = 0, j = 64; i < 5; i++, j = j/2) 
 		{
 			if(randDuration == i && FullBeat >= j)
 				if(reqDuration == randDuration)

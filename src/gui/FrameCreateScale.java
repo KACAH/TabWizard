@@ -101,11 +101,8 @@ public class FrameCreateScale extends JFrame
 					JOptionPane.showMessageDialog(null, "Scale is empty or scale doesn't have name");
 					return;
 				}
-				else
-				{
 					TWScaleManager.writeScaleToFile("data//Scales.twd", newScale);
 					JOptionPane.showMessageDialog(null, "Scale is added");
-				}
 			}
 		});
 
@@ -125,8 +122,7 @@ public class FrameCreateScale extends JFrame
 		return newCheck;
 	}
 
-	private JTextField ScaleName()
-	{
+	private JTextField ScaleName(){
 		text.setBounds(140, 20, 120, 30);
 		return text;
 	}
@@ -188,7 +184,6 @@ public class FrameCreateScale extends JFrame
 					Main.scalemanager.dispose();
 					
 					try {
-						
 						FrameScaleManager scaleManager = new FrameScaleManager();
 						scaleManager.setVisible(true);
 						

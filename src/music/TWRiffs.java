@@ -27,20 +27,23 @@ public class TWRiffs {
 			int randScaleNote = rn.nextInt(Scale.ScaleSize());
 			int randMainOrScaleNote = rn.nextInt(2);
 			int rand16Note = rn.nextInt(3);
-			int randOctava = rn.nextInt(2);
+			int randOctava = rn.nextInt(3);
 			int randString = rn.nextInt(2)+5;
 
 			for(int i = 0; i < Scale.ScaleSize(); i++)
 			{
+				//Using main chord note. Probability 1/2
 				if(randMainOrScaleNote == 0 && FullBeat < 8)
 				{
 					frets = track.getFretsByNoteAndString(MainNote, 6);
 
+					//Using eighth note. Probability 2/3
 					if(rand16Note == 0 || rand16Note == 1)
 					{
 						SimpleRiffNote(frets, 0, 6, 4, 8, true, track, bassTrack);
 						i = Scale.ScaleSize() - 1;
 					}
+					//Using sixteenth note. Probability 1/3
 					if(rand16Note == 2)
 					{
 						SimpleRiffNote(frets, 0, 6, 4, 16, true, track, bassTrack);
@@ -48,12 +51,16 @@ public class TWRiffs {
 						i = Scale.ScaleSize() - 1;
 					}					
 				}
+
+				//Using note from scale. Probability 1/2
 				if(randMainOrScaleNote == 1 && FullBeat < 8)
 				{
+					//Using concrete note from scale. Probability depends on Scale size
 					if(randScaleNote == i)
 					{
 						frets = track.getFretsByNoteAndString(Scale.getNote(i), randString);
 
+						//Write note from different octave. Probability depends on Scale size
 						if(randOctava == 0 || randOctava == 1)
 							SimpleRiffNote(frets, 0, randString, randString-2, 8, false, track, bassTrack);
 						else
@@ -63,7 +70,7 @@ public class TWRiffs {
 			}			
 		}
 	}	
-	
+
 	/**
 	 * Adds a note to the track and sets effects
 	 * @param frets frets on guitar neck
@@ -97,38 +104,34 @@ public class TWRiffs {
 		TWSimpleNote MainNote = TWHarmonyGenerator.getMainChord().getNote(0);
 		Scale = TWScaleManager.transponScale(Scale, MainNote.getName());
 
-		for(int FullBeat = 0; FullBeat < 8;)
+		for(int FullBeat = 0; FullBeat < 8; FullBeat++)
 		{
 			int randScaleNote = rn.nextInt(Scale.ScaleSize());
 			int randMainOrScaleNote = rn.nextInt(2);
 
 			for(int i = 0; i < Scale.ScaleSize(); i++)
 			{
+				//Using main chord note. Probability 1/2
 				if(randMainOrScaleNote == 0 && FullBeat < 8)
 				{
 					frets = track.getFretsByNoteAndString(MainNote, 6);
 
 					track.addNoteNew(frets[0], 6, 8);
-					track.getLastNote().setSimpleEffect(7, true);
+					track.getLastNote().setSimpleEffect(7, true); // set Palm Mute
 					bassTrack.addNoteNew(frets[0], 4, 8);
 
-					FullBeat++;
 					i = Scale.ScaleSize() - 1;					
 				}
-
+				//Using note from scale. Probability 1/2
 				if(randMainOrScaleNote == 1 && FullBeat < 8)
-				{
 					if(randScaleNote == i)
 					{
 						frets = track.getFretsByNoteAndString(Scale.getNote(i), 5);
 
 						track.addNoteNew(frets[0], 5, 8);
-						track.addNoteMore(frets[0]+2, 4);
+						track.addNoteMore(frets[0]+2, 4); // writes a power chord
 						bassTrack.addNoteNew(frets[0], 3, 8);
-
-						FullBeat++;
 					}
-				}
 			}	
 		}
 	}
@@ -153,33 +156,30 @@ public class TWRiffs {
 			int randPause = rn.nextInt(4);
 			boolean pause = false;
 
-			if(randPause == 0 && FullBeat < 8 && FullBeat != 0)
-			{
+			//Writes pause
+			if(randPause == 0 && FullBeat < 8 && FullBeat != 0)	{
 				PowerRiffPause(track, bassTrack);
 				FullBeat++;
 				pause = true;
 			}
 
 			for(int i = 0; i < Scale.ScaleSize(); i++)
-			{
+
+				//Using main chord note. Probability 1/2
 				if(randBaseOrScaleNote == 0 && FullBeat < 8 && !pause)
 				{
-					if(randScaleNote == i)
-					{
+					if(randScaleNote == i)	{
 						PowerRiffBeat(track.getFretsByNoteAndString(Scale.getNote(i), 6), track, bassTrack);					
 						FullBeat++;
 					}
 				}
+			//Using note from scale. Probability 1/2
 				else
-				{
-					if(FullBeat < 8)
-					{
+					if(FullBeat < 8){
 						PowerRiffBeat(track.getFretsByNoteAndString(MainNote, 6), track, bassTrack);
 						FullBeat++;
 						i = Scale.ScaleSize() - 1;
 					}
-				}
-			}
 		}
 	}
 
@@ -190,22 +190,20 @@ public class TWRiffs {
 	 * @param bassTrack track on which we write a quint
 	 * @throws TWDataException
 	 */
-	private static void PowerRiffBeat(int[] frets, TWInstrumentTrack track, TWInstrumentTrack bassTrack) throws TWDataException
-	{
+	private static void PowerRiffBeat(int[] frets, TWInstrumentTrack track, TWInstrumentTrack bassTrack) throws TWDataException	{
 		track.addNoteNew(frets[0], 6, 8);
-		track.addNoteMore(frets[0]+2, 5);
-		track.addNoteMore(frets[0]+2, 4);
+		track.addNoteMore(frets[0]+2, 5); // writes a power chord
+		track.addNoteMore(frets[0]+2, 4); // writes a power chord
 		bassTrack.addNoteNew(frets[0], 4, 8);
 	}
-	
+
 	/**
 	 * Adds a rest to the track
 	 * @param track track on which we write a rest
 	 * @param bassTrack track on which we write a rest
 	 * @throws TWDataException
 	 */
-	private static void PowerRiffPause(TWInstrumentTrack track, TWInstrumentTrack bassTrack) throws TWDataException
-	{
+	private static void PowerRiffPause(TWInstrumentTrack track, TWInstrumentTrack bassTrack) throws TWDataException {
 		track.addRest(8);
 		bassTrack.addRest(8);
 	}

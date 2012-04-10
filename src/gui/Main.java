@@ -34,13 +34,14 @@ public class Main
 	static public NewTrackFrame newtrackframe;
 	static public FragmentTypeFrame fragmenttypeframe = new FragmentTypeFrame();
 	static public FrameScaleManager scalemanager;
-	//static public FragmentList fragmentlist = new FragmentList();
 	
 	
 	public static void main(String[] args) throws IOException
 	{
 		newtrackframe = new NewTrackFrame();
 		scalemanager = new FrameScaleManager();
+
+		mainframe.setVisible(true);
 		
 		TWScaleManager.loadScales("data//Scales.twd");
 			

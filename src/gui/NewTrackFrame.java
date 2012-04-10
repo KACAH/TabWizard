@@ -116,8 +116,8 @@ public class NewTrackFrame extends JFrame {
 				else
 				{
 					String name = SimpleTrackName.getText();
-					int volume = (Integer) SimpleTrackVolume.getValue()*8-1;
-					int balance = Balance.getValue()*8+64;
+					int volume = (Integer) SimpleTrackVolume.getValue()*8-1; //Max volume = 127
+					int balance = Balance.getValue()*8+64; // 64 - balance center
 					String tuning = (String) Tuning.getSelectedItem();
 					
 					String instr = (String) instruments.getSelectedItem();
@@ -134,6 +134,7 @@ public class NewTrackFrame extends JFrame {
 						}	
 						for(int i = 0; i < TracklistModel.size(); i++)
 						{
+							// Get track name splitting string in list
 							String TrackName = TracklistModel.get(i).split("\\) ")[1].split(",")[0];
 
 							if(SimpleTrackName.getText().equals(TrackName))
@@ -288,7 +289,7 @@ public class NewTrackFrame extends JFrame {
 
 				if(TracklistModel.size() != 0)
 				{	
-					if(!hasBassTrack())
+					if(!hasBassTrack() || !hasDrumTrack())
 						return;
 					else
 					{
@@ -303,13 +304,14 @@ public class NewTrackFrame extends JFrame {
 
 							song = new TWSong(getTempo());
 
+							
 							for(int i = 0; i < TWGenerate.readyTracks.size(); i++)
 								song.addTrack(TWGenerate.readyTracks.get(i).getHeader());
 
 							for(int i = 0; i < TracklistModel.size(); i++)
 							{
 								if(TracklistModel.get(i).split(":")[1].equals(" Drums"))
-									NewTrackFrame.song.addTrack(TWGenerate.readyPercussionTrack.getHeader());
+									song.addTrack(TWGenerate.readyPercussionTrack.getHeader());
 							}
 						} catch (TWDataException e1) {
 							e1.printStackTrace();
@@ -331,6 +333,17 @@ public class NewTrackFrame extends JFrame {
 				return true;
 		}
 		JOptionPane.showMessageDialog(null, "Please add a bass track");
+		return false;
+	}
+	
+	private boolean hasDrumTrack()
+	{
+		for(int i = 0; i < TracklistModel.size(); i++)
+		{
+			if(TracklistModel.get(i).split(": ")[1].equals("Drums"))
+				return true;
+		}
+		JOptionPane.showMessageDialog(null, "Please add a drum track");
 		return false;
 	}
 
