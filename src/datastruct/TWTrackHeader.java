@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * The TWTrackHeader class contains all information about tracks
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWTrackHeader {
 	protected String name;

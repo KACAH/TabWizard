@@ -9,7 +9,7 @@ import java.util.Iterator;
  * The TWSong class represents whole song with all headers, measures and tracks. 
  * This is the main class to work with.
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWSong
 {

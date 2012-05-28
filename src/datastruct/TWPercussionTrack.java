@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWPercussionTrack class represents only percussions song's track.
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWPercussionTrack extends TWTrack {
 	

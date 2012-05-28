@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWColor class represents color in RGB model 
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWColor {
 	private int r;

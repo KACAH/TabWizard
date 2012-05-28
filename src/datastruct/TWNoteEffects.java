@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWNoteEffects class represents all effects of note (vibrato, slide and s.o.)
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWNoteEffects {
 	private static final int EFFECTS_COUNT = 13;
@@ -29,7 +29,7 @@ public class TWNoteEffects {
 	/**
 	 * Bend effect class. Part of note effects class.
 	 * 
-	 * @author Deniss Paltovs (KACAH)
+	 * 
 	 */
 	public static class TWBendEffect {
 		
@@ -50,7 +50,7 @@ public class TWNoteEffects {
 		/**
 		 * Class TWBendPoint represents one point of the bend's curve
 		 * 
-		 * @author Deniss Paltovs (KACAH)
+		 * 
 		 */
 		public static class TWBendPoint {
 			public int position;

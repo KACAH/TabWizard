@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * The TWTrack class represents all song tracks including percussions.
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 abstract public class TWTrack {
 	protected TWTrackHeader header;

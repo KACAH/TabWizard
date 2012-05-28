@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWInstrumentTrack class represents all song tracks except percussions.
  * 
- * @author Deniss Paltovs (KACAH)
+ *
  */
 public class TWInstrumentTrack extends TWTrack {
 	

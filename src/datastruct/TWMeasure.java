@@ -8,7 +8,7 @@ import java.util.ListIterator;
  * The TWMeasure class represents song's measure data: Beats, Notes and s.o.
  * Objects of this class are created automatically
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWMeasure {
 	//3 for normal note (1 normal = 3/3 normal)

@@ -2,7 +2,7 @@ package datastruct;
 
 /**
  * The TWBeat class represents one beat of the measure
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWBeat {
 	private TWDuration duration;

@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWExtendedNote is simple note + octave. For example E0, F#5...
  * 
- * @author Deniss Paltovs (KACAH)
+ *
  */
 public class TWExtendedNote {
 	private TWSimpleNote note;

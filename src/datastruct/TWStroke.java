@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWSTroke class represents beat stroke effect. Also it contains some constants, witch help to work with strokes
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWStroke {
 	public static final int UP = 1;

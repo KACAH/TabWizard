@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The interface TWInstruments is container of all popular instruments' constants
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public interface TWInstruments {
 	public static final short DRUMS = -1;

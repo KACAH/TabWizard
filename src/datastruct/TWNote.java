@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWNote class represents song's note with effects
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWNote {
 	private int velocity;

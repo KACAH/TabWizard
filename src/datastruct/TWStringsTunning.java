@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWStringsTunning class represents settings of the guitar strings (tunning)
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWStringsTunning {
 	private TWExtendedNote[] strings;

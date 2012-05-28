@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWSimpleNote enum is musical representation of notes. 
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public enum TWSimpleNote {
 	C(0,"C"), C_(1,"C#"), D(2,"D"), D_(3,"D#"), E(4,"E"), F(5,"F"),

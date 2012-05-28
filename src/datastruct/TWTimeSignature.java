@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWTimeSignature class represents measure's time signature - two ints numerator and denominator
  *
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWTimeSignature {
 	private int numerator;

@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWDuration class represents Note's duration. Also it contains some constants, witch help to work with duration
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWDuration {
 	public static final int WHOLE = 1;

@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The interface TWDefaults is container of TabsWizard data default settings
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public interface TWDefaults {
 	public static final String AUTHOR = "TabsWizard";

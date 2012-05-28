@@ -3,7 +3,7 @@ package datastruct;
 /**
  * The TWMeasureHeader class contains all settings of song's measure
  * 
- * @author Deniss Paltovs (KACAH)
+ * 
  */
 public class TWMeasureHeader {
 	private TWTimeSignature timeSignature;
