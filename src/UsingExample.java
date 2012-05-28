@@ -28,6 +28,7 @@ public class UsingExample
 			song.addTrack( new TWTrackHeader( "Bass", TWInstruments.BASS_GUITAR) );
 			song.addTrack( new TWTrackHeader( "Drums", TWInstruments.DRUMS) );
 			
+			
 			TWSongPart part = song.createSongPart("Test");
 			TWInstrumentTrack track1 = part.getInstrumentTrack(0);
 			
